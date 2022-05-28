@@ -41,8 +41,6 @@ from math import modf as modf
 #region Public imports of components
 from nalpy.math.vector2 import Vector2 as Vector2
 from nalpy.math.rect import Rect as Rect
-from nalpy.math.transform import Transform as Transform
-from nalpy.math.transform import RectTransform as RectTransform
 #endregion
 
 #region Constants
