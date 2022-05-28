@@ -72,7 +72,7 @@ Value = _typing.TypeVar("Value", int, float)
 
 #region Basic math functions
 def cbrt(__x: _typing.SupportsFloat) -> float:
-    return pow(float(__x), 1.0 / 3.0)
+    return pow(__x, 1.0 / 3.0) # Division will be optimized during bytecode compilation
 
 def sign(__x: _typing.SupportsFloat) -> int:
     """
@@ -84,7 +84,7 @@ def sign(__x: _typing.SupportsFloat) -> int:
     +1 | greater than zero
     ```
     """
-    return bool(float(__x) > 0) - bool(float(__x) < 0)
+    return bool(float(__x) > 0.0) - bool(float(__x) < 0.0)
     # return int(math.copysign(1.0, __x))
     # copysign behaviour is not consistent across different platforms
 
@@ -113,28 +113,33 @@ def clamp(value: Value, _min: Value, _max: Value) -> Value:
     return max(_min, min(value, _max))
 
 def clamp01(value: float) -> float:
+    """Shorthand for `math.clamp(value, 0.0, 1.0)`"""
     return clamp(value, 0.0, 1.0)
 
 
 def remap(value: float, from1: float, to1: float, from2: float, to2: float) -> float:
-    """Converts a value to another value within the given arguments."""
+    """Converts a value to another value within the given arguments. Ends are inclusive."""
     return (value - from1) / (to1 - from1) * (to2 - from2) + from2
 
 def remap01(value: float, from1: float, to1: float) -> float:
+    """Converts a value to another value within 0.0 and 1.0. Ends are inclusive."""
     return (value - from1) / (to1 - from1)
 #endregion
 
 #region Rounding
+#region Basic to digits
 def ceil_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
     """Return the ceiling of x as a float with specified decimal accuracy."""
-    pow10: float = pow(10.0, float(digits))
+    pow10: float = pow(10.0, digits)
     return ceil(float(__x) * pow10) / pow10 # dividing changes output to float
 
 def floor_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
     """Return the floor of x as a float with specified decimal accuracy."""
-    pow10: float = pow(10.0, float(digits))
+    pow10: float = pow(10.0, digits)
     return floor(float(__x) * pow10) / pow10 # dividing changes output to float
+#endregion
 
+#region Nearest n
 def round_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
     """
     Round a number to the nearest multiple of ``n``.
@@ -145,7 +150,7 @@ def round_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int
     """
     Round a number to the nearest multiple of ``n`` with specified decimal accuracy.
     """
-    pow10: float = pow(10.0, float(digits))
+    pow10: float = pow(10.0, digits)
     return round_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 
 def floor_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
@@ -158,7 +163,7 @@ def floor_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int
     """
     Floor a number to the nearest multiple of ``n`` with specified decimal accuracy.
     """
-    pow10: float = pow(10.0, float(digits))
+    pow10: float = pow(10.0, digits)
     return floor_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 
 def ceil_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
@@ -171,10 +176,11 @@ def ceil_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int 
     """
     Ceil a number to the nearest multiple of ``n`` with specified decimal accuracy.
     """
-    pow10: float = pow(10.0, float(digits))
+    pow10: float = pow(10.0, digits)
     return ceil_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
+#endregion
 
-
+#region Away from zero
 def round_away_from_zero_to_digits(__x: float, digits: int) -> float:
     """
     Round a number to a given precision in decimal digits.
@@ -185,7 +191,7 @@ def round_away_from_zero_to_digits(__x: float, digits: int) -> float:
     if isnan(__x) or isinf(__x):
         raise ValueError(f"Cannot round value: '{__x}'")
 
-    pow10: float = pow(10.0, float(digits)) # 10 to the power of zero is one
+    pow10: float = pow(10.0, digits) # 10 to the power of zero is one
     __x *= pow10
 
     # rounding
@@ -202,6 +208,7 @@ def round_away_from_zero(__x: float) -> int:
     When a number is halfway between two others, it's rounded toward the nearest number that's away from zero.
     """
     return int(round_away_from_zero_to_digits(__x, digits=0))
+#endregion
 #endregion
 
 #region Interpolation
@@ -240,20 +247,19 @@ def smooth_step(a: float, b: float, t: float) -> float:
     return b * t + a * (1 - t)
 
 def move_towards(current: float, target: float, maxDelta: float) -> float:
-    """Moves a value current towards target.
-    This is essentially the same as Lerp, but instead the function will ensure that the speed never exceeds maxDelta. Negative values of maxDelta pushes the value away from target.
+    """
+    Moves a value current towards target.
 
-    Args:
-        current (float): The current value.
-        target (float): The value to move towards.
-        maxDelta (float): The maximum change that should be applied to the value.
+    This is essentially the same as Lerp, but instead the function will ensure that the speed never exceeds maxDelta. Negative values of maxDelta pushes the value away from target.
     """
     if abs(target - current) <= maxDelta:
         return target
     return current + sign(target - current) * maxDelta
 
 def move_towards_angle(current: float, target: float, maxDelta: float) -> float:
-    """Same as MoveTowards but makes sure the values interpolate correctly when they wrap around 360 degrees.
+    """
+    Same as MoveTowards but makes sure the values interpolate correctly when they wrap around 360 degrees.
+
     Variables current and target are assumed to be in degrees. For optimization reasons, negative values of maxDelta are not supported and may cause oscillation. To push current away from a target angle, add 180 to that angle instead.
     """
 
@@ -264,16 +270,23 @@ def move_towards_angle(current: float, target: float, maxDelta: float) -> float:
     return move_towards(current, target, maxDelta)
 
 def ping_pong(t: float, length: float) -> float:
+    """
+    Returns a value that will increment and decrement between the value 0 and length.
+
+   ``t`` has to be a self-incrementing value.
+    """
     t = t % (length * 2.0)
     return length - abs(t - length)
 #endregion
 
 #region Iterables
 def closest(value: int | float, iterable: _typing.Iterable[Value]) -> Value:
+    """Return the value in the iterable that is closest to the given value."""
     comparison_function = lambda k: abs(k - value)
     return min(iterable, key=comparison_function)
 
 def furthest(value: int | float, iterable: _typing.Iterable[Value]) -> Value:
+    """Return the value in the iterable that is furthest from the given value."""
     comparison_function = lambda k: abs(k - value)
     return max(iterable, key=comparison_function)
 #endregion
