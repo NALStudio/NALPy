@@ -72,7 +72,11 @@ Value = _typing.TypeVar("Value", int, float)
 
 #region Basic math functions
 def cbrt(__x: _typing.SupportsFloat) -> float:
-    return pow(__x, 1.0 / 3.0) # Division will be optimized during bytecode compilation
+    x = float(__x)
+    if x >= 0:
+        return pow(x, 1.0 / 3.0) # Division will be optimized during bytecode compilation
+    else:
+        return pow(-x, 1.0 / 3.0) * -1 # Division will be optimized during bytecode compilation
 
 def sign(__x: _typing.SupportsFloat) -> int:
     """
@@ -127,16 +131,24 @@ def remap01(value: float, from1: float, to1: float) -> float:
 #endregion
 
 #region Rounding
-#region Basic to digits
-def ceil_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
-    """Return the ceiling of x as a float with specified decimal accuracy."""
-    pow10: float = pow(10.0, digits)
-    return ceil(float(__x) * pow10) / pow10 # dividing changes output to float
+#region Away from zero
+def round_away_from_zero(__x: _typing.SupportsFloat) -> int:
+    """
+    Round a number to an integer.
+    When a number is halfway between two others, it's rounded toward the nearest number that's away from zero.
+    """
+    if isnan(__x) or isinf(__x):
+        raise ValueError(f"Cannot round value: '{__x}'")
 
-def floor_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
-    """Return the floor of x as a float with specified decimal accuracy."""
-    pow10: float = pow(10.0, digits)
-    return floor(float(__x) * pow10) / pow10 # dividing changes output to float
+    # Split integral and fractional parts
+    fraction, float_value = modf(__x)
+    value = int(float_value)
+
+    # Rounding
+    if abs(fraction) >= 0.5:
+        value += sign(fraction)
+
+    return value
 #endregion
 
 #region Nearest n
@@ -146,18 +158,48 @@ def round_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
     """
     return round(float(__x) / n) * n
 
+def floor_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
+    """
+    Floor a number to the nearest multiple of ``n``.
+    """
+    return floor(float(__x) / n) * n
+
+def ceil_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
+    """
+    Ceil a number to the nearest multiple of ``n``.
+    """
+    return ceil(float(__x) / n) * n
+#endregion
+
+#region Round to digits
+def ceil_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
+    """Return the ceiling of x as a float with specified decimal accuracy."""
+    pow10: float = pow(10.0, digits)
+    return ceil(float(__x) * pow10) / pow10 # dividing changes output to float
+
+def floor_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
+    """Return the floor of x as a float with specified decimal accuracy."""
+    pow10: float = pow(10.0, digits)
+    return floor(float(__x) * pow10) / pow10 # dividing changes output to float
+
+
+def round_away_from_zero_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
+    """
+    Round a number to a given precision in decimal digits.
+    When a number is halfway between two others, it's rounded toward the nearest number that's away from zero.
+
+    ``digits`` may be negative.
+    """
+    pow10: float = pow(10.0, digits)
+    return round_away_from_zero(float(__x) * pow10) / pow10 # dividing changes output to float
+
+
 def round_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
     """
     Round a number to the nearest multiple of ``n`` with specified decimal accuracy.
     """
     pow10: float = pow(10.0, digits)
     return round_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
-
-def floor_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
-    """
-    Floor a number to the nearest multiple of ``n``.
-    """
-    return floor(float(__x) / n) * n
 
 def floor_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
     """
@@ -166,48 +208,12 @@ def floor_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int
     pow10: float = pow(10.0, digits)
     return floor_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 
-def ceil_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
-    """
-    Ceil a number to the nearest multiple of ``n``.
-    """
-    return ceil(float(__x) / n) * n
-
 def ceil_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
     """
     Ceil a number to the nearest multiple of ``n`` with specified decimal accuracy.
     """
     pow10: float = pow(10.0, digits)
     return ceil_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
-#endregion
-
-#region Away from zero
-def round_away_from_zero_to_digits(__x: float, digits: int) -> float:
-    """
-    Round a number to a given precision in decimal digits.
-    When a number is halfway between two others, it's rounded toward the nearest number that's away from zero.
-
-    ``digits`` may be negative.
-    """
-    if isnan(__x) or isinf(__x):
-        raise ValueError(f"Cannot round value: '{__x}'")
-
-    pow10: float = pow(10.0, digits) # 10 to the power of zero is one
-    __x *= pow10
-
-    # rounding
-    fraction, value = modf(__x)
-    if abs(fraction) >= 0.5:
-        value += sign(fraction)
-
-    value /= pow10
-    return value
-
-def round_away_from_zero(__x: float) -> int:
-    """
-    Round a number to an integer.
-    When a number is halfway between two others, it's rounded toward the nearest number that's away from zero.
-    """
-    return int(round_away_from_zero_to_digits(__x, digits=0))
 #endregion
 #endregion
 

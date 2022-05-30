@@ -10,6 +10,9 @@ import typing as _typing
 ParamsT = _typing.ParamSpec("ParamsT")
 
 class Event(_typing.Generic[ParamsT]):
+    """
+    The event class on which other methods can subscribe using the `+=` operator and unsubscribe using `-=`. Can be typehinted.
+    """
     def __init__(self, values: _typing.Iterable[_typing.Callable[ParamsT, _typing.Any]] = []) -> None:
         self.listeners = [v for v in values]
 
