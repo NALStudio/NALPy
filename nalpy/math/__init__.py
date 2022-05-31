@@ -155,8 +155,11 @@ def round_away_from_zero(__x: _typing.SupportsFloat) -> int:
 def round_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
     """
     Round a number to the nearest multiple of ``n``.
+    When a number is halfway between two multiples of n, it's rounded toward the nearest number that's away from zero.
     """
-    return round(float(__x) / n) * n
+    if n == 0: # Prevent division by zero. Any multiple of zero is always zero.
+        return 0
+    return round_away_from_zero(float(__x) / n) * n
 
 def floor_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
     """

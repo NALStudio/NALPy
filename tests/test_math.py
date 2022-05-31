@@ -150,6 +150,90 @@ class Rounding(unittest.TestCase):
         self.assertAlmostEqual(math.round_away_from_zero(-15.75), -16)
         self.assertAlmostEqual(math.round_away_from_zero(-69.420), -69)
 
+    def test_round_to_nearest_n(self):
+        self.assertAlmostEqual(math.round_to_nearest_n(0, 3), 0)
+        self.assertAlmostEqual(math.round_to_nearest_n(0.5, 3), 0)
+        self.assertAlmostEqual(math.round_to_nearest_n(1, 3), 0)
+        self.assertAlmostEqual(math.round_to_nearest_n(2, 3), 3)
+        self.assertAlmostEqual(math.round_to_nearest_n(5, 3), 6)
+        self.assertAlmostEqual(math.round_to_nearest_n(15, 3), 15)
+        self.assertAlmostEqual(math.round_to_nearest_n(15.1, 3), 15)
+        self.assertAlmostEqual(math.round_to_nearest_n(15.25, 3), 15)
+        self.assertAlmostEqual(math.round_to_nearest_n(15.5, 3), 15)
+        self.assertAlmostEqual(math.round_to_nearest_n(15.51, 3), 15)
+        self.assertAlmostEqual(math.round_to_nearest_n(15.75, 3), 15)
+        self.assertAlmostEqual(math.round_to_nearest_n(16.5, 3), 18)
+        self.assertAlmostEqual(math.round_to_nearest_n(69.420, 3), 69)
+
+        self.assertAlmostEqual(math.round_to_nearest_n(14.9999, 2), 14)
+        self.assertAlmostEqual(math.round_to_nearest_n(15, 2), 16)
+        self.assertAlmostEqual(math.round_to_nearest_n(15.25, 2), 16)
+        self.assertAlmostEqual(math.round_to_nearest_n(15.5, 2), 16)
+
+
+        self.assertAlmostEqual(math.round_to_nearest_n(-0, 3), 0)
+        self.assertAlmostEqual(math.round_to_nearest_n(-0.5, 3), 0)
+        self.assertAlmostEqual(math.round_to_nearest_n(-1, 3), 0)
+        self.assertAlmostEqual(math.round_to_nearest_n(-2, 3), -3)
+        self.assertAlmostEqual(math.round_to_nearest_n(-5, 3), -6)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15, 3), -15)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15.1, 3), -15)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15.25, 3), -15)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15.5, 3), -15)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15.51, 3), -15)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15.75, 3), -15)
+        self.assertAlmostEqual(math.round_to_nearest_n(-16.5, 3), -18)
+        self.assertAlmostEqual(math.round_to_nearest_n(-69.420, 3), -69)
+
+        self.assertAlmostEqual(math.round_to_nearest_n(-14.9999, 2), -14)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15, 2), -16)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15.25, 2), -16)
+        self.assertAlmostEqual(math.round_to_nearest_n(-15.5, 2), -16)
+
+    def test_floor_nearest_n(self):
+        self.assertAlmostEqual(math.floor_to_nearest_n(0, 3), 0)
+        self.assertAlmostEqual(math.floor_to_nearest_n(1, 3), 0)
+        self.assertAlmostEqual(math.floor_to_nearest_n(2, 3), 0)
+        self.assertAlmostEqual(math.floor_to_nearest_n(3, 3), 3)
+        self.assertAlmostEqual(math.floor_to_nearest_n(4, 3), 3)
+        self.assertAlmostEqual(math.floor_to_nearest_n(5, 3), 3)
+        self.assertAlmostEqual(math.floor_to_nearest_n(6, 3), 6)
+
+        self.assertAlmostEqual(math.floor_to_nearest_n(5.99, 3), 3)
+        self.assertAlmostEqual(math.floor_to_nearest_n(6.001, 3), 6)
+
+        self.assertAlmostEqual(math.floor_to_nearest_n(-0, 3), 0)
+        self.assertAlmostEqual(math.floor_to_nearest_n(-1, 3), -3)
+        self.assertAlmostEqual(math.floor_to_nearest_n(-2, 3), -3)
+        self.assertAlmostEqual(math.floor_to_nearest_n(-3, 3), -3)
+        self.assertAlmostEqual(math.floor_to_nearest_n(-4, 3), -6)
+        self.assertAlmostEqual(math.floor_to_nearest_n(-5, 3), -6)
+        self.assertAlmostEqual(math.floor_to_nearest_n(-6, 3), -6)
+
+    def test_ceil_nearest_n(self):
+        self.assertAlmostEqual(math.ceil_to_nearest_n(0, 3), 0)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(1, 3), 3)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(2, 3), 3)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(3, 3), 3)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(4, 3), 6)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(5, 3), 6)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(5, 3), 6)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(6, 3), 6)
+
+        self.assertAlmostEqual(math.ceil_to_nearest_n(5.99, 3), 6)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(6.001, 3), 9)
+
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-0, 3), 0)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-1, 3), 0)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-2, 3), 0)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-3, 3), -3)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-4, 3), -3)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-5, 3), -3)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-6, 3), -6)
+
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-5.99, 3), -3)
+        self.assertAlmostEqual(math.ceil_to_nearest_n(-6.001, 3), -6)
+
 
 if __name__ == '__main__':
     unittest.main()
