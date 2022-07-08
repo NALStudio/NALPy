@@ -235,5 +235,40 @@ class Rounding(unittest.TestCase):
         self.assertAlmostEqual(math.ceil_to_nearest_n(-6.001, 3), -6)
 
 
+class Interpolation(unittest.TestCase):
+    def test_lerp(self):
+        self.assertAlmostEqual(math.lerp(0, 1, 0.5), 0.5)
+        self.assertAlmostEqual(math.lerp(4, 8, 0.5), 6)
+
+        self.assertAlmostEqual(math.lerp(69, 420, 2), 420)
+        self.assertAlmostEqual(math.lerp(69, 420, -69), 69)
+
+        self.assertAlmostEqual(math.lerp(0, 4, 0.25), 1)
+        self.assertAlmostEqual(math.lerp(2, 8, 0.75), 6.5)
+
+    def test_lerp_unclamped(self):
+        self.assertAlmostEqual(math.lerp_unclamped(0, 1, 0.5), 0.5)
+        self.assertAlmostEqual(math.lerp_unclamped(4, 8, 0.5), 6)
+
+        self.assertAlmostEqual(math.lerp_unclamped(4, 8, 2), 12)
+        self.assertAlmostEqual(math.lerp_unclamped(6, 10, -1), 2)
+
+        self.assertAlmostEqual(math.lerp_unclamped(0, 4, 0.25), 1)
+        self.assertAlmostEqual(math.lerp_unclamped(2, 8, 0.75), 6.5)
+
+    def test_lerp_angle(self):
+        self.assertAlmostEqual(math.lerp_angle(0, 360, 0.5), 0)
+        self.assertAlmostEqual(math.lerp_angle(0, 720, 0.5), 0)
+
+        self.assertAlmostEqual(math.lerp_angle(90, 180, 0.5), 135)
+        self.assertAlmostEqual(math.lerp_angle(-45, -90, 0.5), -67.5)
+
+        self.assertAlmostEqual(math.lerp_angle(-69, 420, 2), 60)
+        self.assertAlmostEqual(math.lerp_angle(-69, 420, -2), -69)
+
+        self.assertAlmostEqual(math.lerp_angle(180, 360, 0.5), 270)
+        self.assertAlmostEqual(math.lerp_angle(360, 720, 0.5), 360)
+
+
 if __name__ == '__main__':
     unittest.main()
