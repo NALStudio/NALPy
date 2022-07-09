@@ -48,7 +48,10 @@ class _Helpers:
 
 
 def pascal_case_to_sentence(pascal: str) -> str:
-    if " " in pascal or not (len(pascal) < 1 or pascal[0].isupper()):
+    if len(pascal) < 1:
+        return ""
+
+    if " " in pascal or not pascal[0].isupper():
         raise ValueError("Not PascalCase!")
 
     return "".join(_Helpers.parse_pascal_or_camel(pascal))
@@ -58,7 +61,10 @@ def sentence_to_pascal_case(sentence: str) -> str:
 
 
 def camel_case_to_sentence(camel: str) -> str:
-    if " " in camel or not (len(camel) < 1 or camel[0].islower()):
+    if len(camel) < 1:
+        return ""
+
+    if " " in camel or not camel[0].islower():
         raise ValueError("Not camelCase!")
 
     return "".join(_Helpers.parse_pascal_or_camel(camel))
