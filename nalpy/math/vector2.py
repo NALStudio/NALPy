@@ -7,7 +7,6 @@ from nalpy import math
 
 class Vector2(NamedTuple):
     """An immutable two-dimensional vector"""
-
     x: float
     y: float
 

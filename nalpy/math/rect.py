@@ -118,8 +118,8 @@ class Rect(NamedTuple):
         return (self.x, self.y, self.w, self.h)
 
     def to_int_tuple(self) -> tuple[int, int, int, int]:
-        x = round(self.x)
-        y = round(self.y)
-        w = round(self.w)
-        h = round(self.h)
+        x: int = round(self.x)
+        y: int = round(self.y)
+        w: int = round(self.w)
+        h: int = round(self.h)
         return (x, y, w, h)

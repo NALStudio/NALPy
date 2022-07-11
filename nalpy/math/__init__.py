@@ -45,8 +45,10 @@ from nalpy.math.rect import Rect as Rect
 
 #region Constants
 PI = _math_module_pi_constant
-EPSILON = _sys.float_info.epsilon
 GOLDEN_RATIO = (1 + sqrt(5)) / 2
+
+EPSILON = _sys.float_info.epsilon
+"""Difference between 1.0 and the least value greater than 1.0 that is representable as a float."""
 
 INFINITY = float("inf")
 NEGATIVEINFINITY = float("-inf")
@@ -54,14 +56,14 @@ NAN = float("nan")
 
 MAXVALUE = _sys.maxsize
 """
-Maximum size of integer-dependant things
+Maximum size of integer-dependant things.
 
 NOTE: Python integers don't have a maximum value.
 """
 
 MINVALUE = -MAXVALUE - 1
 """
-Minimum size of integer-dependant things
+Minimum size of integer-dependant things.
 
 NOTE: Python integers don't have a minimum value.
 """

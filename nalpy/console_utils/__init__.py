@@ -1,31 +1,6 @@
-from enum import IntEnum as _IntEnum
-
-class ConsoleColor(_IntEnum):
-    BLACK = 0
-    DARK_RED = 1
-    DARK_GREEN = 2
-    DARK_YELLOW = 3
-    DARK_BLUE = 4
-    DARK_MAGENTA = 5
-    DARK_CYAN = 6
-    GRAY = 7
-
-    DARK_GRAY = 10
-    RED = 11
-    GREEN = 12
-    YELLOW = 13
-    BLUE = 14
-    MAGENTA = 15
-    CYAN = 16
-    WHITE = 17
-
-class ConsoleStyle(_IntEnum):
-    BOLD = 1
-    FAINT = 2
-    ITALIC = 3
-    UNDERLINE = 4
-    STRIKE = 9
-
+# Enum imports
+from nalpy.console_utils.enums import ConsoleColor as ConsoleColor
+from nalpy.console_utils.enums import ConsoleStyle as ConsoleStyle
 
 # Module imports
 from nalpy.console_utils import progressbar as progressbar
@@ -52,8 +27,6 @@ from nalpy.console_utils.cursor import cursor_forward as cursor_forward
 from nalpy.console_utils.cursor import cursor_back as cursor_back
 from nalpy.console_utils.cursor import cursor_line_down as cursor_line_down
 from nalpy.console_utils.cursor import cursor_line_up as cursor_line_up
-from nalpy.console_utils.cursor import cursor_set_column as cursor_set_column
-from nalpy.console_utils.cursor import cursor_set_pos as cursor_set_pos
 from nalpy.console_utils.cursor import cursor_hide as cursor_hide
 from nalpy.console_utils.cursor import cursor_show as cursor_show
 from nalpy.console_utils.cursor import clear as clear
@@ -64,4 +37,5 @@ from nalpy.console_utils.cursor import lerase as lerase
 from nalpy.console_utils.cursor import rerase as rerase
 from nalpy.console_utils.cursor import scroll_up as scroll_up
 from nalpy.console_utils.cursor import scroll_down as scroll_down
+from nalpy.console_utils.cursor import cursor_set_pos as cursor_set_pos
 from nalpy.console_utils.cursor import cursor_get_pos as cursor_get_pos
