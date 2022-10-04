@@ -9,7 +9,11 @@ import typing as _typing
 # Operations
 from math import pow as pow
 from math import sqrt as sqrt
+
 from math import log as log
+from math import log10 as log10
+from math import log2 as log2
+from math import log1p as log1p
 
 # Geometry
 from math import tan as tan
