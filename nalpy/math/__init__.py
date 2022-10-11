@@ -40,6 +40,10 @@ from math import isnan as isnan
 # Value manipulation
 from math import modf as modf
 
+# Functions
+from math import gcd as gcd
+from math import lcm as lcm
+
 #endregion
 
 #region Public imports of components
