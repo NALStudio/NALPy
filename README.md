@@ -3,6 +3,7 @@ An experimental portable package for different types of projects.
 
 
 ### TODO:
+- [ ] Fix math ___ to nearest n division by zeroes
 - [ ] Rewrite logging
 - [ ] Rewrite config to be modular
 - [ ] Clean up console_utils
