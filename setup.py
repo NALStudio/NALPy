@@ -1,5 +1,4 @@
 from glob import glob
-import os
 import setuptools
 
 long_description: str
@@ -11,11 +10,11 @@ sub_packages: list[str] = glob(f"{root_package}/*/", recursive=True)
 
 setuptools.setup(
     name='nalpy',
-    version='0.0.3',
+    version='0.0.4',
     author='Niko Leinonen',
     description='An experimental portable package for different types of projects.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/NALStudio/NALPy',
-    packages=[root_package, *sub_packages]
+    packages=setuptools.find_packages()
 )
