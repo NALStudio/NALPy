@@ -9,6 +9,7 @@ class Rect(NamedTuple):
     position: math.Vector2
     size: math.Vector2
 
+    #region Constructors
     @classmethod
     def from_corners(cls, topleft: math.Vector2, bottomright: math.Vector2):
         size = bottomright - topleft
@@ -24,7 +25,9 @@ class Rect(NamedTuple):
     def from_center(cls, center: math.Vector2, size: math.Vector2):
         topleft = center - (size / 2.0)
         return cls(topleft, size)
+    #endregion
 
+    #region Properties
     @property
     def x(self) -> float:
         return self.position.x
@@ -100,7 +103,9 @@ class Rect(NamedTuple):
     @property
     def center(self) -> math.Vector2:
         return math.Vector2(self.center_x, self.center_y)
+    #endregion
 
+    #region Collision checks
     def collide_point(self, point: math.Vector2) -> bool:
         """Checks whether a point lies within the borders of this rect."""
         return (self.left < point.x < self.right
@@ -113,6 +118,7 @@ class Rect(NamedTuple):
                 and not (self.left > rect.right)   # noqa: W503
                 and not (self.top > rect.bottom)   # noqa: W503
                 and not (self.bottom < rect.top))  # noqa: W503
+    #endregion
 
     def to_float_tuple(self) -> tuple[float, float, float, float]:
         return (self.x, self.y, self.w, self.h)

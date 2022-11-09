@@ -10,7 +10,7 @@ class Vector2(NamedTuple):
     x: float
     y: float
 
-
+    #region Class Properties
     @classmethod
     @property
     def zero(cls) -> math.Vector2:
@@ -22,8 +22,9 @@ class Vector2(NamedTuple):
     def one(cls) -> math.Vector2:
         """Shorthand for ``math.Vector2(1.0, 1.0)``"""
         return _ONE #  Returning single instance, because Vector2 is immutable
+    #endregion
 
-
+    #region Operators
     def __str__(self) -> str:
         """Human-readable string representation of the vector."""
         return f"Vector2({self.x}, {self.y})"
@@ -66,6 +67,19 @@ class Vector2(NamedTuple):
 
         return Vector2(self.x / x, self.y / y)
 
+    def __floordiv__(self, other: Vector2 | float | int) -> Vector2:
+        """Floor Divide"""
+        x: float | int
+        y: float | int
+        if isinstance(other, Vector2):
+            x = other.x
+            y = other.y
+        else:
+            x = other
+            y = other
+
+        return Vector2(self.x // x, self.y // y)
+
     def __neg__(self) -> Vector2:
         """Negate"""
         return Vector2(-self.x, -self.y)
@@ -78,24 +92,38 @@ class Vector2(NamedTuple):
 
     def __eq__(self, __o: object) -> bool:
         return isinstance(__o, Vector2) and __o.x == self.x and __o.y == self.y
+    #endregion
 
-
+    #region Modifier Properties
     @property
     def magnitude(self) -> float:
+        """The length of this vector."""
         return math.hypot(self.x, self.y)
 
     @property
-    def sqr_magnitude(self) -> float:
-        return (self.x * self.x) + (self.y * self.y)
-
-    @property
-    def normalized(self):
+    def normalized(self) -> Vector2:
+        """A copy of this vector with a magnitude of 1"""
         mag: float = self.magnitude
+        if mag == 0:
+            raise ZeroDivisionError("Vector's magnitude is zero!")
         return Vector2(self.x / mag, self.y / mag)
+    #endregion
 
+    #region Mathematic Operations
+    @staticmethod
+    def dot(a: Vector2, b: Vector2):
+        """Dot Product of two vectors."""
+        return (a.x * b.x) + (a.y * b.y)
+    #endregion
 
+    #region Interpolation
     @staticmethod
     def lerp(a: Vector2, b: Vector2, t: float) -> Vector2:
+        """
+        Linearly interpolates between vectors ``a`` and ``b`` by ``t``.
+
+        The parameter ``t`` is clamped to the range [0, 1].
+        """
         t = math.clamp01(t)
         lerp_x = a.x + ((b.x - a.x) * t)
         lerp_y = a.y + ((b.y - a.y) * t)
@@ -103,6 +131,11 @@ class Vector2(NamedTuple):
 
     @staticmethod
     def lerp_unclamped(a: Vector2, b: Vector2, t: float) -> Vector2:
+        """
+        Linearly interpolates between vectors ``a`` and ``b`` by ``t``.
+
+        The parameter ``t`` is not clamped.
+        """
         lerp_x = a.x + ((b.x - a.x) * t)
         lerp_y = a.y + ((b.y - a.y) * t)
         return Vector2(lerp_x, lerp_y)
@@ -122,27 +155,53 @@ class Vector2(NamedTuple):
         move_x = current.x + to_vector_x / dist * max_distance_delta
         move_y = current.y + to_vector_y / dist * max_distance_delta
         return Vector2(move_x, move_y)
+    #endregion
+
+    #region Rotation
+    @staticmethod
+    def perpendicular(vector: Vector2) -> Vector2:
+        """
+        Returns a 2D vector with the same magnitude, but perpendicular to the given 2D vector.
+        The result is always rotated 90-degrees in a counter-clockwise direction for a 2D coordinate system where the positive Y axis goes up.
+        """
+        return Vector2(-vector.y, vector.x)
 
     @staticmethod
-    def angle(_from: Vector2, _to: Vector2):
-        diff = _to - _from
-        return math.degrees(math.atan2(diff.y, diff.x))
+    def reflect(vector: Vector2, normal: Vector2):
+        """Reflects a vector off the vector defined by a normal."""
+        factor: float = -2 * Vector2.dot(normal, vector)
+        return Vector2(factor * normal.x + vector.x, factor * normal.y + vector.y)
+    #endregion
+
+    #region Relation
+    @staticmethod
+    def angle(_from: Vector2, _to: Vector2) -> float:
+        """Gets the unsigned angle in degrees between from and to."""
+        denom: float = _from.magnitude * _to.magnitude
+        if denom == 0:
+            return 0.0
+
+        dot: float = Vector2.dot(_from, _to)
+        cos_val: float = math.clamp(dot / denom, -1.0, 1.0)
+        return math.degrees(math.acos(cos_val))
+
+    @staticmethod
+    def signed_angle(_from: Vector2, _to: Vector2) -> float:
+        unsigned_angle: float = Vector2.angle(_from, _to)
+        sign: float = math.sign((_from.x * _to.y) - (_from.y * _to.x))
+        return unsigned_angle * sign
 
     @staticmethod
     def distance(a: Vector2, b: Vector2):
         diff = a - b
         return diff.magnitude
-
+    #endregion
 
     def to_float_tuple(self) -> tuple[float, float]:
         return (self.x, self.y)
 
     def to_int_tuple(self) -> tuple[int, int]:
         return (round(self.x), round(self.y))
-
-    def to_int_list(self) -> list[int]:
-        return [round(self.x), round(self.y)]
-
 
 _ZERO = Vector2(0.0, 0.0)
 _ONE = Vector2(1.0, 1.0)
