@@ -203,7 +203,11 @@ class Vector2(NamedTuple):
     #region Relation
     @staticmethod
     def angle(_from: Vector2, _to: Vector2) -> float:
-        """Gets the unsigned angle in degrees between from and to."""
+        """
+        Gets the unsigned angle in degrees between from and to.
+
+        NOTE: The angle returned will always be between 0 and 180 degrees, because the method returns the smallest angle between the vectors.
+        """
         denom: float = _from.magnitude * _to.magnitude
         if denom == 0:
             return 0.0
@@ -214,7 +218,11 @@ class Vector2(NamedTuple):
 
     @staticmethod
     def signed_angle(_from: Vector2, _to: Vector2) -> float:
-        """Gets the signed angle in degrees between from and to."""
+        """
+        Gets the signed angle in degrees between from and to. The angle returned is the signed counterclockwise angle between the two vectors.
+
+        NOTE: The angle returned will always be between -180 and 180 degrees, because the method returns the smallest angle between the vectors.
+        """
         unsigned_angle: float = Vector2.angle(_from, _to)
         sign: float = math.sign((_from.x * _to.y) - (_from.y * _to.x))
         return unsigned_angle * sign
