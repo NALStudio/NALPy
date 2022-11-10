@@ -116,6 +116,7 @@ class Vector2(NamedTuple):
         return hash((self.x, self.y))
 
     def __eq__(self, __o: object) -> bool:
+        """Equals"""
         return isinstance(__o, Vector2) and __o.x == self.x and __o.y == self.y
     #endregion
 
@@ -167,6 +168,7 @@ class Vector2(NamedTuple):
 
     @staticmethod
     def move_towards(current: Vector2, target: Vector2, max_distance_delta: float):
+        """Moves a point current towards target."""
         to_vector_x: float = target.x - current.x
         to_vector_y: float = target.y - current.y
 
@@ -212,12 +214,14 @@ class Vector2(NamedTuple):
 
     @staticmethod
     def signed_angle(_from: Vector2, _to: Vector2) -> float:
+        """Gets the signed angle in degrees between from and to."""
         unsigned_angle: float = Vector2.angle(_from, _to)
         sign: float = math.sign((_from.x * _to.y) - (_from.y * _to.x))
         return unsigned_angle * sign
 
     @staticmethod
     def distance(a: Vector2, b: Vector2):
+        """Returns the distance between a and b."""
         diff = a - b
         return diff.magnitude
     #endregion
