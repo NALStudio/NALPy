@@ -22,6 +22,31 @@ class Vector2(NamedTuple):
     def one(cls) -> math.Vector2:
         """Shorthand for ``math.Vector2(1.0, 1.0)``"""
         return _ONE #  Returning single instance, because Vector2 is immutable
+
+
+    @classmethod
+    @property
+    def up(cls) -> math.Vector2:
+        """Shorthand for ``math.Vector2(0.0, 1.0)``"""
+        return _UP #  Returning single instance, because Vector2 is immutable
+
+    @classmethod
+    @property
+    def down(cls) -> math.Vector2:
+        """Shorthand for ``math.Vector2(0.0, -1.0)``"""
+        return _DOWN #  Returning single instance, because Vector2 is immutable
+
+    @classmethod
+    @property
+    def left(cls) -> math.Vector2:
+        """Shorthand for ``math.Vector2(-1.0, 0.0)``"""
+        return _LEFT #  Returning single instance, because Vector2 is immutable
+
+    @classmethod
+    @property
+    def right(cls) -> math.Vector2:
+        """Shorthand for ``math.Vector2(1.0, 0.0)``"""
+        return _RIGHT #  Returning single instance, because Vector2 is immutable
     #endregion
 
     #region Operators
@@ -94,7 +119,7 @@ class Vector2(NamedTuple):
         return isinstance(__o, Vector2) and __o.x == self.x and __o.y == self.y
     #endregion
 
-    #region Modifier Properties
+    #region Instance Properties
     @property
     def magnitude(self) -> float:
         """The length of this vector."""
@@ -205,3 +230,8 @@ class Vector2(NamedTuple):
 
 _ZERO = Vector2(0.0, 0.0)
 _ONE = Vector2(1.0, 1.0)
+
+_UP = Vector2(0.0, 1.0)
+_DOWN = Vector2(0.0, -1.0)
+_LEFT = Vector2(-1.0, 0.0)
+_RIGHT = Vector2(1.0, 0.0)

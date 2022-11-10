@@ -10,7 +10,7 @@ sub_packages: list[str] = glob(f"{root_package}/*/", recursive=True)
 
 setuptools.setup(
     name='nalpy',
-    version='0.0.5',
+    version='0.0.6',
     author='Niko Leinonen',
     description='An experimental portable package for different types of projects.',
     long_description=long_description,
