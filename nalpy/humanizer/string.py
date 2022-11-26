@@ -1,12 +1,9 @@
-from __future__ import annotations
-from enum import IntEnum, auto
-from typing import Generator, Iterator
-
+import typing as _typing
 
 class _Helpers:
     @staticmethod
     def parse_pascal_or_camel(pascal_or_camel: str) -> str:
-        def generator() -> Generator[str, None, None]:
+        def generator() -> _typing.Iterable[str]:
             characters = list(pascal_or_camel)
             for i in range(len(characters)):
                 if i == 0:
@@ -109,7 +106,7 @@ def truncate(string: str, length: int, truncation_string: str = "...", include_s
         string (str): The string to truncate
         length (int): The length to truncate to
         truncation_string (str, optional): The string to append at the end of truncation. Defaults to "...".
-        include_suffix (bool, optional): Include the length of `truncation_string` in the total length of the string. Defaults to False.
+        include_suffix (bool, optional): Include the length of `truncation_string` in the total length of the string. Defaults to True.
         remove_whitespace (bool, optional): Remove all whitespace inbetween the truncated string and truncation_string. Defaults to True.
 
     Returns:
@@ -134,7 +131,7 @@ def ltruncate(string: str, length: int, truncation_string: str = "...", include_
         string (str): The string to truncate
         length (int): The length to truncate to
         truncation_string (str, optional): The string to append at the end of truncation. Defaults to "...".
-        include_prefix (bool, optional): Include the length of `truncation_string` in the total length of the string. Defaults to False.
+        include_prefix (bool, optional): Include the length of `truncation_string` in the total length of the string. Defaults to True.
         remove_whitespace (bool, optional): Remove all whitespace inbetween the truncated string and truncation_string. Defaults to True.
 
     Returns:

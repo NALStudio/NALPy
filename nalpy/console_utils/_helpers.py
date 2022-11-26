@@ -16,6 +16,7 @@ def get_ansi_color(color: ConsoleColor, prefix_number: int) -> str:
     suffix = ""
     number = color.value
     if number >= 10:
+        assert number < 20 # Just to make sure I haven't fucked something up in ConsoleColors
         suffix = ";1"
         number -= 10
 

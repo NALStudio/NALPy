@@ -1,5 +1,3 @@
-from __future__ import annotations as _annotations
-
 import typing as _typing
 
 from nalpy import math as _math
@@ -17,7 +15,7 @@ class ProgressbarStyle(_typing.NamedTuple):
 
     @classmethod
     @property
-    def default(cls) -> ProgressbarStyle:
+    def default(cls) -> _typing.Self:
         return ProgressbarStyle()
 
 class Progressbar:
@@ -25,7 +23,7 @@ class Progressbar:
         self._style: ProgressbarStyle = style
         self._cursor_hidden: bool = False
 
-    def __enter__(self) -> Progressbar:
+    def __enter__(self) -> _typing.Self:
         self.start()
         return self
 

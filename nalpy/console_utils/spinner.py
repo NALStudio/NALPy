@@ -1,8 +1,5 @@
-from __future__ import annotations as _annotations
-
 from time import time as _time
 import typing as _typing
-from nalpy import math as _math
 from nalpy import console_utils as _console_utils
 
 class SpinnerStyle(_typing.NamedTuple):
@@ -12,7 +9,7 @@ class SpinnerStyle(_typing.NamedTuple):
 
     @classmethod
     @property
-    def default(cls) -> SpinnerStyle:
+    def default(cls) -> _typing.Self:
         return SpinnerStyle()
 
 class Spinner:
@@ -21,7 +18,7 @@ class Spinner:
         self._starttime: float | None = None
         self._cursor_hidden: bool = False
 
-    def __enter__(self) -> Spinner:
+    def __enter__(self) -> _typing.Self:
         self.start()
         return self
 
