@@ -1,7 +1,6 @@
 from enum import Enum
 from nalpy import math
-from typing import NamedTuple, Self
-from nalpy.humanizer import inflections as _inflections
+from typing import Iterable, NamedTuple, Self, TypeVar
 
 
 class _Scale(NamedTuple):
@@ -52,6 +51,10 @@ class MetricPrefix(Enum):
         assert isinstance(val, _Scale)
         return val
 
+    @staticmethod
+    def get_optimal_for_value(base_value: float):
+        return _pick_optimal_prefix(base_value, MetricPrefix)
+
 class BinaryPrefix(Enum):
     KIBI = _Scale("kibi", "Ki", 2, 10)
     MEBI = _Scale("mebi", "Mi", 2, 20)
@@ -67,6 +70,12 @@ class BinaryPrefix(Enum):
         val = super().value
         assert isinstance(val, _Scale)
         return val
+
+    @staticmethod
+    def get_optimal_for_value(base_value: float):
+        return _pick_optimal_prefix(base_value, BinaryPrefix)
+
+_PrefixT = TypeVar("_PrefixT", MetricPrefix, BinaryPrefix)
 
 def convert_metric(input_: float, input_scale: MetricPrefix | BinaryPrefix | None, output_scale: MetricPrefix | BinaryPrefix | None) -> float:
     i_scale: _Scale
@@ -110,3 +119,14 @@ def _to_metric(base_value: float, scale_value: int, scale_name: str, unit: str |
         unit_str = unit + "s"
 
     return f"{value:.{decimals}f}{space}{scale_name}{unit_str}"
+
+def _pick_optimal_prefix(base_value: float, prefixes: Iterable[_PrefixT]) -> _PrefixT:
+    prefix: _PrefixT | None = None
+    for prefix in sorted(prefixes, key=lambda s: s.value, reverse=True):
+        scale = prefix.value
+        if (base_value / scale.value) >= 1.0:
+            return prefix
+
+    if prefix is None:
+        raise ValueError("No scales provided.")
+    return prefix
