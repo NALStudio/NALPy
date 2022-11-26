@@ -4,7 +4,7 @@ from typing import NamedTuple as _NamedTuple
 from nalpy import math as _math
 from nalpy.humanizer import inflections as _inflections
 
-class UnitData(_NamedTuple):
+class _UnitData(_NamedTuple):
     article: str
     name: str
     seconds_length: float
@@ -31,21 +31,21 @@ class UnitData(_NamedTuple):
         return _inflections.quick_quantisize(self.name, amount)
 
 class TimeUnit(_Enum): # NOTE: Must be ordered from smallest to largest
-    MILLISECOND = UnitData("a", "millisecond", 0.001)
-    SECOND = UnitData("a", "second", 1.0)
-    MINUTE = UnitData("a", "minute", 60.0)
-    HOUR = UnitData("an", "hour", 3_600.0)
-    DAY = UnitData("a", "day", 86_400, "yesterday", "tomorrow")
-    WEEK = UnitData("a", "week", 604_800)
-    MONTH = UnitData("a", "month", (365.242199 / 12) * 86_400)
-    YEAR = UnitData("a", "year", 365.242199 * 86_400)
+    MILLISECOND = _UnitData("a", "millisecond", 0.001)
+    SECOND = _UnitData("a", "second", 1.0)
+    MINUTE = _UnitData("a", "minute", 60.0)
+    HOUR = _UnitData("an", "hour", 3_600.0)
+    DAY = _UnitData("a", "day", 86_400, "yesterday", "tomorrow")
+    WEEK = _UnitData("a", "week", 604_800)
+    MONTH = _UnitData("a", "month", (365.242199 / 12) * 86_400)
+    YEAR = _UnitData("a", "year", 365.242199 * 86_400)
 
 
-def _get_all_units() -> list[UnitData]:
+def _get_all_units() -> list[_UnitData]:
     return [tu.value for tu in TimeUnit]
 
-def _pick_optimal_unit(seconds: float, min_unit: TimeUnit, max_unit: TimeUnit) -> UnitData:
-    units: list[UnitData] = _get_all_units()
+def _pick_optimal_unit(seconds: float, min_unit: TimeUnit, max_unit: TimeUnit) -> _UnitData:
+    units: list[_UnitData] = _get_all_units()
     optimal_unit_index: int = units.index(max_unit.value)
     while (seconds / units[optimal_unit_index].seconds_length) < 1.0:
         optimal_unit_index -= 1
@@ -99,8 +99,8 @@ def humanize_timedelta(_timedelta: _datetime.timedelta, precision: int = 1, min_
 
     return collection_separator.join(amount_strings)
 
-def to_ordinal_words(datetime: _datetime.datetime | _datetime.date):
-    raise NotImplementedError()
+# def to_ordinal_words(datetime: _datetime.datetime | _datetime.date):
+#     raise NotImplementedError()
 
-def to_clock_notation(time: _datetime.time):
-    raise NotImplementedError()
+# def to_clock_notation(time: _datetime.time):
+#     raise NotImplementedError()
