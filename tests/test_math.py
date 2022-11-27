@@ -91,7 +91,7 @@ class ValueManipulation(unittest.TestCase):
 
         self.assertEqual(math.clamp(100000, 42069, 69420), 69420)
         self.assertEqual(math.clamp(100000, 42069, 1000000), 100000)
-        self.assertEqual(math.clamp(10000, 4206900, 1000000), 4206900)
+        self.assertRaises(ValueError, math.clamp, 10000, 4206900, 1000000)
 
     def test_clamp01(self):
         self.assertEqual(math.clamp(0, 0, 1), math.clamp01(0))

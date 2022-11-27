@@ -50,24 +50,24 @@ from nalpy.math.rect import Rect as Rect
 #endregion
 
 #region Constants
-PI = _math_module_pi_constant
-GOLDEN_RATIO = (1 + sqrt(5)) / 2
+PI: _typing.Final[float] = _math_module_pi_constant
+GOLDEN_RATIO: _typing.Final[float] = (1.0 + sqrt(5.0)) / 2.0
 
-EPSILON = _sys.float_info.epsilon
+EPSILON: _typing.Final[float] = _sys.float_info.epsilon
 """Difference between 1.0 and the least value greater than 1.0 that is representable as a float."""
 
-INFINITY = float("inf")
-NEGATIVEINFINITY = float("-inf")
-NAN = float("nan")
+INFINITY: _typing.Final[float] = float("inf")
+NEGATIVEINFINITY: _typing.Final[float] = float("-inf")
+NAN: _typing.Final[float] = float("nan")
 
-MAXVALUE = _sys.maxsize
+MAXVALUE: _typing.Final[int] = _sys.maxsize
 """
 Maximum size of integer-dependant things.
 
 NOTE: Python integers don't have a maximum value.
 """
 
-MINVALUE = -MAXVALUE - 1
+MINVALUE: _typing.Final[int] = -MAXVALUE - 1
 """
 Minimum size of integer-dependant things.
 
@@ -76,7 +76,7 @@ NOTE: Python integers don't have a minimum value.
 #endregion
 
 # Initialize TypeVar
-Value = _typing.TypeVar("Value", int, float)
+ValueT = _typing.TypeVar("ValueT", int, float)
 
 #region Basic math functions
 def cbrt(__x: _typing.SupportsFloat) -> float:
@@ -120,13 +120,15 @@ def delta_angle(current: float, target: float) -> float:
 #endregion
 
 #region Value Manipulation
-def clamp(value: Value, _min: Value, _max: Value) -> Value:
+def clamp(value: ValueT, _min: ValueT, _max: ValueT) -> ValueT:
     """Clamps the value to the specified range. Both ends are inclusive."""
+    if _min > _max:
+        raise ValueError("Minimum value cannot be over the maximum value.")
     return max(_min, min(value, _max))
 
 def clamp01(value: float) -> float:
     """Shorthand for `math.clamp(value, 0.0, 1.0)`"""
-    return clamp(value, 0.0, 1.0)
+    return max(0.0, min(value, 1.0)) # Skips min max range check
 
 
 def remap(value: float, from1: float, to1: float, from2: float, to2: float) -> float:
@@ -173,12 +175,16 @@ def floor_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
     """
     Floor a number to the nearest multiple of ``n``.
     """
+    if n == 0: # Prevent division by zero. Any multiple of zero is always zero.
+        return 0
     return floor(float(__x) / n) * n
 
 def ceil_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
     """
     Ceil a number to the nearest multiple of ``n``.
     """
+    if n == 0: # Prevent division by zero. Any multiple of zero is always zero.
+        return 0
     return ceil(float(__x) / n) * n
 #endregion
 
@@ -297,12 +303,12 @@ def ping_pong(t: float, length: float) -> float:
 #endregion
 
 #region Iterables
-def closest(value: int | float, iterable: _typing.Iterable[Value]) -> Value:
+def closest(value: int | float, iterable: _typing.Iterable[ValueT]) -> ValueT:
     """Return the value in the iterable that is closest to the given value."""
     comparison_function = lambda k: abs(k - value)
     return min(iterable, key=comparison_function)
 
-def furthest(value: int | float, iterable: _typing.Iterable[Value]) -> Value:
+def furthest(value: int | float, iterable: _typing.Iterable[ValueT]) -> ValueT:
     """Return the value in the iterable that is furthest from the given value."""
     comparison_function = lambda k: abs(k - value)
     return max(iterable, key=comparison_function)
