@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 from nalpy import math
 from typing import Iterable, NamedTuple, Self, TypeVar
@@ -52,7 +54,7 @@ class MetricPrefix(Enum):
         return val
 
     @staticmethod
-    def get_optimal_for_value(base_value: float):
+    def get_optimal_for_value(base_value: float) -> MetricPrefix | None:
         return _pick_optimal_prefix(base_value, MetricPrefix)
 
 class BinaryPrefix(Enum):
@@ -98,35 +100,53 @@ def convert_metric(input_: float, input_scale: MetricPrefix | BinaryPrefix | Non
 
     return input_ * scale_multiplier
 
-def to_metric(base_value: float, unit_prefix: MetricPrefix | BinaryPrefix, unit: str | None = None, with_space: bool = True, decimals: int = 0) -> str:
-    scale: _Scale = unit_prefix.value
-    return _to_metric(base_value, scale.value, scale.name, unit, with_space, decimals)
+def to_metric(base_value: float, unit_prefix: MetricPrefix | BinaryPrefix | None, unit_name: str | None = None, with_space: bool = True, decimals: int = 0) -> str:
+    scale_value: int
+    scale_name: str
+    if unit_prefix is not None:
+        scale_value = unit_prefix.value.value
+        scale_name = unit_prefix.value.name
+    else:
+        scale_value = 1
+        scale_name = ""
+    return _to_metric(base_value, scale_value, scale_name, unit_name, with_space, decimals, True)
 
-def to_short_metric(base_value: float, unit_prefix: MetricPrefix | BinaryPrefix, unit: str | None = None, with_space: bool = True, decimals: int = 0) -> str:
-    scale: _Scale = unit_prefix.value
-    return _to_metric(base_value, scale.value, scale.symbol, unit, with_space, decimals)
+def to_short_metric(base_value: float, unit_prefix: MetricPrefix | BinaryPrefix | None, unit_symbol: str | None = None, with_space: bool = True, decimals: int = 0) -> str:
+    scale_value: int
+    scale_symbol: str
+    if unit_prefix is not None:
+        scale_value = unit_prefix.value.value
+        scale_symbol = unit_prefix.value.symbol
+    else:
+        scale_value = 1
+        scale_symbol = ""
+    return _to_metric(base_value, scale_value, scale_symbol, unit_symbol, with_space, decimals, False)
 
-def _to_metric(base_value: float, scale_value: int, scale_name: str, unit: str | None, with_space: bool, decimals: int) -> str:
+def _to_metric(base_value: float, scale_value: int, scale_name: str, unit: str | None, with_space: bool, decimals: int, use_plural: bool) -> str:
     space: str = " " if with_space else ""
     value = math.round_away_from_zero_to_digits(base_value / scale_value, digits=decimals)
 
     unit_str: str
     if unit is None:
         unit_str = ""
-    elif decimals == 0 and int(value) == 1:
+    elif (decimals == 0 and int(value) == 1) or not use_plural:
         unit_str = unit
     else:
         unit_str = unit + "s"
 
     return f"{value:.{decimals}f}{space}{scale_name}{unit_str}"
 
-def _pick_optimal_prefix(base_value: float, prefixes: Iterable[_PrefixT]) -> _PrefixT:
+def _pick_optimal_prefix(base_value: float, prefixes: Iterable[_PrefixT]) -> _PrefixT | None:
+    def get_prefix_value(prefix: _PrefixT | None) -> int:
+        if prefix is None:
+            return 1
+        return prefix.value.value
+
     prefix: _PrefixT | None = None
-    for prefix in sorted(prefixes, key=lambda s: s.value, reverse=True):
-        scale = prefix.value
-        if (base_value / scale.value) >= 1.0:
+
+    for prefix in sorted((*prefixes, None), key=lambda s: get_prefix_value(s), reverse=True):
+        scale_value = get_prefix_value(prefix)
+        if (base_value / scale_value) >= 1.0:
             return prefix
 
-    if prefix is None:
-        raise ValueError("No scales provided.")
     return prefix
