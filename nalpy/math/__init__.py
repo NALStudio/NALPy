@@ -1,4 +1,5 @@
 from math import pi as _math_module_pi_constant
+from math import e as _math_module_e_constant
 import sys as _sys
 import typing as _typing
 
@@ -34,6 +35,7 @@ from math import floor as floor
 from math import isclose as isclose
 from math import isinf as isinf
 from math import isnan as isnan
+from math import isfinite as isfinite
 
 # Value manipulation
 from math import modf as modf
@@ -51,14 +53,29 @@ from nalpy.math.rect import Rect as Rect
 
 #region Constants
 PI: _typing.Final[float] = _math_module_pi_constant
+"""The mathematical constant `3.14159...`"""
+
+EULER: _typing.Final[float] = _math_module_e_constant
+"""Euler's number. The mathematical constant `2.71828...`"""
+
 GOLDEN_RATIO: _typing.Final[float] = (1.0 + sqrt(5.0)) / 2.0
+"""The constant `1.61803...`"""
 
 EPSILON: _typing.Final[float] = _sys.float_info.epsilon
-"""Difference between 1.0 and the least value greater than 1.0 that is representable as a float."""
+"""Difference between `1.0` and the least value greater than `1.0` that is representable as a float."""
 
 INFINITY: _typing.Final[float] = float("inf")
+"""Same as `float("inf")`"""
+
 NEGATIVEINFINITY: _typing.Final[float] = float("-inf")
+"""Same as `float("-inf")`"""
+
 NAN: _typing.Final[float] = float("nan")
+"""
+Same as `float('nan')`.
+
+NOTE: NaN values are not equal to anything, including themselves. To check if a float is NaN, use `math.isnan()`.
+"""
 
 MAXVALUE: _typing.Final[int] = _sys.maxsize
 """
