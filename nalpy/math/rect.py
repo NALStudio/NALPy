@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import NamedTuple
+from typing import NamedTuple, Self
 
 from nalpy import math
 
@@ -11,18 +9,18 @@ class Rect(NamedTuple):
 
     #region Constructors
     @classmethod
-    def from_corners(cls, topleft: math.Vector2, bottomright: math.Vector2):
+    def from_corners(cls, topleft: math.Vector2, bottomright: math.Vector2) -> Self:
         size = bottomright - topleft
         return cls(topleft, size)
 
     @classmethod
-    def from_sides(cls, left: float, top: float, right: float, bottom: float):
+    def from_sides(cls, left: float, top: float, right: float, bottom: float) -> Self:
         topleft = math.Vector2(left, top)
         size = math.Vector2(right - left, bottom - top)
         return cls(topleft, size)
 
     @classmethod
-    def from_center(cls, center: math.Vector2, size: math.Vector2):
+    def from_center(cls, center: math.Vector2, size: math.Vector2) -> Self:
         topleft = center - (size / 2.0)
         return cls(topleft, size)
     #endregion
@@ -107,17 +105,25 @@ class Rect(NamedTuple):
 
     #region Collision checks
     def collide_point(self, point: math.Vector2) -> bool:
-        """Checks whether a point lies within the borders of this rect."""
-        return (self.left < point.x < self.right
-                and self.top < point.y < self.bottom)  # nopep8
+        """Checks whether a point lies within the borders of this rect. Includes points that are at the edge of this rect."""
+        if self.w <= 0 or self.h <= 0:
+            return False # zero or negative sized rects should not collide with anything.
 
-    def collide_rect(self, rect: Rect) -> bool:
-        """Checks whether another rect overlaps with the borders of this rect."""
+        return (self.left <= point.x <= self.right
+                and self.top <= point.y <= self.bottom)
+
+    def collide_rect(self, rect: Self) -> bool:
+        """Checks whether another rect overlaps with the borders of this rect. Includes rects that are at the edge of this rect."""
+        if self.w <= 0 or self.h <= 0 or rect.w <= 0 or rect.h <= 0:
+            return False # zero or negative sized rects should not collide with anything.
+
         # If any of the checks fail the rectangles don't overlap
-        return (not (self.right < rect.left)
-                and not (self.left > rect.right)   # noqa: W503
-                and not (self.top > rect.bottom)   # noqa: W503
-                and not (self.bottom < rect.top))  # noqa: W503
+        return (
+                self.left   <= rect.right
+            and self.top    <= rect.bottom
+            and self.right  >= rect.left
+            and self.bottom >= rect.top
+        )
     #endregion
 
     def to_float_tuple(self) -> tuple[float, float, float, float]:

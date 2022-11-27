@@ -1,5 +1,3 @@
-from __future__ import annotations as _annotations
-
 from math import pi as _math_module_pi_constant
 import sys as _sys
 import typing as _typing

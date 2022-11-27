@@ -13,39 +13,39 @@ class Vector2(NamedTuple):
     #region Class Properties
     @classmethod
     @property
-    def zero(cls) -> math.Vector2:
+    def zero(cls) -> Vector2:
         """Shorthand for ``math.Vector2(0.0, 0.0)``"""
         return _ZERO #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def one(cls) -> math.Vector2:
+    def one(cls) -> Vector2:
         """Shorthand for ``math.Vector2(1.0, 1.0)``"""
         return _ONE #  Returning single instance, because Vector2 is immutable
 
 
     @classmethod
     @property
-    def up(cls) -> math.Vector2:
-        """Shorthand for ``math.Vector2(0.0, 1.0)``"""
+    def up(cls) -> Vector2:
+        """A unit vector pointing up (vector j). Shorthand for ``math.Vector2(0.0, 1.0)``"""
         return _UP #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def down(cls) -> math.Vector2:
-        """Shorthand for ``math.Vector2(0.0, -1.0)``"""
+    def down(cls) -> Vector2:
+        """A unit vector pointing down. Shorthand for ``math.Vector2(0.0, -1.0)``"""
         return _DOWN #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def left(cls) -> math.Vector2:
-        """Shorthand for ``math.Vector2(-1.0, 0.0)``"""
+    def left(cls) -> Vector2:
+        """A unit vector pointing left. Shorthand for ``math.Vector2(-1.0, 0.0)``"""
         return _LEFT #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def right(cls) -> math.Vector2:
-        """Shorthand for ``math.Vector2(1.0, 0.0)``"""
+    def right(cls) -> Vector2:
+        """A unit vector pointing right (vector i). Shorthand for ``math.Vector2(1.0, 0.0)``"""
         return _RIGHT #  Returning single instance, because Vector2 is immutable
     #endregion
 
@@ -131,7 +131,7 @@ class Vector2(NamedTuple):
         """A copy of this vector with a magnitude of 1"""
         mag: float = self.magnitude
         if mag == 0:
-            raise ZeroDivisionError("Vector's magnitude is zero!")
+            raise ValueError("Vector does not have a direction to normalize to.")
         return Vector2(self.x / mag, self.y / mag)
     #endregion
 
@@ -209,7 +209,7 @@ class Vector2(NamedTuple):
         NOTE: The angle returned will always be between 0 and 180 degrees, because the method returns the smallest angle between the vectors.
         """
         denom: float = _from.magnitude * _to.magnitude
-        if denom == 0:
+        if denom == 0.0:
             return 0.0
 
         dot: float = Vector2.dot(_from, _to)
