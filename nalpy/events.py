@@ -2,8 +2,6 @@
 Provides C#-like Events.
 """
 
-from __future__ import annotations as _annotations # To mark it as private
-
 import typing as _typing
 
 
@@ -16,7 +14,7 @@ class Event(_typing.Generic[ParamsT]):
     def __init__(self, values: _typing.Iterable[_typing.Callable[ParamsT, _typing.Any]] = []) -> None:
         self.listeners = [v for v in values]
 
-    def __iadd__(self, value: _typing.Callable[ParamsT, _typing.Any]) -> Event:
+    def __iadd__(self, value: _typing.Callable[ParamsT, _typing.Any]) -> _typing.Self:
         if not callable(value):
             raise TypeError(f"Value of type {type(value)} is not callable!")
 
@@ -27,7 +25,7 @@ class Event(_typing.Generic[ParamsT]):
 
         return self
 
-    def __isub__(self, value: _typing.Callable[ParamsT, _typing.Any])  -> Event:
+    def __isub__(self, value: _typing.Callable[ParamsT, _typing.Any])  -> _typing.Self:
         if not callable(value):
             raise TypeError(f"Value of type {type(value)} is not callable!")
 

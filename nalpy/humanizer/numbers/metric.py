@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from enum import Enum
 from nalpy import math
 from typing import Iterable, NamedTuple, Self, TypeVar
@@ -53,9 +51,9 @@ class MetricPrefix(Enum):
         assert isinstance(val, _Scale)
         return val
 
-    @staticmethod
-    def get_optimal_for_value(base_value: float) -> MetricPrefix | None:
-        return _pick_optimal_prefix(base_value, MetricPrefix)
+    @classmethod
+    def get_optimal_for_value(cls, base_value: float) -> Self | None:
+        return _pick_optimal_prefix(base_value, cls)
 
 class BinaryPrefix(Enum):
     KIBI = _Scale("kibi", "Ki", 2, 10)
@@ -73,9 +71,9 @@ class BinaryPrefix(Enum):
         assert isinstance(val, _Scale)
         return val
 
-    @staticmethod
-    def get_optimal_for_value(base_value: float):
-        return _pick_optimal_prefix(base_value, BinaryPrefix)
+    @classmethod
+    def get_optimal_for_value(cls, base_value: float) -> Self | None:
+        return _pick_optimal_prefix(base_value, cls)
 
 _PrefixT = TypeVar("_PrefixT", MetricPrefix, BinaryPrefix)
 

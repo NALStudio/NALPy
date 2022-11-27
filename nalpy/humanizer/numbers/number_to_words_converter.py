@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 units_map: tuple[str, ...] = ( "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" )
 tens_map: tuple[str, ...] = ( "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" )
 ordinal_exceptions: dict[int, str] = {

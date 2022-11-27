@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from typing import NamedTuple
+from typing import NamedTuple, final, Final
 
 from nalpy import math
 
 
+@final
 class Vector2(NamedTuple):
     """An immutable two-dimensional vector"""
     x: float
@@ -240,10 +241,10 @@ class Vector2(NamedTuple):
     def to_int_tuple(self) -> tuple[int, int]:
         return (round(self.x), round(self.y))
 
-_ZERO = Vector2(0.0, 0.0)
-_ONE = Vector2(1.0, 1.0)
+_ZERO: Final[Vector2] = Vector2(0.0, 0.0)
+_ONE: Final[Vector2] = Vector2(1.0, 1.0)
 
-_UP = Vector2(0.0, 1.0)
-_DOWN = Vector2(0.0, -1.0)
-_LEFT = Vector2(-1.0, 0.0)
-_RIGHT = Vector2(1.0, 0.0)
+_UP: Final[Vector2] = Vector2(0.0, 1.0)
+_DOWN: Final[Vector2] = Vector2(0.0, -1.0)
+_LEFT: Final[Vector2] = Vector2(-1.0, 0.0)
+_RIGHT: Final[Vector2] = Vector2(1.0, 0.0)

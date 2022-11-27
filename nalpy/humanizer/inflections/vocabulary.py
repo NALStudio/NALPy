@@ -1,6 +1,102 @@
-from __future__ import annotations
-
 import re
+
+class _Rule:
+    def __init__(self, pattern: str, replacement: str) -> None:
+        self._regex = re.compile(pattern, re.IGNORECASE)
+        self._replacement = replacement
+
+    def apply(self, word: str) -> str | None:
+        if self._regex.search(word) is None:
+            return None
+
+        return self._regex.sub(self._replacement, word)
+
+class Vocabulary:
+    def __init__(self) -> None:
+        self._plurals: list[_Rule] = []
+        self._singulars: list[_Rule] = []
+        self._uncountables: list[str] = []
+
+    def add_irregular(self, singular: str, plural: str, match_ending: bool = True):
+        if match_ending:
+            self.add_plural("(" + singular[0] + ")" + singular[1:] + "$", "\\1" + plural[1:])
+            self.add_singular("(" + plural[0] + ")" + plural[1:] + "$", "\\1" + singular[1:])
+        else:
+            self.add_plural(f"^{singular}$", plural)
+            self.add_singular(f"^{plural}$", singular)
+
+    def add_uncountable(self, word: str):
+        self._uncountables.append(word.lower())
+
+    def add_plural(self, rule: str, replacement: str):
+        self._plurals.append(_Rule(rule, replacement))
+
+    def add_singular(self, rule: str, replacement: str):
+        self._singulars.append(_Rule(rule, replacement))
+
+    def pluralize(self, word: str, is_known_to_be_singular: bool = True) -> str:
+        result = self._apply_rules(self._plurals, word, False)
+
+        if is_known_to_be_singular:
+            return result if result is not None else word
+
+        # the singularity is unknown so we should check all possibilities
+        as_singular = self._apply_rules(self._singulars, word, False)
+        as_singular_as_plural = self._apply_rules(self._plurals, as_singular, False)
+        if (
+            as_singular is not None
+            and as_singular != word
+            and as_singular + "s" != word
+            and as_singular_as_plural == word
+            and result != word
+        ):
+            return word
+
+        assert result is not None
+        return result
+
+    def singularize(self, word: str, is_known_to_be_plural: bool = True, skip_simple_words: bool = False) -> str:
+        result = self._apply_rules(self._singulars, word, skip_simple_words)
+
+        if is_known_to_be_plural:
+            return result if result is not None else word
+
+        # the plurality is unknown so we should check all possibilities
+        as_plural = self._apply_rules(self._plurals, word, False)
+        as_plural_as_singular = self._apply_rules(self._singulars, as_plural, False)
+        if (
+            as_plural != word
+            and word + "s" != as_plural
+            and as_plural_as_singular == word
+            and result != word
+        ):
+            return word
+
+        return result if result is not None else word
+
+    def _apply_rules(self, rules: list[_Rule], word: str | None, skip_first_rule: bool) -> str | None:
+        if word is None:
+            return None
+
+        if len(word) < 1:
+            return word
+
+        if self._is_uncountable(word):
+            return word
+
+        result = word
+        for rule in reversed(rules[(1 if skip_first_rule else 0):]):
+            result = rule.apply(word)
+            if result != None:
+                break
+
+        return self._match_upper_case(word, result) if result is not None else None
+
+    def _is_uncountable(self, word: str):
+        return word.lower() in self._uncountables
+
+    def _match_upper_case(self, word: str, replacement: str):
+        return (replacement[0].upper() + replacement[1:]) if word[0].isupper() and replacement[0].islower() else replacement
 
 
 def _generate_default_vocabulary() -> Vocabulary:
@@ -130,103 +226,3 @@ def default() -> Vocabulary:
     if _default_vocabulary is None:
         _default_vocabulary = _generate_default_vocabulary()
     return _default_vocabulary
-
-
-class Vocabulary:
-    def __init__(self) -> None:
-        self._plurals: list[_Rule] = []
-        self._singulars: list[_Rule] = []
-        self._uncountables: list[str] = []
-
-    def add_irregular(self, singular: str, plural: str, match_ending: bool = True):
-        if match_ending:
-            self.add_plural("(" + singular[0] + ")" + singular[1:] + "$", "\\1" + plural[1:])
-            self.add_singular("(" + plural[0] + ")" + plural[1:] + "$", "\\1" + singular[1:])
-        else:
-            self.add_plural(f"^{singular}$", plural)
-            self.add_singular(f"^{plural}$", singular)
-
-    def add_uncountable(self, word: str):
-        self._uncountables.append(word.lower())
-
-    def add_plural(self, rule: str, replacement: str):
-        self._plurals.append(_Rule(rule, replacement))
-
-    def add_singular(self, rule: str, replacement: str):
-        self._singulars.append(_Rule(rule, replacement))
-
-    def pluralize(self, word: str, is_known_to_be_singular: bool = True) -> str:
-        result = self._apply_rules(self._plurals, word, False)
-
-        if is_known_to_be_singular:
-            return result if result is not None else word
-
-        # the singularity is unknown so we should check all possibilities
-        as_singular = self._apply_rules(self._singulars, word, False)
-        as_singular_as_plural = self._apply_rules(self._plurals, as_singular, False)
-        if (
-            as_singular is not None
-            and as_singular != word
-            and as_singular + "s" != word
-            and as_singular_as_plural == word
-            and result != word
-        ):
-            return word
-
-        assert result is not None
-        return result
-
-    def singularize(self, word: str, is_known_to_be_plural: bool = True, skip_simple_words: bool = False) -> str:
-        result = self._apply_rules(self._singulars, word, skip_simple_words)
-
-        if is_known_to_be_plural:
-            return result if result is not None else word
-
-        # the plurality is unknown so we should check all possibilities
-        as_plural = self._apply_rules(self._plurals, word, False)
-        as_plural_as_singular = self._apply_rules(self._singulars, as_plural, False)
-        if (
-            as_plural != word
-            and word + "s" != as_plural
-            and as_plural_as_singular == word
-            and result != word
-        ):
-            return word
-
-        return result if result is not None else word
-
-    def _apply_rules(self, rules: list[_Rule], word: str | None, skip_first_rule: bool) -> str | None:
-        if word is None:
-            return None
-
-        if len(word) < 1:
-            return word
-
-        if self._is_uncountable(word):
-            return word
-
-        result = word
-        for rule in reversed(rules[(1 if skip_first_rule else 0):]):
-            result = rule.apply(word)
-            if result != None:
-                break
-
-        return self._match_upper_case(word, result) if result is not None else None
-
-    def _is_uncountable(self, word: str):
-        return word.lower() in self._uncountables
-
-    def _match_upper_case(self, word: str, replacement: str):
-        return (replacement[0].upper() + replacement[1:]) if word[0].isupper() and replacement[0].islower() else replacement
-
-
-class _Rule:
-    def __init__(self, pattern: str, replacement: str) -> None:
-        self._regex = re.compile(pattern, re.IGNORECASE)
-        self._replacement = replacement
-
-    def apply(self, word: str) -> str | None:
-        if self._regex.search(word) is None:
-            return None
-
-        return self._regex.sub(self._replacement, word)

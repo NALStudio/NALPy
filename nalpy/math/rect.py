@@ -1,8 +1,9 @@
-from typing import NamedTuple, Self
+from typing import NamedTuple, Self, final
 
 from nalpy import math
 
 
+@final
 class Rect(NamedTuple):
     position: math.Vector2
     size: math.Vector2

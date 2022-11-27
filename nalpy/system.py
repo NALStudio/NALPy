@@ -1,4 +1,3 @@
-from __future__ import annotations as _annotations
 from enum import Enum as _Enum
 import platform as _platform
 
