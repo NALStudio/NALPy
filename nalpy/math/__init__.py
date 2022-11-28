@@ -67,7 +67,7 @@ EPSILON: _typing.Final[float] = _sys.float_info.epsilon
 INFINITY: _typing.Final[float] = float("inf")
 """Same as `float("inf")`"""
 
-NEGATIVEINFINITY: _typing.Final[float] = float("-inf")
+NEGATIVE_INFINITY: _typing.Final[float] = float("-inf")
 """Same as `float("-inf")`"""
 
 NAN: _typing.Final[float] = float("nan")
