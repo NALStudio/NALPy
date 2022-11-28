@@ -141,10 +141,11 @@ def ltruncate(string: str, length: int, truncation_string: str = "...", include_
     if include_prefix:
         target_length -= len(truncation_string)
 
-    if len(string) <= target_length:
+    string_length: int = len(string)
+    if string_length <= target_length:
         return string
 
-    start_index = len(string) - target_length
+    start_index = string_length - target_length
     txt = string[start_index:]
     if remove_whitespace:
         txt = txt.lstrip()
