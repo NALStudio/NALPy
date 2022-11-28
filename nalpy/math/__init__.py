@@ -93,7 +93,7 @@ NOTE: Python integers don't have a minimum value.
 #endregion
 
 # Initialize TypeVar
-ValueT = _typing.TypeVar("ValueT", int, float)
+_NumberT = _typing.TypeVar("_NumberT", int, float)
 
 #region Basic math functions
 def cbrt(__x: _typing.SupportsFloat) -> float:
@@ -126,7 +126,7 @@ def is_positive_inf(__x: _typing.SupportsFloat) -> bool:
 def is_negative_inf(__x: _typing.SupportsFloat) -> bool:
     """Return ``True`` if ``x`` is negative infinity, and ``False`` otherwise."""
     x = float(__x)
-    return isinf(x) and x < 0 # faster than f == NEGATIVEINFINITY, supposedly
+    return isinf(x) and x < 0 # faster than f == NEGATIVE_INFINITY, supposedly
 
 def delta_angle(current: float, target: float) -> float:
     """Calculates the shortest difference between two given angles."""
@@ -137,7 +137,7 @@ def delta_angle(current: float, target: float) -> float:
 #endregion
 
 #region Value Manipulation
-def clamp(value: ValueT, _min: ValueT, _max: ValueT) -> ValueT:
+def clamp(value: _NumberT, _min: _NumberT, _max: _NumberT) -> _NumberT:
     """Clamps the value to the specified range. Both ends are inclusive."""
     if _min > _max:
         raise ValueError("Minimum value cannot be over the maximum value.")
@@ -320,12 +320,12 @@ def ping_pong(t: float, length: float) -> float:
 #endregion
 
 #region Iterables
-def closest(value: int | float, iterable: _typing.Iterable[ValueT]) -> ValueT:
+def closest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _NumberT:
     """Return the value in the iterable that is closest to the given value."""
     comparison_function = lambda k: abs(k - value)
     return min(iterable, key=comparison_function)
 
-def furthest(value: int | float, iterable: _typing.Iterable[ValueT]) -> ValueT:
+def furthest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _NumberT:
     """Return the value in the iterable that is furthest from the given value."""
     comparison_function = lambda k: abs(k - value)
     return max(iterable, key=comparison_function)
