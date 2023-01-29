@@ -227,6 +227,18 @@ class Vector2(NamedTuple):
         return diff.magnitude
     #endregion
 
+    #region Contructors
+    @classmethod
+    def min(cls, a: Self, b: Self) -> Self:
+        """Returns a vector that is made from the smallest components of two vectors."""
+        return cls(min(a.x, b.x), min(a.y, b.y))
+
+    @classmethod
+    def max(cls, a: Self, b: Self) -> Self:
+        """Returns a vector that is made from the largest components of two vectors."""
+        return cls(max(a.x, b.x), max(a.y, b.y))
+    #endregion
+
     def to_float_tuple(self) -> tuple[float, float]:
         return (self.x, self.y)
 

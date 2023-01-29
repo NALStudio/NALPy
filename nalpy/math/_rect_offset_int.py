@@ -3,34 +3,34 @@ from typing import NamedTuple, final
 from nalpy import math
 
 @final
-class RectOffset(NamedTuple):
-    left: float
-    right: float
-    top: float
-    bottom: float
+class RectOffsetInt(NamedTuple):
+    left: int
+    right: int
+    top: int
+    bottom: int
 
     @property
-    def horizontal(self) -> float:
+    def horizontal(self) -> int:
         return self.left + self.right
 
     @property
-    def vertical(self) -> float:
+    def vertical(self) -> int:
         return self.top + self.bottom
 
-    def add(self, rect: math.Rect) -> math.Rect:
+    def add(self, rect: math.RectInt) -> math.RectInt:
         """Add the border offsets to a rect."""
 
-        return math.Rect.from_sides(
+        return math.RectInt.from_sides(
             rect.left + self.left,
             rect.top + self.top,
             rect.right - self.right,
             rect.bottom - self.bottom
         )
 
-    def remove(self, rect: math.Rect) -> math.Rect:
+    def remove(self, rect: math.RectInt) -> math.RectInt:
         """Remove the border offsets from a rect."""
 
-        return math.Rect.from_sides(
+        return math.RectInt.from_sides(
             rect.left - self.left,
             rect.top - self.top,
             rect.right + self.right,

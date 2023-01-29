@@ -110,9 +110,7 @@ class Rect(NamedTuple):
         return math.Vector2(self.center_x, self.center_y)
     #endregion
 
-    #region Operators
-
-    #endregion
+    # __eq__ and __hash__ are provided by NamedTuple
 
     #region Collision checks
     def collide_point(self, point: math.Vector2) -> bool:
