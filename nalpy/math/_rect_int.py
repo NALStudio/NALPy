@@ -110,3 +110,6 @@ class RectInt(NamedTuple):
 
     def to_int_tuple(self) -> tuple[int, int, int, int]:
         return (self.x, self.y, self.w, self.h)
+
+    def to_int_dict(self) -> dict[str, int]:
+        return self._asdict()

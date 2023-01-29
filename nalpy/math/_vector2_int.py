@@ -155,6 +155,9 @@ class Vector2Int(NamedTuple):
     def to_int_tuple(self) -> tuple[int, int]:
         return (self.x, self.y)
 
+    def to_int_dict(self) -> dict[str, int]:
+        return self._asdict()
+
 _ZERO: Final[Vector2Int] = Vector2Int(0, 0)
 _ONE: Final[Vector2Int] = Vector2Int(1, 1)
 

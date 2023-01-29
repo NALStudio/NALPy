@@ -160,3 +160,6 @@ class Rect(NamedTuple):
         w: int = round(self.w)
         h: int = round(self.h)
         return (x, y, w, h)
+
+    def to_float_dict(self) -> dict[str, float]:
+        return self._asdict()

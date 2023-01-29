@@ -46,3 +46,6 @@ class RectOffset(NamedTuple):
         top: int = round(self.top)
         bottom: int = round(self.bottom)
         return (left, right, top, bottom)
+
+    def to_float_dict(self) -> dict[str, float]:
+        return self._asdict()

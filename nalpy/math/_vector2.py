@@ -245,6 +245,9 @@ class Vector2(NamedTuple):
     def to_int_tuple(self) -> tuple[int, int]:
         return (round(self.x), round(self.y))
 
+    def to_float_dict(self) -> dict[str, float]:
+        return self._asdict()
+
 _ZERO: Final[Vector2] = Vector2(0.0, 0.0)
 _ONE: Final[Vector2] = Vector2(1.0, 1.0)
 
