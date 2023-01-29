@@ -36,3 +36,13 @@ class RectOffset(NamedTuple):
             rect.right + self.right,
             rect.bottom + self.bottom
         )
+
+    def to_float_tuple(self) -> tuple[float, float, float, float]:
+        return (self.left, self.right, self.top, self.bottom)
+
+    def to_int_tuple(self) -> tuple[int, int, int, int]:
+        left: int = round(self.left)
+        right: int = round(self.right)
+        top: int = round(self.top)
+        bottom: int = round(self.bottom)
+        return (left, right, top, bottom)
