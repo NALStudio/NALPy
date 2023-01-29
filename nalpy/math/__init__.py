@@ -46,10 +46,7 @@ from math import lcm as lcm
 
 #endregion
 
-#region Public imports of components
-from nalpy.math.vector2 import Vector2 as Vector2
-from nalpy.math.rect import Rect as Rect
-#endregion
+# Public component imports at the bottom
 
 #region Constants
 PI: _typing.Final[float] = _math_module_pi_constant
@@ -189,17 +186,13 @@ def round_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
     return round_away_from_zero(float(__x) / n) * n
 
 def floor_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
-    """
-    Floor a number to the nearest multiple of ``n``.
-    """
+    """Floor a number to the nearest multiple of ``n``."""
     if n == 0: # Prevent division by zero. Any multiple of zero is always zero.
         return 0
     return floor(float(__x) / n) * n
 
 def ceil_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
-    """
-    Ceil a number to the nearest multiple of ``n``.
-    """
+    """Ceil a number to the nearest multiple of ``n``."""
     if n == 0: # Prevent division by zero. Any multiple of zero is always zero.
         return 0
     return ceil(float(__x) / n) * n
@@ -229,23 +222,17 @@ def round_away_from_zero_to_digits(__x: _typing.SupportsFloat, digits: int = 0) 
 
 
 def round_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
-    """
-    Round a number to the nearest multiple of ``n`` with specified decimal accuracy.
-    """
+    """Round a number to the nearest multiple of ``n`` with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return round_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 
 def floor_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
-    """
-    Floor a number to the nearest multiple of ``n`` with specified decimal accuracy.
-    """
+    """Floor a number to the nearest multiple of ``n`` with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return floor_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 
 def ceil_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
-    """
-    Ceil a number to the nearest multiple of ``n`` with specified decimal accuracy.
-    """
+    """Ceil a number to the nearest multiple of ``n`` with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return ceil_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 #endregion
@@ -275,6 +262,13 @@ def lerp_angle(a: float, b: float, t: float) -> float:
     The parameter t is clamped to the range [0, 1]. Variables a and b are assumed to be in degrees.
     """
     return a + delta_angle(a, b) * clamp01(t)
+
+def inverse_lerp(a: float, b: float, value: float) -> float:
+    """Calculates the clamped parameter ``t`` in ``lerp`` when output is the given ``value``."""
+    if a != b:
+        return clamp01((value - a) / (b - a))
+    else:
+        return 0.0
 
 def smooth_step(a: float, b: float, t: float) -> float:
     """
@@ -329,4 +323,10 @@ def furthest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _Numbe
     """Return the value in the iterable that is furthest from the given value."""
     comparison_function = lambda k: abs(k - value)
     return max(iterable, key=comparison_function)
+#endregion
+
+#region Public imports of components
+from nalpy.math._vector2 import Vector2 as Vector2
+from nalpy.math._rect import Rect as Rect
+from nalpy.math._rect_offset import RectOffset as RectOffset
 #endregion

@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import NamedTuple, final, Final
+from typing import NamedTuple, Self, final, Final
 
 from nalpy import math
 
@@ -14,60 +12,58 @@ class Vector2(NamedTuple):
     #region Class Properties
     @classmethod
     @property
-    def zero(cls) -> Vector2:
+    def zero(cls) -> Self:
         """Shorthand for ``math.Vector2(0.0, 0.0)``"""
         return _ZERO #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def one(cls) -> Vector2:
+    def one(cls) -> Self:
         """Shorthand for ``math.Vector2(1.0, 1.0)``"""
         return _ONE #  Returning single instance, because Vector2 is immutable
 
 
     @classmethod
     @property
-    def up(cls) -> Vector2:
+    def up(cls) -> Self:
         """A unit vector pointing up (vector j). Shorthand for ``math.Vector2(0.0, 1.0)``"""
         return _UP #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def down(cls) -> Vector2:
+    def down(cls) -> Self:
         """A unit vector pointing down. Shorthand for ``math.Vector2(0.0, -1.0)``"""
         return _DOWN #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def left(cls) -> Vector2:
+    def left(cls) -> Self:
         """A unit vector pointing left. Shorthand for ``math.Vector2(-1.0, 0.0)``"""
         return _LEFT #  Returning single instance, because Vector2 is immutable
 
     @classmethod
     @property
-    def right(cls) -> Vector2:
+    def right(cls) -> Self:
         """A unit vector pointing right (vector i). Shorthand for ``math.Vector2(1.0, 0.0)``"""
         return _RIGHT #  Returning single instance, because Vector2 is immutable
     #endregion
 
     #region Operators
-    def __str__(self) -> str:
-        """Human-readable string representation of the vector."""
-        return f"Vector2({self.x}, {self.y})"
 
+    # Provides __str__ also
     def __repr__(self) -> str:
         """Unambiguous string representation of the vector."""
-        return repr((self.x, self.y))
+        return f"Vector2({self.x}, {self.y})"
 
-    def __add__(self, other: Vector2) -> Vector2:
+    def __add__(self, other: Self) -> Self:
         """Add"""
         return Vector2(self.x + other.x, self.y + other.y)
 
-    def __sub__(self, other: Vector2) -> Vector2:
+    def __sub__(self, other: Self) -> Self:
         """Subtract"""
         return Vector2(self.x - other.x, self.y - other.y)
 
-    def __mul__(self, other: Vector2 | float | int) -> Vector2:
+    def __mul__(self, other: Self | float | int) -> Self:
         """Multiply"""
         x: float
         y: float
@@ -80,7 +76,7 @@ class Vector2(NamedTuple):
 
         return Vector2(self.x * x, self.y * y)
 
-    def __truediv__(self, other: Vector2 | float | int) -> Vector2:
+    def __truediv__(self, other: Self | float | int) -> Self:
         """Divide"""
         x: float
         y: float
@@ -93,7 +89,7 @@ class Vector2(NamedTuple):
 
         return Vector2(self.x / x, self.y / y)
 
-    def __floordiv__(self, other: Vector2 | float | int) -> Vector2:
+    def __floordiv__(self, other: Self | float | int) -> Self:
         """Floor Divide"""
         x: float | int
         y: float | int
@@ -106,19 +102,15 @@ class Vector2(NamedTuple):
 
         return Vector2(self.x // x, self.y // y)
 
-    def __neg__(self) -> Vector2:
+    def __neg__(self) -> Self:
         """Negate"""
         return Vector2(-self.x, -self.y)
 
-    def __abs__(self) -> Vector2:
+    def __abs__(self) -> Self:
         return Vector2(abs(self.x), abs(self.y))
 
-    def __hash__(self) -> int:
-        return hash((self.x, self.y))
+    # __eq__ and __hash__ are provided by NamedTuple
 
-    def __eq__(self, __o: object) -> bool:
-        """Equals"""
-        return isinstance(__o, Vector2) and __o.x == self.x and __o.y == self.y
     #endregion
 
     #region Instance Properties
@@ -128,7 +120,7 @@ class Vector2(NamedTuple):
         return math.hypot(self.x, self.y)
 
     @property
-    def normalized(self) -> Vector2:
+    def normalized(self) -> Self:
         """A copy of this vector with a magnitude of 1"""
         mag: float = self.magnitude
         if mag == 0:
@@ -137,15 +129,15 @@ class Vector2(NamedTuple):
     #endregion
 
     #region Mathematic Operations
-    @staticmethod
-    def dot(a: Vector2, b: Vector2):
+    @classmethod
+    def dot(cls, a: Self, b: Self):
         """Dot Product of two vectors."""
         return (a.x * b.x) + (a.y * b.y)
     #endregion
 
     #region Interpolation
-    @staticmethod
-    def lerp(a: Vector2, b: Vector2, t: float) -> Vector2:
+    @classmethod
+    def lerp(cls, a: Self, b: Self, t: float) -> Self:
         """
         Linearly interpolates between vectors ``a`` and ``b`` by ``t``.
 
@@ -156,8 +148,8 @@ class Vector2(NamedTuple):
         lerp_y = a.y + ((b.y - a.y) * t)
         return Vector2(lerp_x, lerp_y)
 
-    @staticmethod
-    def lerp_unclamped(a: Vector2, b: Vector2, t: float) -> Vector2:
+    @classmethod
+    def lerp_unclamped(cls, a: Self, b: Self, t: float) -> Self:
         """
         Linearly interpolates between vectors ``a`` and ``b`` by ``t``.
 
@@ -167,8 +159,8 @@ class Vector2(NamedTuple):
         lerp_y = a.y + ((b.y - a.y) * t)
         return Vector2(lerp_x, lerp_y)
 
-    @staticmethod
-    def move_towards(current: Vector2, target: Vector2, max_distance_delta: float):
+    @classmethod
+    def move_towards(cls, current: Self, target: Self, max_distance_delta: float):
         """Moves a point current towards target."""
         to_vector_x: float = target.x - current.x
         to_vector_y: float = target.y - current.y
@@ -186,24 +178,24 @@ class Vector2(NamedTuple):
     #endregion
 
     #region Rotation
-    @staticmethod
-    def perpendicular(vector: Vector2) -> Vector2:
+    @classmethod
+    def perpendicular(cls, vector: Self) -> Self:
         """
         Returns a 2D vector with the same magnitude, but perpendicular to the given 2D vector.
         The result is always rotated 90-degrees in a counter-clockwise direction for a 2D coordinate system where the positive Y axis goes up.
         """
         return Vector2(-vector.y, vector.x)
 
-    @staticmethod
-    def reflect(vector: Vector2, normal: Vector2):
+    @classmethod
+    def reflect(cls, vector: Self, normal: Self):
         """Reflects a vector off the vector defined by a normal."""
         factor: float = -2 * Vector2.dot(normal, vector)
         return Vector2(factor * normal.x + vector.x, factor * normal.y + vector.y)
     #endregion
 
     #region Relation
-    @staticmethod
-    def angle(_from: Vector2, _to: Vector2) -> float:
+    @classmethod
+    def angle(cls, _from: Self, _to: Self) -> float:
         """
         Gets the unsigned angle in degrees between from and to.
 
@@ -217,8 +209,8 @@ class Vector2(NamedTuple):
         cos_val: float = math.clamp(dot / denom, -1.0, 1.0)
         return math.degrees(math.acos(cos_val))
 
-    @staticmethod
-    def signed_angle(_from: Vector2, _to: Vector2) -> float:
+    @classmethod
+    def signed_angle(cls, _from: Self, _to: Self) -> float:
         """
         Gets the signed angle in degrees between from and to. The angle returned is the signed counterclockwise angle between the two vectors.
 
@@ -228,8 +220,8 @@ class Vector2(NamedTuple):
         sign: float = math.sign((_from.x * _to.y) - (_from.y * _to.x))
         return unsigned_angle * sign
 
-    @staticmethod
-    def distance(a: Vector2, b: Vector2):
+    @classmethod
+    def distance(cls, a: Self, b: Self):
         """Returns the distance between a and b."""
         diff = a - b
         return diff.magnitude

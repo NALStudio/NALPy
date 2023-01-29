@@ -5,6 +5,12 @@ from nalpy import math
 
 @final
 class Rect(NamedTuple):
+    """
+    A 2D Rectangle defined by X and Y position, width and height.
+
+    In this rectangle the origin represents the top-left corner and Y increases downwards.
+    """
+
     position: math.Vector2
     size: math.Vector2
 
@@ -22,7 +28,7 @@ class Rect(NamedTuple):
 
     @classmethod
     def from_center(cls, center: math.Vector2, size: math.Vector2) -> Self:
-        topleft = center - (size / 2.0)
+        topleft = center - (size / 2)
         return cls(topleft, size)
     #endregion
 
@@ -104,6 +110,10 @@ class Rect(NamedTuple):
         return math.Vector2(self.center_x, self.center_y)
     #endregion
 
+    #region Operators
+
+    #endregion
+
     #region Collision checks
     def collide_point(self, point: math.Vector2) -> bool:
         """Checks whether a point lies within the borders of this rect. Includes points that are at the edge of this rect."""
@@ -124,6 +134,22 @@ class Rect(NamedTuple):
             and self.top    <= rect.bottom
             and self.right  >= rect.left
             and self.bottom >= rect.top
+        )
+    #endregion
+
+    #region Normalization
+    @classmethod
+    def normalized_to_point(cls, rect: Self, normalized_rect_coordinates: math.Vector2) -> math.Vector2:
+        return math.Vector2(
+            math.lerp(rect.left, rect.right, normalized_rect_coordinates.x),
+            math.lerp(rect.top, rect.bottom, normalized_rect_coordinates.y)
+        )
+
+    @classmethod
+    def point_to_normalized(cls, rect: Self, point: math.Vector2) -> math.Vector2:
+        return math.Vector2(
+            math.inverse_lerp(rect.left, rect.right, point.x),
+            math.inverse_lerp(rect.top, rect.bottom, point.y)
         )
     #endregion
 
