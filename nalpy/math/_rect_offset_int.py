@@ -37,6 +37,12 @@ class RectOffsetInt(NamedTuple):
             rect.bottom + self.bottom
         )
 
+    def to_rect_offset(self) -> math.RectOffset:
+        return math.RectOffset(
+            float(self.left), float(self.right),
+            float(self.top), float(self.bottom)
+        )
+
     def to_int_tuple(self) -> tuple[int, int, int, int]:
         """Shorthand for ``(rect.left, rect.right, rect.top, rect.bottom)``"""
         return (self.left, self.right, self.top, self.bottom)
