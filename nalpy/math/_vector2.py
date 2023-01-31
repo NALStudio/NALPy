@@ -239,9 +239,6 @@ class Vector2(NamedTuple):
         return cls(max(a.x, b.x), max(a.y, b.y))
     #endregion
 
-    def to_float_tuple(self) -> tuple[float, float]:
-        return (self.x, self.y)
-
     def to_int_tuple(self) -> tuple[int, int]:
         return (round(self.x), round(self.y))
 

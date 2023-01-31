@@ -38,6 +38,7 @@ class RectOffset(NamedTuple):
         )
 
     def to_float_tuple(self) -> tuple[float, float, float, float]:
+        """Shorthand for ``(rect.left, rect.right, rect.top, rect.bottom)``"""
         return (self.left, self.right, self.top, self.bottom)
 
     def to_int_tuple(self) -> tuple[int, int, int, int]:

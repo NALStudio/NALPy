@@ -152,6 +152,7 @@ class Rect(NamedTuple):
     #endregion
 
     def to_float_tuple(self) -> tuple[float, float, float, float]:
+        """Shorthand for ``(rect.x, rect.y, rect.w, rect.h)``"""
         return (self.x, self.y, self.w, self.h)
 
     def to_int_tuple(self) -> tuple[int, int, int, int]:

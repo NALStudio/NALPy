@@ -109,6 +109,7 @@ class RectInt(NamedTuple):
     #endregion
 
     def to_int_tuple(self) -> tuple[int, int, int, int]:
+        """Shorthand for ``(rect.x, rect.y, rect.w, rect.h)``"""
         return (self.x, self.y, self.w, self.h)
 
     def to_int_dict(self) -> dict[str, int]:

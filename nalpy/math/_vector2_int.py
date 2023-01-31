@@ -152,9 +152,6 @@ class Vector2Int(NamedTuple):
         return cls(max(a.x, b.x), max(a.y, b.y))
     #endregion
 
-    def to_int_tuple(self) -> tuple[int, int]:
-        return (self.x, self.y)
-
     def to_int_dict(self) -> dict[str, int]:
         return self._asdict()
 
