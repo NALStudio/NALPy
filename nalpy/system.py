@@ -1,18 +1,11 @@
-from enum import Enum as _Enum
+from enum import StrEnum as _StrEnum
 import platform as _platform
 
-class OSPlatform(_Enum):
+class OSPlatform(_StrEnum):
     WINDOWS = "Windows"
     LINUX = "Linux"
     MAC_OS = "Darwin"
     JAVA = "Java"
-
-    @property
-    def value(self) -> str:
-        """The platform system name"""
-        val = super().value
-        assert isinstance(val, str)
-        return val
 
 def get_os_platform() -> OSPlatform:
     return OSPlatform(_platform.system())
