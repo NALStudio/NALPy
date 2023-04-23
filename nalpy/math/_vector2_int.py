@@ -1,7 +1,7 @@
 from typing import NamedTuple, Self, final, Final
 
-from nalpy import math
-
+from . import hypot, ceil, floor
+from . import Vector2 as _Vec2
 
 @final
 class Vector2Int(NamedTuple):
@@ -56,57 +56,106 @@ class Vector2Int(NamedTuple):
         return f"Vector2Int({self.x}, {self.y})"
 
     def __add__(self, other: Self) -> Self:
-        """Add"""
+        """Add (self + other)"""
+        if not isinstance(other, Vector2Int):
+            return NotImplemented
         return Vector2Int(self.x + other.x, self.y + other.y)
 
     def __sub__(self, other: Self) -> Self:
-        """Subtract"""
+        """Subtract (self - other)"""
+        if not isinstance(other, Vector2Int):
+            return NotImplemented
         return Vector2Int(self.x - other.x, self.y - other.y)
 
     def __mul__(self, other: Self | int) -> Self:
-        """Multiply"""
+        """Multiply (self * other)"""
         x: int
         y: int
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
-        else:
+        elif isinstance(other, int):
             x = other
             y = other
+        else:
+            return NotImplemented
 
         return Vector2Int(self.x * x, self.y * y)
 
-    def __truediv__(self, other: Self | float | int) -> math.Vector2:
-        """Divide"""
+    def __rmul__(self, other: Self | int) -> Self:
+        """Reverse multiply (other * self)"""
+        return self.__mul__(other) # other * self = self * other
+
+    def __truediv__(self, other: Self | int | float) -> _Vec2:
+        """Divide (self / other)"""
         x: float
         y: float
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
-        else:
+        elif isinstance(other, int | float):
             x = other
             y = other
+        else:
+            return NotImplemented
 
-        return math.Vector2(self.x / x, self.y / y)
+        return _Vec2(self.x / x, self.y / y)
 
     def __floordiv__(self, other: Self | int) -> Self:
-        """Floor Divide"""
+        """Floor Divide (self // other)"""
         x: int
         y: int
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
-        else:
+        elif isinstance(other, int):
             x = other
             y = other
+        else:
+            return NotImplemented
 
         return Vector2Int(self.x // x, self.y // y)
 
+
+    def __mod__(self, other: Self | int) -> Self:
+        """Modulo (self % other)"""
+        x: int
+        y: int
+        if isinstance(other, Vector2Int):
+            x = other.x
+            y = other.y
+        elif isinstance(other, int):
+            x = other
+            y = other
+        else:
+            return NotImplemented
+
+        return Vector2Int(self.x % x, self.y % y)
+
+    def __divmod__(self, other: Self | int) -> tuple[Self, Self]:
+        """Floor division and modulo (divmod(self, other))"""
+        x: int
+        y: int
+        if isinstance(other, Vector2Int):
+            x = other.x
+            y = other.y
+        elif isinstance(other, int):
+            x = other
+            y = other
+        else:
+            return NotImplemented
+
+        x_fdiv, x_mod = divmod(self.x, x)
+        y_fdiv, y_mod = divmod(self.y, y)
+        return (Vector2Int(x_fdiv, y_fdiv), Vector2Int(x_mod, y_mod))
+
+
     def __neg__(self) -> Self:
-        """Negate"""
+        """Negate (-self)"""
         return Vector2Int(-self.x, -self.y)
 
     def __abs__(self) -> Self:
+        """Absolute value (abs(self))"""
         return Vector2Int(abs(self.x), abs(self.y))
 
     # __eq__ and __hash__ are provided by NamedTuple
@@ -117,7 +166,7 @@ class Vector2Int(NamedTuple):
     @property
     def magnitude(self) -> float:
         """The length of this vector."""
-        return math.hypot(self.x, self.y)
+        return hypot(self.x, self.y)
     #endregion
 
     #region Relation
@@ -130,15 +179,15 @@ class Vector2Int(NamedTuple):
 
     #region Constructors
     @classmethod
-    def ceil(cls, v: math.Vector2) -> Self:
-        return cls(math.ceil(v.x), math.ceil(v.y))
+    def ceil(cls, v: _Vec2) -> Self:
+        return cls(ceil(v.x), ceil(v.y))
 
     @classmethod
-    def floor(cls, v: math.Vector2) -> Self:
-        return cls(math.floor(v.x), math.floor(v.y))
+    def floor(cls, v: _Vec2) -> Self:
+        return cls(floor(v.x), floor(v.y))
 
     @classmethod
-    def round(cls, v: math.Vector2) -> Self:
+    def round(cls, v: _Vec2) -> Self:
         return cls(round(v.x), round(v.y))
 
     @classmethod
@@ -152,8 +201,8 @@ class Vector2Int(NamedTuple):
         return cls(max(a.x, b.x), max(a.y, b.y))
     #endregion
 
-    def to_vector2(self) -> math.Vector2:
-        return math.Vector2(float(self.x), float(self.y))
+    def to_vector2(self) -> _Vec2:
+        return _Vec2(float(self.x), float(self.y))
 
     def to_int_dict(self) -> dict[str, int]:
         return self._asdict()

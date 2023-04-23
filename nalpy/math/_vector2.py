@@ -1,7 +1,6 @@
 from typing import NamedTuple, Self, final, Final
 
-from nalpy import math
-
+from . import hypot, clamp01, sqrt, clamp, acos, degrees, sign
 
 @final
 class Vector2(NamedTuple):
@@ -56,57 +55,106 @@ class Vector2(NamedTuple):
         return f"Vector2({self.x}, {self.y})"
 
     def __add__(self, other: Self) -> Self:
-        """Add"""
+        """Add (self + other)"""
+        if not isinstance(other, Vector2):
+            return NotImplemented
         return Vector2(self.x + other.x, self.y + other.y)
 
     def __sub__(self, other: Self) -> Self:
-        """Subtract"""
+        """Subtract (self - other)"""
+        if not isinstance(other, Vector2):
+            return NotImplemented
         return Vector2(self.x - other.x, self.y - other.y)
 
     def __mul__(self, other: Self | float | int) -> Self:
-        """Multiply"""
-        x: float
-        y: float
-        if isinstance(other, Vector2):
-            x = other.x
-            y = other.y
-        else:
-            x = other
-            y = other
-
-        return Vector2(self.x * x, self.y * y)
-
-    def __truediv__(self, other: Self | float | int) -> Self:
-        """Divide"""
-        x: float
-        y: float
-        if isinstance(other, Vector2):
-            x = other.x
-            y = other.y
-        else:
-            x = other
-            y = other
-
-        return Vector2(self.x / x, self.y / y)
-
-    def __floordiv__(self, other: Self | float | int) -> Self:
-        """Floor Divide"""
+        """Multiply (self * other)"""
         x: float | int
         y: float | int
         if isinstance(other, Vector2):
             x = other.x
             y = other.y
-        else:
+        elif isinstance(other, int | float):
             x = other
             y = other
+        else:
+            return NotImplemented
+
+        return Vector2(self.x * x, self.y * y)
+
+    def __rmul__(self, other: Self | float | int) -> Self:
+        """Reverse multiply (other * self)"""
+        return self.__mul__(other) # other * self = self * other
+
+    def __truediv__(self, other: Self | float | int) -> Self:
+        """Divide (self / other)"""
+        x: float | int
+        y: float | int
+        if isinstance(other, Vector2):
+            x = other.x
+            y = other.y
+        elif isinstance(other, int | float):
+            x = other
+            y = other
+        else:
+            return NotImplemented
+
+        return Vector2(self.x / x, self.y / y)
+
+    def __floordiv__(self, other: Self | float | int) -> Self:
+        """Floor Divide (self // other)"""
+        x: float | int
+        y: float | int
+        if isinstance(other, Vector2):
+            x = other.x
+            y = other.y
+        elif isinstance(other, int | float):
+            x = other
+            y = other
+        else:
+            return NotImplemented
 
         return Vector2(self.x // x, self.y // y)
 
+
+    def __mod__(self, other: Self | float | int) -> Self:
+        """Modulo (self % other)"""
+        x: float | int
+        y: float | int
+        if isinstance(other, Vector2):
+            x = other.x
+            y = other.y
+        elif isinstance(other, int | float):
+            x = other
+            y = other
+        else:
+            return NotImplemented
+
+        return Vector2(self.x % x, self.y % y)
+
+    def __divmod__(self, other: Self | float | int) -> tuple[Self, Self]:
+        """Floor division and modulo (divmod(self, other))"""
+        x: float | int
+        y: float | int
+        if isinstance(other, Vector2):
+            x = other.x
+            y = other.y
+        elif isinstance(other, int | float):
+            x = other
+            y = other
+        else:
+            return NotImplemented
+
+        x_fdiv, x_mod = divmod(self.x, x)
+        y_fdiv, y_mod = divmod(self.y, y)
+        return (Vector2(x_fdiv, y_fdiv), Vector2(x_mod, y_mod))
+
+
     def __neg__(self) -> Self:
-        """Negate"""
+        """Negate (-self)"""
         return Vector2(-self.x, -self.y)
 
     def __abs__(self) -> Self:
+        """Absolute value (abs(self))"""
         return Vector2(abs(self.x), abs(self.y))
 
     # __eq__ and __hash__ are provided by NamedTuple
@@ -117,7 +165,7 @@ class Vector2(NamedTuple):
     @property
     def magnitude(self) -> float:
         """The length of this vector."""
-        return math.hypot(self.x, self.y)
+        return hypot(self.x, self.y)
 
     @property
     def normalized(self) -> Self:
@@ -143,7 +191,7 @@ class Vector2(NamedTuple):
 
         The parameter ``t`` is clamped to the range [0, 1].
         """
-        t = math.clamp01(t)
+        t = clamp01(t)
         lerp_x = a.x + ((b.x - a.x) * t)
         lerp_y = a.y + ((b.y - a.y) * t)
         return Vector2(lerp_x, lerp_y)
@@ -170,7 +218,7 @@ class Vector2(NamedTuple):
         if sqDist == 0 or (max_distance_delta >= 0 and sqDist <= max_distance_delta * max_distance_delta):
             return target
 
-        dist: float = math.sqrt(sqDist)
+        dist: float = sqrt(sqDist)
 
         move_x = current.x + to_vector_x / dist * max_distance_delta
         move_y = current.y + to_vector_y / dist * max_distance_delta
@@ -206,8 +254,8 @@ class Vector2(NamedTuple):
             return 0.0
 
         dot: float = Vector2.dot(_from, _to)
-        cos_val: float = math.clamp(dot / denom, -1.0, 1.0)
-        return math.degrees(math.acos(cos_val))
+        cos_val: float = clamp(dot / denom, -1.0, 1.0)
+        return degrees(acos(cos_val))
 
     @classmethod
     def signed_angle(cls, _from: Self, _to: Self) -> float:
@@ -217,8 +265,8 @@ class Vector2(NamedTuple):
         NOTE: The angle returned will always be between -180 and 180 degrees, because the method returns the smallest angle between the vectors.
         """
         unsigned_angle: float = Vector2.angle(_from, _to)
-        sign: float = math.sign((_from.x * _to.y) - (_from.y * _to.x))
-        return unsigned_angle * sign
+        s: float = sign((_from.x * _to.y) - (_from.y * _to.x))
+        return unsigned_angle * s
 
     @classmethod
     def distance(cls, a: Self, b: Self):
