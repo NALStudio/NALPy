@@ -1,6 +1,6 @@
 from typing import NamedTuple, Self, final, Final
 
-from . import hypot, clamp01, sqrt, clamp, acos, degrees, sign
+from .. import hypot, clamp01, sqrt, clamp, acos, degrees, sign
 
 @final
 class Vector2(NamedTuple):
@@ -178,7 +178,7 @@ class Vector2(NamedTuple):
 
     #region Mathematic Operations
     @classmethod
-    def dot(cls, a: Self, b: Self):
+    def dot(cls, a: Self, b: Self) -> float:
         """Dot Product of two vectors."""
         return (a.x * b.x) + (a.y * b.y)
     #endregion
@@ -287,11 +287,13 @@ class Vector2(NamedTuple):
         return cls(max(a.x, b.x), max(a.y, b.y))
     #endregion
 
+    #region Conversions
     def to_int_tuple(self) -> tuple[int, int]:
         return (round(self.x), round(self.y))
 
     def to_float_dict(self) -> dict[str, float]:
         return self._asdict()
+    #endregion
 
 _ZERO: Final[Vector2] = Vector2(0.0, 0.0)
 _ONE: Final[Vector2] = Vector2(1.0, 1.0)

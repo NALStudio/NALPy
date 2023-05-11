@@ -1,9 +1,15 @@
 from typing import NamedTuple, final
 
-from nalpy import math
+from .rect import Rect
 
 @final
 class RectOffset(NamedTuple):
+    """
+    Offsets for rectangles, borders, etc.
+
+    Assumes that X increases to the right and Y increases downwards.
+    """
+
     left: float
     right: float
     top: float
@@ -17,29 +23,25 @@ class RectOffset(NamedTuple):
     def vertical(self) -> float:
         return self.top + self.bottom
 
-    def add(self, rect: math.Rect) -> math.Rect:
+    def add(self, rect: Rect) -> Rect:
         """Add the border offsets to a rect."""
 
-        return math.Rect.from_sides(
-            rect.left + self.left,
-            rect.top + self.top,
-            rect.right - self.right,
-            rect.bottom - self.bottom
+        return Rect.from_min_max(
+            rect.xmin + self.left,
+            rect.ymin + self.top,
+            rect.xmax - self.right,
+            rect.ymax - self.bottom
         )
 
-    def remove(self, rect: math.Rect) -> math.Rect:
+    def remove(self, rect: Rect) -> Rect:
         """Remove the border offsets from a rect."""
 
-        return math.Rect.from_sides(
-            rect.left - self.left,
-            rect.top - self.top,
-            rect.right + self.right,
-            rect.bottom + self.bottom
+        return Rect.from_min_max(
+            rect.xmin - self.left,
+            rect.ymin - self.top,
+            rect.xmax + self.right,
+            rect.ymax + self.bottom
         )
-
-    def to_float_tuple(self) -> tuple[float, float, float, float]:
-        """Shorthand for ``(rect.left, rect.right, rect.top, rect.bottom)``"""
-        return (self.left, self.right, self.top, self.bottom)
 
     def to_int_tuple(self) -> tuple[int, int, int, int]:
         left: int = round(self.left)

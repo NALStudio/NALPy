@@ -326,10 +326,13 @@ def furthest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _Numbe
 #endregion
 
 #region Public imports of components
-from nalpy.math._vector2 import Vector2 as Vector2
-from nalpy.math._vector2_int import Vector2Int as Vector2Int
-from nalpy.math._rect import Rect as Rect
-from nalpy.math._rect_int import RectInt as RectInt
-from nalpy.math._rect_offset import RectOffset as RectOffset
-from nalpy.math._rect_offset_int import RectOffsetInt as RectOffsetInt
+from nalpy.math._vector2.vector2 import Vector2 as Vector2
+from nalpy.math._vector2.vector2_int import Vector2Int as Vector2Int
+from nalpy.math._vector2.mvector2 import MVector2 as MVector2
+from nalpy.math._vector2.mvector2_int import MVector2Int as MVector2Int
+
+from nalpy.math._rect.rect import Rect as Rect
+from nalpy.math._rect.rect_int import RectInt as RectInt
+from nalpy.math._rect.rect_offset import RectOffset as RectOffset
+from nalpy.math._rect.rect_offset_int import RectOffsetInt as RectOffsetInt
 #endregion
