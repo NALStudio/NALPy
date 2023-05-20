@@ -82,8 +82,8 @@ class RectInt(NamedTuple):
 
     @property
     def all_positions_within(self) -> Iterable[Vector2Int]:
-        for y in range(self.ymin, self.ymax + 1): # Return by row. (x first then y)
-            for x in range(self.xmin, self.xmax + 1):
+        for y in range(self.ymin, self.ymax): # Return by row. (x first then y)
+            for x in range(self.xmin, self.xmax):
                 yield Vector2Int(x, y)
     #endregion
 
