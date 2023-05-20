@@ -2,7 +2,7 @@ from typing import Self, final
 
 from .vector2 import Vector2
 
-from .. import hypot, clamp01, sqrt, clamp, acos, degrees, sign
+from .. import hypot, clamp01, sqrt, clamp, acos, degrees, sign, INFINITY
 
 @final
 class MVector2:
@@ -303,6 +303,55 @@ class MVector2:
         move_x = current.x + to_vector_x / dist * max_distance_delta
         move_y = current.y + to_vector_y / dist * max_distance_delta
         return MVector2(move_x, move_y)
+
+    @classmethod
+    def smooth_damp(cls, current: Vector2, target: Vector2, current_velocity: Self, smooth_time: float, delta_time: float, max_speed: float = INFINITY):
+        """Due to Python limitations, this method needs to be implemented in MVector2. This will be moved to Vector2 whenever it becomes possible."""
+        smooth_time = max(0.0001, smooth_time)
+        omega: float = 2.0 / smooth_time
+
+        x: float = omega * delta_time
+        exp: float = 1.0 / (1.0 + x + 0.48 * x * x + 0.235 * x * x * x)
+
+        change_x: float = current.x - target.x
+        change_y: float = current.y - target.y
+        originalTo: Vector2 = target
+
+        # Clamp maximum speed
+        maxChange: float = max_speed * smooth_time
+
+        maxChangeSq: float = maxChange * maxChange
+        sqDist: float = change_x * change_x + change_y * change_y
+        if sqDist > maxChangeSq:
+            mag: float = sqrt(sqDist)
+            change_x = change_x / mag * maxChange
+            change_y = change_y / mag * maxChange
+
+        target = Vector2(current.x - change_x, current.y - change_y)
+
+        temp_x: float = (current_velocity.x + omega * change_x) * delta_time
+        temp_y: float = (current_velocity.y + omega * change_y) * delta_time
+
+        current_velocity.x = (current_velocity.x - omega * temp_x) * exp
+        current_velocity.y = (current_velocity.y - omega * temp_y) * exp
+
+        output_x: float = target.x + (change_x + temp_x) * exp
+        output_y: float = target.y + (change_y + temp_y) * exp
+
+        # Prevent overshooting
+        origMinusCurrent_x: float = originalTo.x - current.x
+        origMinusCurrent_y: float = originalTo.y - current.y
+        outMinusOrig_x: float = output_x - originalTo.x
+        outMinusOrig_y: float = output_y - originalTo.y
+
+        if origMinusCurrent_x * outMinusOrig_x + origMinusCurrent_y * outMinusOrig_y > 0:
+            output_x = originalTo.x
+            output_y = originalTo.y
+
+            current_velocity.x = (output_x - originalTo.x) / delta_time
+            current_velocity.y = (output_y - originalTo.y) / delta_time
+
+        return Vector2(output_x, output_y)
     #endregion
 
     #region Rotation

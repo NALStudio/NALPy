@@ -316,13 +316,11 @@ def ping_pong(t: float, length: float) -> float:
 #region Iterables
 def closest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _NumberT:
     """Return the value in the iterable that is closest to the given value."""
-    comparison_function = lambda k: abs(k - value)
-    return min(iterable, key=comparison_function)
+    return min(iterable, key=lambda k: abs(k - value))
 
 def furthest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _NumberT:
     """Return the value in the iterable that is furthest from the given value."""
-    comparison_function = lambda k: abs(k - value)
-    return max(iterable, key=comparison_function)
+    return max(iterable, key=lambda k: abs(k - value))
 #endregion
 
 #region Public imports of components
