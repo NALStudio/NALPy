@@ -9,7 +9,7 @@ authors = [
 ]
 requires-python = ">=3.11"
 description = "An experimental portable package for different types of projects."
-version = "0.0.21"
+version = "0.0.20"
 dynamic = ["readme"]
 
 [tool.setuptools.package-data]
@@ -19,5 +19,5 @@ dynamic = ["readme"]
 readme = {file = ["README.md"]}
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
 include = ["nalpy*"]
