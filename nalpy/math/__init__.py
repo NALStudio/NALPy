@@ -1,13 +1,12 @@
-from math import pi as _math_module_pi_constant
-from math import e as _math_module_e_constant
-import sys as _sys
-import typing as _typing
+import sys as __sys
+import typing as __typing
 
 #region public imports of math library functions
 
 # Operations
 from math import pow as pow
 from math import sqrt as sqrt
+from math import cbrt as cbrt
 
 from math import log as log
 from math import log10 as log10
@@ -39,6 +38,7 @@ from math import isfinite as isfinite
 
 # Value manipulation
 from math import modf as modf
+from math import nextafter as nextafter
 
 # Functions
 from math import gcd as gcd
@@ -49,39 +49,36 @@ from math import lcm as lcm
 # Public component imports at the bottom
 
 #region Constants
-PI: _typing.Final[float] = _math_module_pi_constant
+PI: __typing.Final[float] = 3.14159265358979323846
 """The mathematical constant `3.14159...`"""
 
-EULER: _typing.Final[float] = _math_module_e_constant
+EULER: __typing.Final[float] = 2.7182818284590452354
 """Euler's number. The mathematical constant `2.71828...`"""
 
-GOLDEN_RATIO: _typing.Final[float] = (1.0 + sqrt(5.0)) / 2.0
-"""The constant `1.61803...`"""
-
-EPSILON: _typing.Final[float] = _sys.float_info.epsilon
+EPSILON: __typing.Final[float] = __sys.float_info.epsilon
 """Difference between `1.0` and the least value greater than `1.0` that is representable as a float."""
 
-INFINITY: _typing.Final[float] = float("inf")
+INFINITY: __typing.Final[float] = float("inf")
 """Same as `float("inf")`"""
 
-NEGATIVE_INFINITY: _typing.Final[float] = float("-inf")
+NEGATIVE_INFINITY: __typing.Final[float] = float("-inf")
 """Same as `float("-inf")`"""
 
-NAN: _typing.Final[float] = float("nan")
+NAN: __typing.Final[float] = float("nan")
 """
 Same as `float('nan')`.
 
 NOTE: NaN values are not equal to anything, including themselves. To check if a float is NaN, use `math.isnan()`.
 """
 
-MAXVALUE: _typing.Final[int] = _sys.maxsize
+MAXVALUE: __typing.Final[int] = __sys.maxsize
 """
 Maximum size of integer-dependant things.
 
 NOTE: Python integers don't have a maximum value.
 """
 
-MINVALUE: _typing.Final[int] = -MAXVALUE - 1
+MINVALUE: __typing.Final[int] = -MAXVALUE - 1
 """
 Minimum size of integer-dependant things.
 
@@ -90,17 +87,10 @@ NOTE: Python integers don't have a minimum value.
 #endregion
 
 # Initialize TypeVar
-_NumberT = _typing.TypeVar("_NumberT", int, float)
+_NumberT = __typing.TypeVar("_NumberT", int, float)
 
 #region Basic math functions
-def cbrt(__x: _typing.SupportsFloat) -> float:
-    x = float(__x)
-    if x >= 0:
-        return pow(x, 1.0 / 3.0) # Division will be optimized during bytecode compilation
-    else:
-        return pow(-x, 1.0 / 3.0) * -1 # Division will be optimized during bytecode compilation
-
-def sign(__x: _typing.SupportsFloat) -> int:
+def sign(__x: __typing.SupportsFloat) -> int:
     """
     A number that indicates the sign of ``__x``.
 
@@ -115,12 +105,12 @@ def sign(__x: _typing.SupportsFloat) -> int:
     # copysign behaviour is not consistent across different platforms
 
 
-def is_positive_inf(__x: _typing.SupportsFloat) -> bool:
+def is_positive_inf(__x: __typing.SupportsFloat) -> bool:
     """Return ``True`` if ``x`` is positive infinity, and ``False`` otherwise."""
     x = float(__x)
     return isinf(x) and x > 0 # faster than f == INFINITY, supposedly
 
-def is_negative_inf(__x: _typing.SupportsFloat) -> bool:
+def is_negative_inf(__x: __typing.SupportsFloat) -> bool:
     """Return ``True`` if ``x`` is negative infinity, and ``False`` otherwise."""
     x = float(__x)
     return isinf(x) and x < 0 # faster than f == NEGATIVE_INFINITY, supposedly
@@ -156,7 +146,7 @@ def remap01(value: float, from1: float, to1: float) -> float:
 
 #region Rounding
 #region Away from zero
-def round_away_from_zero(__x: _typing.SupportsFloat) -> int:
+def round_away_from_zero(__x: __typing.SupportsFloat) -> int:
     """
     Round a number to an integer.
     When a number is halfway between two others, it's rounded toward the nearest number that's away from zero.
@@ -176,7 +166,7 @@ def round_away_from_zero(__x: _typing.SupportsFloat) -> int:
 #endregion
 
 #region Nearest n
-def round_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
+def round_to_nearest_n(__x: __typing.SupportsFloat, n: int) -> int:
     """
     Round a number to the nearest multiple of ``n``.
     When a number is halfway between two multiples of n, it's rounded toward the nearest number that's away from zero.
@@ -185,13 +175,13 @@ def round_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
         return 0
     return round_away_from_zero(float(__x) / n) * n
 
-def floor_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
+def floor_to_nearest_n(__x: __typing.SupportsFloat, n: int) -> int:
     """Floor a number to the nearest multiple of ``n``."""
     if n == 0: # Prevent division by zero. Any multiple of zero is always zero.
         return 0
     return floor(float(__x) / n) * n
 
-def ceil_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
+def ceil_to_nearest_n(__x: __typing.SupportsFloat, n: int) -> int:
     """Ceil a number to the nearest multiple of ``n``."""
     if n == 0: # Prevent division by zero. Any multiple of zero is always zero.
         return 0
@@ -199,18 +189,18 @@ def ceil_to_nearest_n(__x: _typing.SupportsFloat, n: int) -> int:
 #endregion
 
 #region Round to digits
-def ceil_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
+def ceil_to_digits(__x: __typing.SupportsFloat, digits: int = 0) -> float:
     """Return the ceiling of x as a float with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return ceil(float(__x) * pow10) / pow10 # dividing changes output to float
 
-def floor_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
+def floor_to_digits(__x: __typing.SupportsFloat, digits: int = 0) -> float:
     """Return the floor of x as a float with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return floor(float(__x) * pow10) / pow10 # dividing changes output to float
 
 
-def round_away_from_zero_to_digits(__x: _typing.SupportsFloat, digits: int = 0) -> float:
+def round_away_from_zero_to_digits(__x: __typing.SupportsFloat, digits: int = 0) -> float:
     """
     Round a number to a given precision in decimal digits.
     When a number is halfway between two others, it's rounded toward the nearest number that's away from zero.
@@ -221,17 +211,17 @@ def round_away_from_zero_to_digits(__x: _typing.SupportsFloat, digits: int = 0) 
     return round_away_from_zero(float(__x) * pow10) / pow10 # dividing changes output to float
 
 
-def round_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
+def round_to_nearest_n_to_digits(__x: __typing.SupportsFloat, n: int, digits: int = 0) -> float:
     """Round a number to the nearest multiple of ``n`` with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return round_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 
-def floor_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
+def floor_to_nearest_n_to_digits(__x: __typing.SupportsFloat, n: int, digits: int = 0) -> float:
     """Floor a number to the nearest multiple of ``n`` with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return floor_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
 
-def ceil_to_nearest_n_to_digits(__x: _typing.SupportsFloat, n: int, digits: int = 0) -> float:
+def ceil_to_nearest_n_to_digits(__x: __typing.SupportsFloat, n: int, digits: int = 0) -> float:
     """Ceil a number to the nearest multiple of ``n`` with specified decimal accuracy."""
     pow10: float = pow(10.0, digits)
     return ceil_to_nearest_n(float(__x) * pow10, n) / pow10 # dividing changes output to float
@@ -314,11 +304,11 @@ def ping_pong(t: float, length: float) -> float:
 #endregion
 
 #region Iterables
-def closest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _NumberT:
+def closest(value: int | float, iterable: __typing.Iterable[_NumberT]) -> _NumberT:
     """Return the value in the iterable that is closest to the given value."""
     return min(iterable, key=lambda k: abs(k - value))
 
-def furthest(value: int | float, iterable: _typing.Iterable[_NumberT]) -> _NumberT:
+def furthest(value: int | float, iterable: __typing.Iterable[_NumberT]) -> _NumberT:
     """Return the value in the iterable that is furthest from the given value."""
     return max(iterable, key=lambda k: abs(k - value))
 #endregion
