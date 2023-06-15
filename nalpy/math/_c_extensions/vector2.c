@@ -1334,7 +1334,7 @@ static const char *__pyx_filename;
 /* #### Code section: filename_table ### */
 
 static const char *__pyx_f[] = {
-  "nalpy\\\\math\\\\_components\\\\vector2.pyx",
+  "nalpy\\\\math\\\\_c_extensions\\\\vector2.pyx",
   "<stringsource>",
 };
 /* #### Code section: utility_code_proto_before_types ### */
@@ -2127,7 +2127,7 @@ static const char __pyx_k_Vector2___reduce_cython[] = "Vector2.__reduce_cython__
 static const char __pyx_k_Vector2___setstate_cython[] = "Vector2.__setstate_cython__";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0[] = "Incompatible checksums (0x%x vs (0x887fcea, 0x73dec59, 0xc8d1ae9) = (x, y))";
 static const char __pyx_k_Vector_does_not_have_a_direction[] = "Vector does not have a direction to normalize to.";
-static const char __pyx_k_nalpy_math__components_vector2_p[] = "nalpy\\math\\_components\\vector2.pyx";
+static const char __pyx_k_nalpy_math__c_extensions_vector2[] = "nalpy\\math\\_c_extensions\\vector2.pyx";
 /* #### Code section: decls ### */
 static int __pyx_pf_7vector2_7Vector2___init__(struct __pyx_obj_7vector2_Vector2 *__pyx_v_self, double __pyx_v_x, double __pyx_v_y); /* proto */
 static PyObject *__pyx_pf_7vector2_7Vector2_2__getitem__(struct __pyx_obj_7vector2_Vector2 *__pyx_v_self, char __pyx_v_i); /* proto */
@@ -2257,7 +2257,7 @@ typedef struct {
   PyObject *__pyx_n_s_move_x;
   PyObject *__pyx_n_s_move_y;
   PyObject *__pyx_n_s_mul;
-  PyObject *__pyx_kp_s_nalpy_math__components_vector2_p;
+  PyObject *__pyx_kp_s_nalpy_math__c_extensions_vector2;
   PyObject *__pyx_n_s_name;
   PyObject *__pyx_n_s_new;
   PyObject *__pyx_n_s_normal;
@@ -2444,7 +2444,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_move_x);
   Py_CLEAR(clear_module_state->__pyx_n_s_move_y);
   Py_CLEAR(clear_module_state->__pyx_n_s_mul);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_nalpy_math__components_vector2_p);
+  Py_CLEAR(clear_module_state->__pyx_kp_s_nalpy_math__c_extensions_vector2);
   Py_CLEAR(clear_module_state->__pyx_n_s_name);
   Py_CLEAR(clear_module_state->__pyx_n_s_new);
   Py_CLEAR(clear_module_state->__pyx_n_s_normal);
@@ -2609,7 +2609,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_move_x);
   Py_VISIT(traverse_module_state->__pyx_n_s_move_y);
   Py_VISIT(traverse_module_state->__pyx_n_s_mul);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_nalpy_math__components_vector2_p);
+  Py_VISIT(traverse_module_state->__pyx_kp_s_nalpy_math__c_extensions_vector2);
   Py_VISIT(traverse_module_state->__pyx_n_s_name);
   Py_VISIT(traverse_module_state->__pyx_n_s_new);
   Py_VISIT(traverse_module_state->__pyx_n_s_normal);
@@ -2784,7 +2784,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_move_x __pyx_mstate_global->__pyx_n_s_move_x
 #define __pyx_n_s_move_y __pyx_mstate_global->__pyx_n_s_move_y
 #define __pyx_n_s_mul __pyx_mstate_global->__pyx_n_s_mul
-#define __pyx_kp_s_nalpy_math__components_vector2_p __pyx_mstate_global->__pyx_kp_s_nalpy_math__components_vector2_p
+#define __pyx_kp_s_nalpy_math__c_extensions_vector2 __pyx_mstate_global->__pyx_kp_s_nalpy_math__c_extensions_vector2
 #define __pyx_n_s_name __pyx_mstate_global->__pyx_n_s_name
 #define __pyx_n_s_new __pyx_mstate_global->__pyx_n_s_new
 #define __pyx_n_s_normal __pyx_mstate_global->__pyx_n_s_normal
@@ -8731,7 +8731,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_move_x, __pyx_k_move_x, sizeof(__pyx_k_move_x), 0, 0, 1, 1},
     {&__pyx_n_s_move_y, __pyx_k_move_y, sizeof(__pyx_k_move_y), 0, 0, 1, 1},
     {&__pyx_n_s_mul, __pyx_k_mul, sizeof(__pyx_k_mul), 0, 0, 1, 1},
-    {&__pyx_kp_s_nalpy_math__components_vector2_p, __pyx_k_nalpy_math__components_vector2_p, sizeof(__pyx_k_nalpy_math__components_vector2_p), 0, 0, 1, 0},
+    {&__pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_k_nalpy_math__c_extensions_vector2, sizeof(__pyx_k_nalpy_math__c_extensions_vector2), 0, 0, 1, 0},
     {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
     {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
     {&__pyx_n_s_normal, __pyx_k_normal, sizeof(__pyx_k_normal), 0, 0, 1, 1},
@@ -8889,7 +8889,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__12 = PyTuple_Pack(2, __pyx_n_s_a, __pyx_n_s_b); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_dot, 128, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_dot, 128, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 128, __pyx_L1_error)
 
   /* "vector2.pyx":132
  *         return (a.x * b.x) + (a.y * b.y)
@@ -8901,7 +8901,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__14 = PyTuple_Pack(5, __pyx_n_s_a, __pyx_n_s_b, __pyx_n_s_t, __pyx_n_s_lerp_x, __pyx_n_s_lerp_y); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 132, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_lerp, 132, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_lerp, 132, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 132, __pyx_L1_error)
 
   /* "vector2.pyx":143
  *         return Vector2(lerp_x, lerp_y)
@@ -8910,7 +8910,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     def lerp_unclamped(Vector2 a, Vector2 b, double t):
  *         lerp_x = a.x + ((b.x - a.x) * t)
  */
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_lerp_unclamped, 143, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 143, __pyx_L1_error)
+  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_lerp_unclamped, 143, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 143, __pyx_L1_error)
 
   /* "vector2.pyx":149
  *         return Vector2(lerp_x, lerp_y)
@@ -8922,7 +8922,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__17 = PyTuple_Pack(8, __pyx_n_s_current, __pyx_n_s_target, __pyx_n_s_max_distance_delta, __pyx_n_s_to_vector_x, __pyx_n_s_to_vector_y, __pyx_n_s_dist, __pyx_n_s_move_x, __pyx_n_s_move_y); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_move_towards, 149, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 149, __pyx_L1_error)
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_move_towards, 149, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 149, __pyx_L1_error)
 
   /* "vector2.pyx":163
  *         return Vector2(move_x, move_y)
@@ -8934,7 +8934,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__19 = PyTuple_Pack(1, __pyx_n_s_vector); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_perpendicular, 163, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 163, __pyx_L1_error)
+  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_perpendicular, 163, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 163, __pyx_L1_error)
 
   /* "vector2.pyx":167
  *         return Vector2(-vector.y, vector.x)
@@ -8946,7 +8946,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__21 = PyTuple_Pack(4, __pyx_n_s_vector, __pyx_n_s_normal, __pyx_n_s_dot, __pyx_n_s_factor); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 167, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_reflect, 167, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 167, __pyx_L1_error)
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_reflect, 167, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 167, __pyx_L1_error)
 
   /* "vector2.pyx":173
  *         return Vector2(factor * normal.x + vector.x, factor * normal.y + vector.y)
@@ -8958,7 +8958,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__23 = PyTuple_Pack(5, __pyx_n_s_from, __pyx_n_s_to, __pyx_n_s_denom, __pyx_n_s_dot, __pyx_n_s_cos_val); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 173, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_angle, 173, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_angle, 173, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 173, __pyx_L1_error)
 
   /* "vector2.pyx":189
  *         return acos(cos_val) * _deg2rad
@@ -8970,7 +8970,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__25 = PyTuple_Pack(3, __pyx_n_s_from, __pyx_n_s_to, __pyx_n_s_unsigned_angle); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
-  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_signed_angle, 189, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_signed_angle, 189, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 189, __pyx_L1_error)
 
   /* "vector2.pyx":197
  *             return unsigned_angle
@@ -8982,7 +8982,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__27 = PyTuple_Pack(4, __pyx_n_s_a, __pyx_n_s_b, __pyx_n_s_diff_x, __pyx_n_s_diff_y); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__27);
   __Pyx_GIVEREF(__pyx_tuple__27);
-  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_distance, 197, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_distance, 197, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 197, __pyx_L1_error)
 
   /* "vector2.pyx":203
  *         return hypot(diff_x, diff_y)
@@ -8991,7 +8991,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     def min(Vector2 a, Vector2 b):
  *         """Returns a vector that is made from the smallest components of two vectors."""
  */
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_min, 203, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_min, 203, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 203, __pyx_L1_error)
 
   /* "vector2.pyx":208
  *         return Vector2(min(a.x, b.x), min(a.y, b.y))
@@ -9000,7 +9000,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     def max(Vector2 a, Vector2 b):
  *         """Returns a vector that is made from the largest components of two vectors."""
  */
-  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__components_vector2_p, __pyx_n_s_max, 208, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_max, 208, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(0, 208, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
