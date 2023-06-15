@@ -3,7 +3,7 @@ cdef extern from "math.h":
     cdef double hypot(double x, double y)
     cdef double acos(double x)
 
-cdef double _deg2rad = 3.14159265358979323846 / 180.0
+cdef double _rad2deg = 180.0 / 3.14159265358979323846
 
 cdef class Vector2:
     zero = Vector2(0.0, 0.0)
@@ -172,7 +172,7 @@ cdef class Vector2:
 
     @staticmethod
     def angle(Vector2 _from, Vector2 _to):
-        cdef double denom = _from.magnitude * _to.magnitude
+        cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
         if denom == 0.0:
             return 0.0
 
@@ -184,7 +184,7 @@ cdef class Vector2:
         elif cos_val > 1.0:
             cos_val = 1.0
 
-        return acos(cos_val) * _deg2rad
+        return acos(cos_val) * _rad2deg
 
     @staticmethod
     def signed_angle(Vector2 _from, Vector2 _to):

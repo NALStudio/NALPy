@@ -1346,7 +1346,7 @@ static const char *__pyx_f[] = {
 struct __pyx_obj_7vector2_Vector2;
 
 /* "vector2.pyx":8
- * cdef double _deg2rad = 3.14159265358979323846 / 180.0
+ * cdef double _rad2deg = 180.0 / 3.14159265358979323846
  * 
  * cdef class Vector2:             # <<<<<<<<<<<<<<
  *     zero = Vector2(0.0, 0.0)
@@ -2009,7 +2009,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 /* #### Code section: module_declarations ### */
 
 /* Module declarations from "vector2" */
-static double __pyx_v_7vector2__deg2rad;
+static double __pyx_v_7vector2__rad2deg;
 static PyObject *__pyx_f_7vector2___pyx_unpickle_Vector2__set_state(struct __pyx_obj_7vector2_Vector2 *, PyObject *); /*proto*/
 /* #### Code section: typeinfo ### */
 /* #### Code section: before_global_var ### */
@@ -2085,7 +2085,6 @@ static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_Vector2_2[] = "Vector2";
 static const char __pyx_k_isenabled[] = "isenabled";
-static const char __pyx_k_magnitude[] = "magnitude";
 static const char __pyx_k_pyx_state[] = "__pyx_state";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_IndexError[] = "IndexError";
@@ -2248,7 +2247,6 @@ typedef struct {
   PyObject *__pyx_n_s_lerp_unclamped;
   PyObject *__pyx_n_s_lerp_x;
   PyObject *__pyx_n_s_lerp_y;
-  PyObject *__pyx_n_s_magnitude;
   PyObject *__pyx_n_s_main;
   PyObject *__pyx_n_s_max;
   PyObject *__pyx_n_s_max_distance_delta;
@@ -2435,7 +2433,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_lerp_unclamped);
   Py_CLEAR(clear_module_state->__pyx_n_s_lerp_x);
   Py_CLEAR(clear_module_state->__pyx_n_s_lerp_y);
-  Py_CLEAR(clear_module_state->__pyx_n_s_magnitude);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
   Py_CLEAR(clear_module_state->__pyx_n_s_max);
   Py_CLEAR(clear_module_state->__pyx_n_s_max_distance_delta);
@@ -2600,7 +2597,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_lerp_unclamped);
   Py_VISIT(traverse_module_state->__pyx_n_s_lerp_x);
   Py_VISIT(traverse_module_state->__pyx_n_s_lerp_y);
-  Py_VISIT(traverse_module_state->__pyx_n_s_magnitude);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
   Py_VISIT(traverse_module_state->__pyx_n_s_max);
   Py_VISIT(traverse_module_state->__pyx_n_s_max_distance_delta);
@@ -2775,7 +2771,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_lerp_unclamped __pyx_mstate_global->__pyx_n_s_lerp_unclamped
 #define __pyx_n_s_lerp_x __pyx_mstate_global->__pyx_n_s_lerp_x
 #define __pyx_n_s_lerp_y __pyx_mstate_global->__pyx_n_s_lerp_y
-#define __pyx_n_s_magnitude __pyx_mstate_global->__pyx_n_s_magnitude
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
 #define __pyx_n_s_max __pyx_mstate_global->__pyx_n_s_max
 #define __pyx_n_s_max_distance_delta __pyx_mstate_global->__pyx_n_s_max_distance_delta
@@ -6230,7 +6225,7 @@ static PyObject *__pyx_pf_7vector2_7Vector2_38reflect(struct __pyx_obj_7vector2_
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def angle(Vector2 _from, Vector2 _to):
- *         cdef double denom = _from.magnitude * _to.magnitude
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
  */
 
 /* Python wrapper */
@@ -6328,11 +6323,8 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
   double __pyx_v_cos_val;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  double __pyx_t_4;
-  int __pyx_t_5;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -6341,34 +6333,24 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
   /* "vector2.pyx":175
  *     @staticmethod
  *     def angle(Vector2 _from, Vector2 _to):
- *         cdef double denom = _from.magnitude * _to.magnitude             # <<<<<<<<<<<<<<
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes             # <<<<<<<<<<<<<<
  *         if denom == 0.0:
  *             return 0.0
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v__from), __pyx_n_s_magnitude); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v__to), __pyx_n_s_magnitude); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 175, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 175, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_t_3); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 175, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_denom = __pyx_t_4;
+  __pyx_v_denom = (hypot(__pyx_v__from->x, __pyx_v__from->y) * hypot(__pyx_v__to->x, __pyx_v__to->y));
 
   /* "vector2.pyx":176
  *     def angle(Vector2 _from, Vector2 _to):
- *         cdef double denom = _from.magnitude * _to.magnitude
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
  *         if denom == 0.0:             # <<<<<<<<<<<<<<
  *             return 0.0
  * 
  */
-  __pyx_t_5 = (__pyx_v_denom == 0.0);
-  if (__pyx_t_5) {
+  __pyx_t_1 = (__pyx_v_denom == 0.0);
+  if (__pyx_t_1) {
 
     /* "vector2.pyx":177
- *         cdef double denom = _from.magnitude * _to.magnitude
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
  *         if denom == 0.0:
  *             return 0.0             # <<<<<<<<<<<<<<
  * 
@@ -6381,7 +6363,7 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
 
     /* "vector2.pyx":176
  *     def angle(Vector2 _from, Vector2 _to):
- *         cdef double denom = _from.magnitude * _to.magnitude
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
  *         if denom == 0.0:             # <<<<<<<<<<<<<<
  *             return 0.0
  * 
@@ -6417,8 +6399,8 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
  *             cos_val = -1.0
  *         elif cos_val > 1.0:
  */
-  __pyx_t_5 = (__pyx_v_cos_val < -1.0);
-  if (__pyx_t_5) {
+  __pyx_t_1 = (__pyx_v_cos_val < -1.0);
+  if (__pyx_t_1) {
 
     /* "vector2.pyx":183
  *         cdef double cos_val = dot / denom
@@ -6446,15 +6428,15 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
  *             cos_val = 1.0
  * 
  */
-  __pyx_t_5 = (__pyx_v_cos_val > 1.0);
-  if (__pyx_t_5) {
+  __pyx_t_1 = (__pyx_v_cos_val > 1.0);
+  if (__pyx_t_1) {
 
     /* "vector2.pyx":185
  *             cos_val = -1.0
  *         elif cos_val > 1.0:
  *             cos_val = 1.0             # <<<<<<<<<<<<<<
  * 
- *         return acos(cos_val) * _deg2rad
+ *         return acos(cos_val) * _rad2deg
  */
     __pyx_v_cos_val = 1.0;
 
@@ -6471,15 +6453,15 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
   /* "vector2.pyx":187
  *             cos_val = 1.0
  * 
- *         return acos(cos_val) * _deg2rad             # <<<<<<<<<<<<<<
+ *         return acos(cos_val) * _rad2deg             # <<<<<<<<<<<<<<
  * 
  *     @staticmethod
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PyFloat_FromDouble((acos(__pyx_v_cos_val) * __pyx_v_7vector2__deg2rad)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 187, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_r = __pyx_t_3;
-  __pyx_t_3 = 0;
+  __pyx_t_2 = PyFloat_FromDouble((acos(__pyx_v_cos_val) * __pyx_v_7vector2__rad2deg)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
   goto __pyx_L0;
 
   /* "vector2.pyx":173
@@ -6487,14 +6469,12 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def angle(Vector2 _from, Vector2 _to):
- *         cdef double denom = _from.magnitude * _to.magnitude
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
  */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_AddTraceback("vector2.Vector2.angle", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -6504,7 +6484,7 @@ static PyObject *__pyx_pf_7vector2_7Vector2_40angle(struct __pyx_obj_7vector2_Ve
 }
 
 /* "vector2.pyx":189
- *         return acos(cos_val) * _deg2rad
+ *         return acos(cos_val) * _rad2deg
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def signed_angle(Vector2 _from, Vector2 _to):
@@ -6698,7 +6678,7 @@ static PyObject *__pyx_pf_7vector2_7Vector2_42signed_angle(struct __pyx_obj_7vec
   }
 
   /* "vector2.pyx":189
- *         return acos(cos_val) * _deg2rad
+ *         return acos(cos_val) * _rad2deg
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def signed_angle(Vector2 _from, Vector2 _to):
@@ -8722,7 +8702,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_lerp_unclamped, __pyx_k_lerp_unclamped, sizeof(__pyx_k_lerp_unclamped), 0, 0, 1, 1},
     {&__pyx_n_s_lerp_x, __pyx_k_lerp_x, sizeof(__pyx_k_lerp_x), 0, 0, 1, 1},
     {&__pyx_n_s_lerp_y, __pyx_k_lerp_y, sizeof(__pyx_k_lerp_y), 0, 0, 1, 1},
-    {&__pyx_n_s_magnitude, __pyx_k_magnitude, sizeof(__pyx_k_magnitude), 0, 0, 1, 1},
     {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
     {&__pyx_n_s_max, __pyx_k_max, sizeof(__pyx_k_max), 0, 0, 1, 1},
     {&__pyx_n_s_max_distance_delta, __pyx_k_max_distance_delta, sizeof(__pyx_k_max_distance_delta), 0, 0, 1, 1},
@@ -8953,7 +8932,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def angle(Vector2 _from, Vector2 _to):
- *         cdef double denom = _from.magnitude * _to.magnitude
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
  */
   __pyx_tuple__23 = PyTuple_Pack(5, __pyx_n_s_from, __pyx_n_s_to, __pyx_n_s_denom, __pyx_n_s_dot, __pyx_n_s_cos_val); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 173, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__23);
@@ -8961,7 +8940,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_vector2, __pyx_n_s_angle, 173, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 173, __pyx_L1_error)
 
   /* "vector2.pyx":189
- *         return acos(cos_val) * _deg2rad
+ *         return acos(cos_val) * _rad2deg
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def signed_angle(Vector2 _from, Vector2 _to):
@@ -9436,11 +9415,11 @@ if (!__Pyx_RefNanny) {
   /* "vector2.pyx":6
  *     cdef double acos(double x)
  * 
- * cdef double _deg2rad = 3.14159265358979323846 / 180.0             # <<<<<<<<<<<<<<
+ * cdef double _rad2deg = 180.0 / 3.14159265358979323846             # <<<<<<<<<<<<<<
  * 
  * cdef class Vector2:
  */
-  __pyx_v_7vector2__deg2rad = (3.14159265358979323846 / 180.0);
+  __pyx_v_7vector2__rad2deg = (180.0 / 3.14159265358979323846);
 
   /* "vector2.pyx":9
  * 
@@ -9651,7 +9630,7 @@ if (!__Pyx_RefNanny) {
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def angle(Vector2 _from, Vector2 _to):
- *         cdef double denom = _from.magnitude * _to.magnitude
+ *         cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
  */
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_7vector2_7Vector2_41angle, __Pyx_CYFUNCTION_STATICMETHOD | __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Vector2_angle, NULL, __pyx_n_s_vector2, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 173, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -9668,7 +9647,7 @@ if (!__Pyx_RefNanny) {
   PyType_Modified(__pyx_ptype_7vector2_Vector2);
 
   /* "vector2.pyx":189
- *         return acos(cos_val) * _deg2rad
+ *         return acos(cos_val) * _rad2deg
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def signed_angle(Vector2 _from, Vector2 _to):
