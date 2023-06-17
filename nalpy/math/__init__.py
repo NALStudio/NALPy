@@ -324,3 +324,7 @@ from nalpy.math._rect.rect_int import RectInt as RectInt
 from nalpy.math._rect.rect_offset import RectOffset as RectOffset
 from nalpy.math._rect.rect_offset_int import RectOffsetInt as RectOffsetInt
 #endregion
+
+#region Private imports of legacy components
+from nalpy.math._vector2.vector2 import Vector2 as _Legacy_Vector2
+#endregion

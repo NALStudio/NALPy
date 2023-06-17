@@ -41,6 +41,9 @@ class BasicFunctionality(unittest.TestCase):
         self.assertEqual(repr(math.Vector2(2.0, 2.0)), f"Vector2(2.0, 2.0)")
         self.assertEqual(repr(math.Vector2(2.4, 3.075)), f"Vector2(2.4, 3.075)")
 
+        self.assertEqual(repr(math.Vector2(2.0, 2.0)), str(math.Vector2(2.0, 2.0)))
+        self.assertEqual(repr(math.Vector2(2.4, 3.075)), str(math.Vector2(2.4, 3.075)))
+
     def test_addsub(self):
         b: math.Vector2 = math.Vector2.one
         self.assertEqual(b + math.Vector2(2.5, 2.5), math.Vector2(3.5, 3.5))
