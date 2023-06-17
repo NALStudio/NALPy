@@ -5,6 +5,21 @@ cdef extern from "math.h":
 
 cdef double _rad2deg = 180.0 / 3.14159265358979323846
 
+cdef inline _Vector2Angle(Vector2 _from, Vector2 _to):
+    cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
+    if denom == 0.0:
+        return 0.0
+
+    cdef double dot = (_from.x * _to.x) + (_from.y * _to.y)
+
+    cdef double cos_val = dot / denom
+    if cos_val < -1.0: # Clamp to range [-1, 1]
+        cos_val = -1.0
+    elif cos_val > 1.0:
+        cos_val = 1.0
+
+    return acos(cos_val) * _rad2deg
+
 cdef class Vector2:
     zero = Vector2(0.0, 0.0)
     one = Vector2(1.0, 1.0)
@@ -172,23 +187,14 @@ cdef class Vector2:
 
     @staticmethod
     def angle(Vector2 _from, Vector2 _to):
-        cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
-        if denom == 0.0:
-            return 0.0
-
-        cdef double dot = (_from.x * _to.x) + (_from.y * _to.y)
-
-        cdef double cos_val = dot / denom
-        if cos_val < -1.0:
-            cos_val = -1.0
-        elif cos_val > 1.0:
-            cos_val = 1.0
-
-        return acos(cos_val) * _rad2deg
+        return _Vector2Angle(_from, _to)
+        # Extracted into a separate inline method to increase signed_angle performance.
+        # From my testing this makes Vector2.angle slower by around 2 % which is basically randomness
+        # But on the other hand this change makes Vector2.signed_angle around 12 % faster.
 
     @staticmethod
     def signed_angle(Vector2 _from, Vector2 _to):
-        cdef double unsigned_angle = Vector2.angle(_from, _to)
+        cdef double unsigned_angle = _Vector2Angle(_from, _to)
         if ((_from.x * _to.y) - (_from.y * _to.x)) < 0.0:
             return -unsigned_angle
         else:
