@@ -43,46 +43,59 @@ commands: tuple[str, ...] = (
 #     "Vector2.min(x, y)",
 #     "Vector2.max(x, y)",
 )
+
+class Configuration(NamedTuple):
+    name: str
+    Vector2Implementation: type
+
+configurations: tuple[Configuration] = (
+    Configuration("New Vector2", Vector2),
+)
+
 n = 2500
 runs = 10000
 
 DELIM: str = 75 * "-"
 
-def run_oldv2_cmd(cmd: str) -> float:
-    old_v = timeit(cmd, setup=setup, globals={"Vector2": _Legacy_Vector2}, number=n)
-    print(f"Old Vector2: {old_v} seconds for {n} repetitions")
-    return old_v
-
-def run_newv2_cmd(cmd: str) -> float:
-    new_v = timeit(cmd, setup=setup, globals={"Vector2": Vector2}, number=n)
-    print(f"New Vector2: {new_v} seconds for {n} repetitions")
-    return new_v
+def run_cmd(cmd: str, config: Configuration, index: int, total: int) -> float:
+    secs = timeit(cmd, setup=setup, globals={"Vector2": config.Vector2Implementation}, number=n)
+    print(f"({index + 1} / {total}) {config.name}: {secs} seconds for {n} repetitions")
+    return secs
 
 class CommandRan(NamedTuple):
     command: str
-    oldspeed: float
-    newspeed: float
+    config_run_seconds: tuple[tuple[Configuration, float], ...]
 
-    @property
-    def percent_faster(self) -> float:
-        return (1 - (self.newspeed / self.oldspeed)) * 100
+    def get_percent_faster(self) -> tuple[Configuration, Configuration, float]:
+        """Returns the slowest and fastest configurations and the percentage of which the fastest configuration is faster than the slowest."""
+        slowest_config, slowest_time = max(self.config_run_seconds, key=lambda s: s[1])
+        fastest_config, fastest_time = min(self.config_run_seconds, key=lambda s: s[1])
+        percent_faster: float = (1 - (fastest_time / slowest_time)) * 100
+        return (slowest_config, fastest_config, percent_faster)
 
 cmds_ran: list[CommandRan] = []
 
 for i, cmd in enumerate(commands):
     print(f"Command: {cmd} ({i + 1} / {len(commands)})")
-    old_runs: list[float] = []
-    for _ in range(runs):
-        old_runs.append(run_oldv2_cmd(cmd))
+    configruns: list[tuple[Configuration, float]] = []
+    for config in configurations:
+        runsofthisconfig: list[float] = []
+        for i in range(runs):
+            timetaken_seconds: float = run_cmd(cmd, config, i, runs)
+            runsofthisconfig.append(timetaken_seconds)
+        configruns.append((config, min(runsofthisconfig)))
 
-    new_runs: list[float] = []
-    for _ in range(runs):
-        new_runs.append(run_newv2_cmd(cmd))
-
-    cmds_ran.append(CommandRan(cmd, min(old_runs), min(new_runs)))
+    cmds_ran.append(CommandRan(cmd, tuple(configruns)))
     print(DELIM)
 
-ran_sorted: tuple[CommandRan, ...] = tuple(sorted(cmds_ran, key=lambda r: r.percent_faster))
+ran_sorted: tuple[CommandRan, ...] = tuple(sorted(cmds_ran, key=lambda r: r.get_percent_faster()))
+
+def value_to_console_color(value: float):
+    if value > 0.0:
+        return ConsoleColor.GREEN
+    if value < 0.0:
+        return ConsoleColor.RED
+    return ConsoleColor.YELLOW
 
 for run in ran_sorted:
     set_foreground_color(ConsoleColor.CYAN)
@@ -90,9 +103,10 @@ for run in ran_sorted:
     print(run.command, end="")
     reset_attributes()
     print()
-    print(f"{run.oldspeed} seconds / {n} runs")
-    print(f"{run.newspeed} seconds / {n} runs")
-    set_foreground_color(ConsoleColor.GREEN if run.percent_faster > 0.0 else ConsoleColor.RED)
-    print(f"{run.percent_faster} % faster", end="")
+    for config, seconds in run.config_run_seconds:
+        print(f"{config.name}: {seconds} seconds / {n} runs")
+    slowest_config, fastest_config, percent_faster = run.get_percent_faster()
+    set_foreground_color(value_to_console_color(percent_faster))
+    print(f"{percent_faster}% faster ({slowest_config.name} => {fastest_config.name})", end="")
     reset_attributes()
     print("\n" + DELIM)
