@@ -20,14 +20,6 @@ cdef inline _Vector2Angle(Vector2 _from, Vector2 _to):
 
     return acos(cos_val) * _rad2deg
 
-cdef inline _Vector2Mult(Vector2 a, b):
-    if isinstance(b, Vector2):
-        return Vector2(a.x * b.x, a.y * b.y)
-    elif isinstance(b, (float, int)):
-        return Vector2(a.x * b, a.y * b)
-    else:
-        return NotImplemented
-
 cdef class Vector2:
     zero = Vector2(0.0, 0.0)
     one = Vector2(1.0, 1.0)
@@ -69,12 +61,16 @@ cdef class Vector2:
 
     def __mul__(self, other):
         # self * other
-        _Vector2Mult(self, other)
-        # Extracted into a separate inline method to increase __rmul__ performance.
+        if isinstance(other, Vector2):
+            return Vector2(self.x * other.x, self.y * other.y)
+        elif isinstance(other, (float, int)):
+            return Vector2(self.x * other, self.y * other)
+        else:
+            return NotImplemented
 
     def __rmul__(self, other):
         # other * self
-        _Vector2Mult(self, other)
+        return self.__mul__(other)
 
     def __truediv__(self, other):
         # self / other
