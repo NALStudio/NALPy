@@ -20,8 +20,11 @@ class BasicMathFunctions(unittest.TestCase):
 
     def test_sign(self):
         self.assertEqual(math.sign(0), 0)
+        self.assertEqual(math.sign(0.0), 0)
         self.assertEqual(math.sign(1), 1)
+        self.assertEqual(math.sign(1.0), 1)
         self.assertEqual(math.sign(-1), -1)
+        self.assertEqual(math.sign(-1.0), -1)
 
         self.assertEqual(math.sign(69), 1)
         self.assertEqual(math.sign(69.420), 1)
@@ -91,7 +94,17 @@ class ValueManipulation(unittest.TestCase):
 
         self.assertEqual(math.clamp(100000, 42069, 69420), 69420)
         self.assertEqual(math.clamp(100000, 42069, 1000000), 100000)
-        self.assertRaises(ValueError, math.clamp, 10000, 4206900, 1000000)
+
+        self.assertEqual(math.clamp(3, 5, 5), 5)
+        self.assertEqual(math.clamp(7, 5, 5), 5)
+        self.assertEqual(math.clamp(5, 5, 5), 5)
+
+        self.assertEqual(math.clamp(2, 7, 5), 7)
+        self.assertEqual(math.clamp(9, 7, 5), 5)
+        self.assertEqual(math.clamp(6, 7, 5), 7)
+        self.assertEqual(math.clamp(5, 7, 5), 7)
+
+        self.assertRaises(TypeError, lambda: math.clamp([], {}, "penis")) # type: ignore
 
     def test_clamp01(self):
         self.assertEqual(math.clamp(0, 0, 1), math.clamp01(0))
@@ -127,28 +140,28 @@ class ValueManipulation(unittest.TestCase):
 
 
 class Rounding(unittest.TestCase):
-    def test_round_away_from_zero(self):
-        self.assertAlmostEqual(math.round_away_from_zero(0.5), 1)
-        self.assertAlmostEqual(math.round_away_from_zero(1), 1)
-        self.assertAlmostEqual(math.round_away_from_zero(5), 5)
-        self.assertAlmostEqual(math.round_away_from_zero(15), 15)
-        self.assertAlmostEqual(math.round_away_from_zero(15.1), 15)
-        self.assertAlmostEqual(math.round_away_from_zero(15.25), 15)
-        self.assertAlmostEqual(math.round_away_from_zero(15.5), 16)
-        self.assertAlmostEqual(math.round_away_from_zero(15.51), 16)
-        self.assertAlmostEqual(math.round_away_from_zero(15.75), 16)
-        self.assertAlmostEqual(math.round_away_from_zero(69.420), 69)
+    def test_round(self):
+        self.assertAlmostEqual(math.round(0.5), 1)
+        self.assertAlmostEqual(math.round(1), 1)
+        self.assertAlmostEqual(math.round(5), 5)
+        self.assertAlmostEqual(math.round(15), 15)
+        self.assertAlmostEqual(math.round(15.1), 15)
+        self.assertAlmostEqual(math.round(15.25), 15)
+        self.assertAlmostEqual(math.round(15.5), 16)
+        self.assertAlmostEqual(math.round(15.51), 16)
+        self.assertAlmostEqual(math.round(15.75), 16)
+        self.assertAlmostEqual(math.round(69.420), 69)
 
-        self.assertAlmostEqual(math.round_away_from_zero(-0.5), -1)
-        self.assertAlmostEqual(math.round_away_from_zero(-1), -1)
-        self.assertAlmostEqual(math.round_away_from_zero(-5), -5)
-        self.assertAlmostEqual(math.round_away_from_zero(-15), -15)
-        self.assertAlmostEqual(math.round_away_from_zero(-15.1), -15)
-        self.assertAlmostEqual(math.round_away_from_zero(-15.25), -15)
-        self.assertAlmostEqual(math.round_away_from_zero(-15.5), -16)
-        self.assertAlmostEqual(math.round_away_from_zero(-15.51), -16)
-        self.assertAlmostEqual(math.round_away_from_zero(-15.75), -16)
-        self.assertAlmostEqual(math.round_away_from_zero(-69.420), -69)
+        self.assertAlmostEqual(math.round(-0.5), -1)
+        self.assertAlmostEqual(math.round(-1), -1)
+        self.assertAlmostEqual(math.round(-5), -5)
+        self.assertAlmostEqual(math.round(-15), -15)
+        self.assertAlmostEqual(math.round(-15.1), -15)
+        self.assertAlmostEqual(math.round(-15.25), -15)
+        self.assertAlmostEqual(math.round(-15.5), -16)
+        self.assertAlmostEqual(math.round(-15.51), -16)
+        self.assertAlmostEqual(math.round(-15.75), -16)
+        self.assertAlmostEqual(math.round(-69.420), -69)
 
     def test_round_to_nearest_n(self):
         self.assertAlmostEqual(math.round_to_nearest_n(0, 3), 0)

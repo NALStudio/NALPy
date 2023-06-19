@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,15 +9,4 @@ authors = [
 ]
 requires-python = ">=3.11"
 description = "An experimental portable package for different types of projects."
-version = "0.0.20"
-dynamic = ["readme"]
-
-[tool.setuptools.package-data]
-"nalpy" = ["py.typed"]
-
-[tool.setuptools.dynamic]
-readme = {file = ["README.md"]}
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["nalpy*"]
+version = "0.1.0"
