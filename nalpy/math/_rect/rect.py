@@ -1,8 +1,6 @@
 from typing import Final, NamedTuple, Self, final
 
-from .._vector2.vector2 import Vector2
-
-from .. import lerp, inverse_lerp
+from .. import lerp, inverse_lerp, Vector2
 
 
 @final

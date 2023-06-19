@@ -1,6 +1,6 @@
 from typing import NamedTuple, final
 
-from .rect import Rect
+from .. import Rect
 
 @final
 class RectOffset(NamedTuple):

@@ -1,7 +1,6 @@
 from typing import Final, Iterable, NamedTuple, Self, final
 
-from .._vector2.vector2_int import Vector2Int
-from .rect import Rect
+from .. import Vector2Int, Rect
 
 
 @final

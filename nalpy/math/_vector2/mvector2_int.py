@@ -1,8 +1,6 @@
-from typing import NamedTuple, Self, final, Final
+from typing import Self, final
 
-from .. import hypot, ceil, floor
-from .mvector2 import MVector2
-from .vector2_int import Vector2Int
+from .. import hypot, ceil, floor, MVector2, Vector2Int
 
 @final
 class MVector2Int:

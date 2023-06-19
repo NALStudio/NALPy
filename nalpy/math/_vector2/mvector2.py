@@ -1,8 +1,6 @@
 from typing import Self, final
 
-from .vector2 import Vector2
-
-from .. import hypot, clamp01, sqrt, clamp, acos, degrees, sign, INFINITY
+from .. import hypot, clamp01, sqrt, clamp, acos, degrees, sign, INFINITY, Vector2
 
 @final
 class MVector2:

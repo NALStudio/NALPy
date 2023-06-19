@@ -1,7 +1,6 @@
 from typing import NamedTuple, final
 
-from .rect_int import RectInt
-from .rect_offset import RectOffset
+from .. import RectInt, RectOffset
 
 @final
 class RectOffsetInt(NamedTuple):
