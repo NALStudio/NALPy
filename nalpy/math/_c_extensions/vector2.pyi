@@ -50,6 +50,8 @@ class Vector2:
 
     def __eq__(self, other: Vector2) -> bool: ...
 
+    def __hash__(self) -> int: ...
+
     @property
     def magnitude(self) -> float:
         """The length of this vector."""

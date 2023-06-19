@@ -9,4 +9,4 @@ authors = [
 ]
 requires-python = ">=3.11"
 description = "An experimental portable package for different types of projects."
-version = "0.1.0"
+version = "0.1.1"

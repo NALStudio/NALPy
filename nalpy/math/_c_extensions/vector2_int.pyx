@@ -120,7 +120,8 @@ cdef class Vector2Int:
     def __eq__(self, Vector2Int other):
         return self.x == other.x and self.y == other.y
 
-    # TODO: Implement __hash__
+    def __hash__(self):
+        return hash((self.x, self.y))
 
     @property
     def magnitude(self):
