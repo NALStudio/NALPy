@@ -5,43 +5,43 @@ from nalpy.console_utils import set_foreground_color, set_background_color, rese
 
 setup: str = "x=Vector2(69.0, 420.0); y=Vector2(-4.0, -5.0)"
 commands: tuple[str, ...] = (
-    "Vector2(0.0, 0.0)",
-    "Vector2.zero",
-    "x[0]",
-    "x[1]",
-    "x.x",
-    "x.y",
-    "x + y",
-    "x - y",
-    "x * y",
+#     "Vector2(0.0, 0.0)",
+#     "Vector2.zero",
+#     "x[0]",
+#     "x[1]",
+#     "x.x",
+#     "x.y",
+#     "x + y",
+#     "x - y",
+#     "x * y",
     "x * 2",
     "2 * x",
-    "x / y",
-    "x / 2",
-    "x // y",
-    "x // 2",
-    "x % y",
-    "x % 2",
-    "divmod(x, y)",
-    "divmod(x, 2)",
-    "-x",
-    "abs(x)",
-    "abs(y)",
-    "x == x",
-    "x == y",
-    "x.magnitude",
-    "x.normalized",
-    "Vector2.dot(x, y)",
-    "Vector2.lerp(x, y, 0.5)",
-    "Vector2.lerp_unclamped(x, y, 1.5)",
-    "Vector2.move_towards(y, x, 15.5)",
-    "Vector2.perpendicular(x)",
-    "Vector2.reflect(x, y)",
-    "Vector2.angle(x, y)",
-    "Vector2.signed_angle(x, y)",
-    "Vector2.distance(x, y)",
-    "Vector2.min(x, y)",
-    "Vector2.max(x, y)",
+#     "x / y",
+#     "x / 2",
+#     "x // y",
+#     "x // 2",
+#     "x % y",
+#     "x % 2",
+#     "divmod(x, y)",
+#     "divmod(x, 2)",
+#     "-x",
+#     "abs(x)",
+#     "abs(y)",
+#     "x == x",
+#     "x == y",
+#     "x.magnitude",
+#     "x.normalized",
+#     "Vector2.dot(x, y)",
+#     "Vector2.lerp(x, y, 0.5)",
+#     "Vector2.lerp_unclamped(x, y, 1.5)",
+#     "Vector2.move_towards(y, x, 15.5)",
+#     "Vector2.perpendicular(x)",
+#     "Vector2.reflect(x, y)",
+#     "Vector2.angle(x, y)",
+#     "Vector2.signed_angle(x, y)",
+#     "Vector2.distance(x, y)",
+#     "Vector2.min(x, y)",
+#     "Vector2.max(x, y)",
 )
 
 class Configuration(NamedTuple):
@@ -49,11 +49,11 @@ class Configuration(NamedTuple):
     Vector2Implementation: type
 
 configurations: tuple[Configuration, ...] = (
-    Configuration("Old Vector2", _Legacy_Vector2),
-    Configuration("New Vector2", Vector2)
+#     Configuration("Old Vector2", _Legacy_Vector2),
+    Configuration("New Vector2", Vector2),
 )
 
-n = 500_000
+n = 1_000_000
 runs = 50
 
 DELIM: str = 75 * "-"
