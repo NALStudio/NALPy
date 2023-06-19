@@ -64,10 +64,10 @@ cpdef move_towards(double current, double target, double max_delta):
     return current + _custom_sign_func(target - current) * max_delta
 
 def move_towards_angle(double current, double target, double max_delta):
-    delta_angle = delta_angle(current, target)
-    if -max_delta < delta_angle and delta_angle < max_delta:
+    deltaAngle = delta_angle(current, target)
+    if -max_delta < deltaAngle and deltaAngle < max_delta:
         return target
-    target = current + delta_angle
+    target = current + deltaAngle
     return move_towards(current, target, max_delta)
 
 def ping_pong(double t, double length):

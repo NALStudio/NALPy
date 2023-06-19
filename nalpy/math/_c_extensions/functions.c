@@ -2844,7 +2844,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_6clamp(CYTHON_
  *         return _max
  *     return value             # <<<<<<<<<<<<<<
  * 
- * cpdef clamp01(double value): # Used by interpolation.pyx
+ * cpdef clamp01(double value):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_value);
@@ -2873,7 +2873,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_6clamp(CYTHON_
 /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -2897,7 +2897,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
 
   /* "nalpy/math/_c_extensions/functions.pyx":22
  * 
- * cpdef clamp01(double value): # Used by interpolation.pyx
+ * cpdef clamp01(double value):
  *     if value < 0.0:             # <<<<<<<<<<<<<<
  *         return 0.0
  *     if value > 1.0:
@@ -2906,7 +2906,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
   if (__pyx_t_1) {
 
     /* "nalpy/math/_c_extensions/functions.pyx":23
- * cpdef clamp01(double value): # Used by interpolation.pyx
+ * cpdef clamp01(double value):
  *     if value < 0.0:
  *         return 0.0             # <<<<<<<<<<<<<<
  *     if value > 1.0:
@@ -2919,7 +2919,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
 
     /* "nalpy/math/_c_extensions/functions.pyx":22
  * 
- * cpdef clamp01(double value): # Used by interpolation.pyx
+ * cpdef clamp01(double value):
  *     if value < 0.0:             # <<<<<<<<<<<<<<
  *         return 0.0
  *     if value > 1.0:
@@ -2962,7 +2962,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
  *         return 1.0
  *     return value             # <<<<<<<<<<<<<<
  * 
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx
+ * cpdef delta_angle(double current, double target):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = PyFloat_FromDouble(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
@@ -2974,7 +2974,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
   /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -3090,7 +3090,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_8clamp01(CYTHO
 /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */
@@ -3115,7 +3115,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
 
   /* "nalpy/math/_c_extensions/functions.pyx":29
  * 
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx
+ * cpdef delta_angle(double current, double target):
  *     cdef double delta = (target - current) % 360.0             # <<<<<<<<<<<<<<
  *     if delta > 180.0:
  *         delta -= 360.0
@@ -3123,7 +3123,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
   __pyx_v_delta = __Pyx_mod_double((__pyx_v_target - __pyx_v_current), 360.0);
 
   /* "nalpy/math/_c_extensions/functions.pyx":30
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx
+ * cpdef delta_angle(double current, double target):
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:             # <<<<<<<<<<<<<<
  *         delta -= 360.0
@@ -3142,7 +3142,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
     __pyx_v_delta = (__pyx_v_delta - 360.0);
 
     /* "nalpy/math/_c_extensions/functions.pyx":30
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx
+ * cpdef delta_angle(double current, double target):
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:             # <<<<<<<<<<<<<<
  *         delta -= 360.0
@@ -3155,7 +3155,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
  *         delta -= 360.0
  *     return delta             # <<<<<<<<<<<<<<
  * 
- * cdef inline _custom_sign_func(double x): # Used by interpolation.pyx
+ * cdef inline _custom_sign_func(double x):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = PyFloat_FromDouble(__pyx_v_delta); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L1_error)
@@ -3167,7 +3167,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
   /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */
@@ -3295,7 +3295,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_10delta_angle(
 /* "nalpy/math/_c_extensions/functions.pyx":34
  *     return delta
  * 
- * cdef inline _custom_sign_func(double x): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cdef inline _custom_sign_func(double x):             # <<<<<<<<<<<<<<
  *     return (<unsigned char>(x > 0.0)) - (<unsigned char>(x < 0.0))
  * 
  */
@@ -3311,7 +3311,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions__
 
   /* "nalpy/math/_c_extensions/functions.pyx":35
  * 
- * cdef inline _custom_sign_func(double x): # Used by interpolation.pyx
+ * cdef inline _custom_sign_func(double x):
  *     return (<unsigned char>(x > 0.0)) - (<unsigned char>(x < 0.0))             # <<<<<<<<<<<<<<
  * 
  * def sign(double x, /):
@@ -3326,7 +3326,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions__
   /* "nalpy/math/_c_extensions/functions.pyx":34
  *     return delta
  * 
- * cdef inline _custom_sign_func(double x): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cdef inline _custom_sign_func(double x):             # <<<<<<<<<<<<<<
  *     return (<unsigned char>(x > 0.0)) - (<unsigned char>(x < 0.0))
  * 
  */
@@ -4973,7 +4973,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -4985,7 +4985,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */
@@ -5507,7 +5507,7 @@ if (!__Pyx_RefNanny) {
   /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -5519,7 +5519,7 @@ if (!__Pyx_RefNanny) {
   /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target): # Used by interpolation.pyx             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */

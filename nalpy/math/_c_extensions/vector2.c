@@ -5465,7 +5465,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_7vector2_7Vector2_28dot(s
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def lerp(Vector2 a, Vector2 b, double t):
- *         if t < 0.0:
+ *         if t < 0.0: # clamp01 substitute
  */
 
 /* Python wrapper */
@@ -5586,7 +5586,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_7vector2_7Vector2_30lerp(
   /* "nalpy/math/_c_extensions/vector2.pyx":154
  *     @staticmethod
  *     def lerp(Vector2 a, Vector2 b, double t):
- *         if t < 0.0:             # <<<<<<<<<<<<<<
+ *         if t < 0.0: # clamp01 substitute             # <<<<<<<<<<<<<<
  *             t = 0.0
  *         elif t > 1.0:
  */
@@ -5595,7 +5595,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_7vector2_7Vector2_30lerp(
 
     /* "nalpy/math/_c_extensions/vector2.pyx":155
  *     def lerp(Vector2 a, Vector2 b, double t):
- *         if t < 0.0:
+ *         if t < 0.0: # clamp01 substitute
  *             t = 0.0             # <<<<<<<<<<<<<<
  *         elif t > 1.0:
  *             t = 1.0
@@ -5605,7 +5605,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_7vector2_7Vector2_30lerp(
     /* "nalpy/math/_c_extensions/vector2.pyx":154
  *     @staticmethod
  *     def lerp(Vector2 a, Vector2 b, double t):
- *         if t < 0.0:             # <<<<<<<<<<<<<<
+ *         if t < 0.0: # clamp01 substitute             # <<<<<<<<<<<<<<
  *             t = 0.0
  *         elif t > 1.0:
  */
@@ -5613,7 +5613,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_7vector2_7Vector2_30lerp(
   }
 
   /* "nalpy/math/_c_extensions/vector2.pyx":156
- *         if t < 0.0:
+ *         if t < 0.0: # clamp01 substitute
  *             t = 0.0
  *         elif t > 1.0:             # <<<<<<<<<<<<<<
  *             t = 1.0
@@ -5632,7 +5632,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_7vector2_7Vector2_30lerp(
     __pyx_v_t = 1.0;
 
     /* "nalpy/math/_c_extensions/vector2.pyx":156
- *         if t < 0.0:
+ *         if t < 0.0: # clamp01 substitute
  *             t = 0.0
  *         elif t > 1.0:             # <<<<<<<<<<<<<<
  *             t = 1.0
@@ -5691,7 +5691,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_7vector2_7Vector2_30lerp(
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def lerp(Vector2 a, Vector2 b, double t):
- *         if t < 0.0:
+ *         if t < 0.0: # clamp01 substitute
  */
 
   /* function exit code */
@@ -8990,7 +8990,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def lerp(Vector2 a, Vector2 b, double t):
- *         if t < 0.0:
+ *         if t < 0.0: # clamp01 substitute
  */
   __pyx_tuple__14 = PyTuple_Pack(5, __pyx_n_s_a, __pyx_n_s_b, __pyx_n_s_t, __pyx_n_s_lerp_x, __pyx_n_s_lerp_y); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
@@ -9640,7 +9640,7 @@ if (!__Pyx_RefNanny) {
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def lerp(Vector2 a, Vector2 b, double t):
- *         if t < 0.0:
+ *         if t < 0.0: # clamp01 substitute
  */
   __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_5nalpy_4math_13_c_extensions_7vector2_7Vector2_31lerp, __Pyx_CYFUNCTION_STATICMETHOD | __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Vector2_lerp, NULL, __pyx_n_s_nalpy_math__c_extensions_vector2_2, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
