@@ -1,7 +1,6 @@
 #cython: language_level=3
-cdef extern from "math.h":
-    cdef double hypot(double x, double y)
-    cdef double acos(double x)
+
+from libc.math cimport hypot, acos, fabs
 
 cdef double _rad2deg = 180.0 / 3.14159265358979323846
 
@@ -70,7 +69,13 @@ cdef class Vector2:
 
     def __rmul__(self, other):
         # other * self
-        return self.__mul__(other)
+        # Duplicated code because inline function didn't work for some reason...
+        if isinstance(other, Vector2):
+            return Vector2(other.x * self.x, other.y * self.y)
+        elif isinstance(other, (float, int)):
+            return Vector2(other * self.x, other * self.y)
+        else:
+            return NotImplemented
 
     def __truediv__(self, other):
         # self / other
@@ -122,7 +127,7 @@ cdef class Vector2:
 
     def __abs__(self):
         # abs(self)
-        return Vector2(abs(self.x), abs(self.y))
+        return Vector2(fabs(self.x), fabs(self.y))
 
     def __eq__(self, Vector2 other):
         return self.x == other.x and self.y == other.y
@@ -146,7 +151,7 @@ cdef class Vector2:
 
     @staticmethod
     def lerp(Vector2 a, Vector2 b, double t):
-        if t < 0.0:
+        if t < 0.0: # clamp01 substitute
             t = 0.0
         elif t > 1.0:
             t = 1.0

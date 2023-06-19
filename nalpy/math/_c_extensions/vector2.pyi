@@ -26,6 +26,8 @@ class Vector2:
     @property
     def y(self) -> float: ...
 
+    def __repr__(self) -> str: ...
+
     def __add__(self, other: Vector2) -> Vector2: ...
 
     def __sub__(self, other: Vector2) -> Vector2: ...
@@ -49,7 +51,9 @@ class Vector2:
     def __eq__(self, other: Vector2) -> bool: ...
 
     @property
-    def magnitude(self) -> float: ...
+    def magnitude(self) -> float:
+        """The length of this vector."""
+        ...
 
     @property
     def normalized(self) -> Vector2:
@@ -58,7 +62,7 @@ class Vector2:
 
     @staticmethod
     def dot(a: Vector2, b: Vector2) -> float:
-        """Dot Product of two vectors."""
+        """Dot Product of two `Vector2` vectors."""
         ...
 
     @staticmethod
@@ -122,10 +126,10 @@ class Vector2:
 
     @staticmethod
     def min(a: Vector2, b: Vector2) -> Vector2:
-        """Returns a vector that is made from the smallest components of two vectors."""
+        """Create a new `Vector2` by selecting the smallest components of the two given `Vector2` instances."""
         ...
 
     @staticmethod
     def max(a: Vector2, b: Vector2) -> Vector2:
-        """Returns a vector that is made from the largest components of two vectors."""
+        """Create a new `Vector2` by selecting the largest components of the two given `Vector2` instances."""
         ...

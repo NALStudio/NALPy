@@ -1,7 +1,6 @@
 from typing import NamedTuple, Self, final, Final
 
-from .. import hypot, ceil, floor
-from .vector2 import Vector2
+from .. import hypot, ceil, floor, trunc, round, Vector2
 
 @final
 class Vector2Int(NamedTuple):
@@ -189,6 +188,10 @@ class Vector2Int(NamedTuple):
     @classmethod
     def round(cls, v: Vector2) -> Self:
         return cls(round(v.x), round(v.y))
+
+    @classmethod
+    def trunc(cls, v: Vector2) -> Self:
+        return cls(trunc(v.x), trunc(v.y))
 
     @classmethod
     def min(cls, a: Self, b: Self) -> Self:

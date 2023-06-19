@@ -122,7 +122,7 @@ def to_short_metric(base_value: float, unit_prefix: MetricPrefix | BinaryPrefix 
 
 def _to_metric(base_value: float, scale_value: int, scale_name: str, unit: str | None, with_space: bool, decimals: int, use_plural: bool) -> str:
     space: str = " " if with_space else ""
-    value = math.round_away_from_zero_to_digits(base_value / scale_value, digits=decimals)
+    value = math.round_to_digits(base_value / scale_value, digits=decimals)
 
     unit_str: str
     if unit is None:
