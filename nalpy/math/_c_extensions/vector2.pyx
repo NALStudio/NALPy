@@ -224,3 +224,9 @@ cdef class Vector2:
     def max(Vector2 a, Vector2 b):
         """Returns a vector that is made from the largest components of two vectors."""
         return Vector2(max(a.x, b.x), max(a.y, b.y))
+
+    def to_tuple(self):
+        return (self.x, self.y)
+
+    def to_dict(self):
+        return {"x": self.x, "y": self.y}

@@ -163,3 +163,9 @@ cdef class Vector2Int:
 
     def to_vector2(self) -> Vector2:
         return Vector2(<double>self.x, <double>self.y)
+
+    def to_tuple(self):
+        return (self.x, self.y)
+
+    def to_dict(self):
+        return {"x": self.x, "y": self.y}
