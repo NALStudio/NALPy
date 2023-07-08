@@ -63,6 +63,9 @@ cdef class Vector2:
         # repr(self)
         return f"Vector2({self.x}, {self.y})"
 
+    def __len__(self):
+        return 2
+
     def __add__(self, Vector2 other):
         # self + other
         return Vector2(self.x + other.x, self.y + other.y)
