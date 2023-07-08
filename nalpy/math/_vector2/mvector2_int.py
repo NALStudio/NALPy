@@ -1,6 +1,6 @@
 from typing import Self, final
 
-from .. import hypot, ceil, floor, MVector2, Vector2Int
+from .. import hypot, ceil, floor, Vector2Int, Vector2, MVector2
 
 @final
 class MVector2Int:
@@ -15,40 +15,34 @@ class MVector2Int:
     def from_immutable(cls, immutable: Vector2Int) -> Self:
         return cls(immutable.x, immutable.y)
 
-    #region Class Properties
+    #region Instantiation Helpers
     @classmethod
-    @property
     def zero(cls) -> Self:
         """Shorthand for ``math.Vector2Int(0, 0)``"""
         return cls(0, 0)
 
     @classmethod
-    @property
     def one(cls) -> Self:
         """Shorthand for ``math.Vector2Int(1, 1)``"""
         return cls(1, 1)
 
 
     @classmethod
-    @property
     def up(cls) -> Self:
         """A unit vector pointing up (vector j). Shorthand for ``math.Vector2Int(0, 1)``"""
         return cls(0, 1)
 
     @classmethod
-    @property
     def down(cls) -> Self:
         """A unit vector pointing down. Shorthand for ``math.Vector2Int(0, -1)``"""
         return cls(0, -1)
 
     @classmethod
-    @property
     def left(cls) -> Self:
         """A unit vector pointing left. Shorthand for ``math.Vector2Int(-1, 0)``"""
         return cls(-1, 0)
 
     @classmethod
-    @property
     def right(cls) -> Self:
         """A unit vector pointing right (vector i). Shorthand for ``math.Vector2Int(1, 0)``"""
         return cls(1, 0)
@@ -61,58 +55,51 @@ class MVector2Int:
         """Unambiguous string representation of the vector."""
         return f"MVector2Int({self.x}, {self.y})"
 
-    def __add__(self, other: Self) -> Self:
+    def __add__(self, other: Self | Vector2Int) -> Vector2Int:
         """Add (self + other)"""
-        if not isinstance(other, MVector2Int):
-            return NotImplemented
-        return MVector2Int(self.x + other.x, self.y + other.y)
+        if isinstance(other, MVector2Int):
+            other = other.to_immutable()
+        return self.to_immutable().__add__(other)
 
-    def __iadd__(self, other: Self) -> Self:
+    def __iadd__(self, other: Self | Vector2Int) -> Self:
         """Inline Add (self += other)"""
-        if not isinstance(other, MVector2Int):
+        if not isinstance(other, MVector2Int | Vector2Int):
             return NotImplemented
         self.x += other.x
         self.y += other.y
         return self
 
-    def __sub__(self, other: Self) -> Self:
+    def __sub__(self, other: Self | Vector2Int) -> Vector2Int:
         """Subtract (self - other)"""
-        if not isinstance(other, MVector2Int):
-            return NotImplemented
-        return MVector2Int(self.x - other.x, self.y - other.y)
+        if isinstance(other, MVector2Int):
+            other = other.to_immutable()
+        return self.to_immutable().__sub__(other)
 
-    def __isub__(self, other: Self) -> Self:
+    def __isub__(self, other: Self | Vector2Int) -> Self:
         """Inline Subtract (self -= other)"""
-        if not isinstance(other, MVector2Int):
+        if not isinstance(other, MVector2Int | Vector2Int):
             return NotImplemented
         self.x -= other.x
         self.y -= other.y
         return self
 
-    def __mul__(self, other: Self | int) -> Self:
+    def __mul__(self, other: Self | Vector2Int | int) -> Vector2Int:
         """Multiply (self * other)"""
-        x: int
-        y: int
         if isinstance(other, MVector2Int):
-            x = other.x
-            y = other.y
-        elif isinstance(other, int):
-            x = other
-            y = other
-        else:
-            return NotImplemented
+            other = other.to_immutable()
+        return self.to_immutable().__mul__(other)
 
-        return MVector2Int(self.x * x, self.y * y)
-
-    def __rmul__(self, other: Self | int) -> Self:
+    def __rmul__(self, other: Self | Vector2Int | int) -> Vector2Int:
         """Reverse multiply (other * self)"""
-        return self.__mul__(other) # other * self = self * other
+        if isinstance(other, MVector2Int):
+            other = other.to_immutable()
+        return self.to_immutable().__rmul__(other)
 
-    def __imul__(self, other: Self | int) -> Self:
+    def __imul__(self, other: Self | Vector2Int | int) -> Self:
         """Inline Multiply (self *= other)"""
         x: int
         y: int
-        if isinstance(other, MVector2Int):
+        if isinstance(other, MVector2Int | Vector2Int):
             x = other.x
             y = other.y
         elif isinstance(other, int):
@@ -125,41 +112,23 @@ class MVector2Int:
         self.y *= y
         return self
 
-    def __truediv__(self, other: Self | int | float) -> MVector2:
+    def __truediv__(self, other: Self | Vector2Int | int | float) -> Vector2:
         """Divide (self / other)"""
-        x: float
-        y: float
         if isinstance(other, MVector2Int):
-            x = other.x
-            y = other.y
-        elif isinstance(other, int | float):
-            x = other
-            y = other
-        else:
-            return NotImplemented
+            other = other.to_immutable()
+        return self.to_immutable().__truediv__(other)
 
-        return MVector2(self.x / x, self.y / y)
-
-    def __floordiv__(self, other: Self | int) -> Self:
+    def __floordiv__(self, other: Self | Vector2Int | int) -> Vector2Int:
         """Floor Divide (self // other)"""
-        x: int
-        y: int
         if isinstance(other, MVector2Int):
-            x = other.x
-            y = other.y
-        elif isinstance(other, int):
-            x = other
-            y = other
-        else:
-            return NotImplemented
+            other = other.to_immutable()
+        return self.to_immutable().__floordiv__(other)
 
-        return MVector2Int(self.x // x, self.y // y)
-
-    def __ifloordiv__(self, other: Self | int) -> Self:
+    def __ifloordiv__(self, other: Self | Vector2Int | int) -> Self:
         """Inline Floor Divide (self //= other)"""
         x: int
         y: int
-        if isinstance(other, MVector2Int):
+        if isinstance(other, MVector2Int | Vector2Int):
             x = other.x
             y = other.y
         elif isinstance(other, int):
@@ -173,51 +142,24 @@ class MVector2Int:
         return self
 
 
-    def __mod__(self, other: Self | int) -> Self:
+    def __mod__(self, other: Self | Vector2Int | int) -> Vector2Int:
         """Modulo (self % other)"""
-        x: int
-        y: int
         if isinstance(other, MVector2Int):
-            x = other.x
-            y = other.y
-        elif isinstance(other, int):
-            x = other
-            y = other
-        else:
-            return NotImplemented
+            other = other.to_immutable()
+        return self.to_immutable().__mod__(other)
 
-        return MVector2Int(self.x % x, self.y % y)
-
-    def __divmod__(self, other: Self | int) -> tuple[Self, Self]:
+    def __divmod__(self, other: Self | Vector2Int | int) -> tuple[Vector2Int, Vector2Int]:
         """Floor division and modulo (divmod(self, other))"""
-        x: int
-        y: int
         if isinstance(other, MVector2Int):
-            x = other.x
-            y = other.y
-        elif isinstance(other, int):
-            x = other
-            y = other
-        else:
-            return NotImplemented
+            other = other.to_immutable()
+        return self.to_immutable().__divmod__(other)
 
-        x_fdiv, x_mod = divmod(self.x, x)
-        y_fdiv, y_mod = divmod(self.y, y)
-        return (MVector2Int(x_fdiv, y_fdiv), MVector2Int(x_mod, y_mod))
-
-
-    def __neg__(self) -> Self:
-        """Negate (-self)"""
-        return MVector2Int(-self.x, -self.y)
-
-    def __abs__(self) -> Self:
-        """Absolute value (abs(self))"""
-        return MVector2Int(abs(self.x), abs(self.y))
 
     def __eq__(self, other: Self) -> bool:
         if isinstance(other, MVector2Int):
             return self.x == other.x and self.y == other.y
-        return False
+        raise TypeError(f"Cannot compare equality between {type(self)} and {type(other)}")
+
     # Hash not implemented because object is mutable.
 
     #endregion
@@ -229,12 +171,10 @@ class MVector2Int:
         return hypot(self.x, self.y)
     #endregion
 
-    #region Relation
-    @classmethod
-    def distance(cls, a: Self, b: Self):
-        """Returns the distance between a and b."""
-        diff = a - b
-        return diff.magnitude
+    #region Operations
+    def copy(self) -> Self:
+        """Make a new vector where the components' values match this vectors values."""
+        return MVector2Int(self.x, self.y)
     #endregion
 
     #region Constructors
