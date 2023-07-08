@@ -15,17 +15,17 @@ commands: tuple[str, ...] = (
 #     "x.y",
 #     "x + y",
 #     "x - y",
-#     "x * y",
-#     "x * 2",
-#     "2 * x",
-#     "x / y",
-#     "x / 2",
-#     "x // y",
-#     "x // 2",
-#     "x % y",
-#     "x % 2",
-#     "divmod(x, y)",
-#     "divmod(x, 2)",
+    "x * y",
+    "x * 2",
+    "2 * x",
+    "x / y",
+    "x / 2",
+    "x // y",
+    "x // 2",
+    "x % y",
+    "x % 2",
+    "divmod(x, y)",
+    "divmod(x, 2)",
 #     "-x",
 #     "abs(x)",
 #     "abs(y)",
@@ -61,10 +61,10 @@ class Configuration(NamedTuple):
     Vector2Implementation: type
 
 configurations: tuple[Configuration, ...] = (
-    Configuration("Old Vector2", _Legacy_Vector2),
-    Configuration("New Vector2", Vector2),
+#     Configuration("Old Vector2", _Legacy_Vector2),
+#     Configuration("New Vector2", Vector2),
 #     Configuration("Old Vector2Int", _Legacy_Vector2Int),
-#     Configuration("New Vector2Int", Vector2Int),
+    Configuration("New Vector2Int", Vector2Int),
 )
 
 n = 500_000
