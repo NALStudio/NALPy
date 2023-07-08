@@ -64,49 +64,74 @@ cdef class Vector2Int:
 
     def __mul__(self, other):
         # self * other
+        cdef int_t x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef int_t y
         if isinstance(other, Vector2Int):
-            return Vector2Int(self.x * other.x, self.y * other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, int):
-            return Vector2Int(self.x * other, self.y * other)
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2Int(self.x * x, self.y * y)
 
     def __rmul__(self, other):
         # other * self
         # Duplicated code because inline function didn't work for some reason...
+        cdef int_t x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef int_t y
         if isinstance(other, Vector2Int):
-            return Vector2Int(other.x * self.x, other.y * self.y)
-        elif isinstance(other, (float, int)):
-            return Vector2Int(other * self.x, other * self.y)
+            x = other.x
+            y = other.y
+        elif isinstance(other, int):
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2Int(self.x * x, self.y * y)
 
     def __truediv__(self, other):
         # self / other, NOTE: Returns Vector2
+        cdef double x
+        cdef double y
         if isinstance(other, Vector2Int):
-            return Vector2(self.x / other.x, self.y / other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, (float, int)):
-            return Vector2(self.x / other, self.y / other)
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2(self.x / x, self.y / y)
 
     def __floordiv__(self, other):
         # self // other
+        cdef int_t x
+        cdef int_t y
         if isinstance(other, Vector2Int):
-            return Vector2Int(self.x // other.x, self.y // other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, int):
-            return Vector2Int(self.x // other, self.y // other)
+            x = y = other
         else:
             return NotImplemented
 
+        return Vector2Int(self.x // x, self.y // y)
+
     def __mod__(self, other):
         # self % other
+        cdef int_t x
+        cdef int_t y
         if isinstance(other, Vector2Int):
-            return Vector2Int(self.x % other.x, self.y % other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, int):
-            return Vector2Int(self.x % other, self.y % other)
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2Int(self.x % x, self.y % y)
 
     def __divmod__(self, other):
         # divmod(self, other)
@@ -121,8 +146,10 @@ cdef class Vector2Int:
         else:
             return NotImplemented
 
-        x_fdiv, x_mod = divmod(self.x, x)
-        y_fdiv, y_mod = divmod(self.y, y)
+        cdef int_t x_fdiv = self.x // x # Cython doesn't have a divmod variant for C
+        cdef int_t x_mod = self.x % x   # We calculate these separately to avoid using Python's divmod
+        cdef int_t y_fdiv = self.y // y
+        cdef int_t y_mod = self.y % y
         return (Vector2Int(x_fdiv, y_fdiv), Vector2Int(x_mod, y_mod))
 
     def __neg__(self):
