@@ -77,13 +77,23 @@ class BasicFunctionality(unittest.TestCase):
     def test_divmod(self):
         self.assertEqual(Vector2Int(9, 9) / 3, Vector2(3, 3))
         self.assertEqual(Vector2Int(9, 9) / Vector2Int(3, 6), Vector2(3.0, 1.5))
+        self.assertEqual(Vector2Int(-9, -9) / 3, Vector2(-3, -3))
+        self.assertEqual(Vector2Int(-9, -9) / Vector2Int(3, 6), Vector2(-3.0, -1.5))
+
         self.assertEqual(Vector2Int(10, 10) // 3, Vector2Int(3, 3))
         self.assertEqual(Vector2Int(10, 10) // Vector2Int(3, 6), Vector2Int(3, 1))
+        self.assertEqual(Vector2Int(-10, -10) // 3, Vector2Int(-4, -4))
+        self.assertEqual(Vector2Int(-10, -10) // Vector2Int(3, 6), Vector2Int(-4, -2))
 
         self.assertEqual(Vector2Int(10, 10) % 3, Vector2Int(1, 1))
         self.assertEqual(Vector2Int(10, 10) % Vector2Int(3, 5), Vector2Int(1, 0))
+        self.assertEqual(Vector2Int(-10, -10) % 3, Vector2Int(2, 2))
+        self.assertEqual(Vector2Int(-10, -10) % Vector2Int(3, 5), Vector2Int(2, 0))
+
         self.assertEqual(divmod(Vector2Int(10, 10), 3), (Vector2Int(3, 3), Vector2Int(1, 1)))
         self.assertEqual(divmod(Vector2Int(10, 10), Vector2Int(3, 5)), (Vector2Int(3, 2), Vector2Int(1, 0)))
+        self.assertEqual(divmod(Vector2Int(-10, -10), 3), (Vector2Int(-4, -4), Vector2Int(2, 2)))
+        self.assertEqual(divmod(Vector2Int(-10, -10), Vector2Int(3, 5)), (Vector2Int(-4, -2), Vector2Int(2, 0)))
 
     def test_rest_operators(self):
         self.assertEqual(-Vector2Int.one, Vector2Int(-1, -1))
