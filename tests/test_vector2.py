@@ -103,14 +103,28 @@ class BasicFunctionality(unittest.TestCase):
 
     def test_divmod(self):
         self.assertEqual(Vector2(9, 9.0) / 3, Vector2(3.0, 3))
+        self.assertEqual(Vector2(9, 9.0) / 3.0, Vector2(3.0, 3))
         self.assertEqual(Vector2(9, 9.0) / Vector2(3, 6), Vector2(3.0, 1.5))
+        self.assertEqual(Vector2(-9, -9.0) / 3, Vector2(-3.0, -3))
+        self.assertEqual(Vector2(-9, -9.0) / 3.0, Vector2(-3.0, -3))
+        self.assertEqual(Vector2(-9, -9.0) / Vector2(3, 6), Vector2(-3.0, -1.5))
+
         self.assertEqual(Vector2(10, 10.0) // 3, Vector2(3.0, 3))
+        self.assertEqual(Vector2(10, 10.0) // 3.0, Vector2(3.0, 3))
         self.assertEqual(Vector2(10, 10.0) // Vector2(3, 6), Vector2(3.0, 1))
+        self.assertEqual(Vector2(-10, -10.0) // 3, Vector2(-4.0, -4))
+        self.assertEqual(Vector2(-10, -10.0) // 3.0, Vector2(-4.0, -4))
+        self.assertEqual(Vector2(-10, -10.0) // Vector2(3, 6), Vector2(-4.0, -2))
 
         self.assertEqual(Vector2(10, 10.0) % 3, Vector2(1.0, 1))
         self.assertEqual(Vector2(10, 10.0) % Vector2(3, 5), Vector2(1.0, 0))
+        self.assertEqual(Vector2(-10, -10.0) % 3, Vector2(2.0, 2))
+        self.assertEqual(Vector2(-10, -10.0) % Vector2(3, 5), Vector2(2.0, 0.0))
+
         self.assertEqual(divmod(Vector2(10, 10.0), 3), (Vector2(3.0, 3), Vector2(1.0, 1)))
         self.assertEqual(divmod(Vector2(10, 10.0), Vector2(3, 5)), (Vector2(3.0, 2.0), Vector2(1.0, 0.0)))
+        self.assertEqual(divmod(Vector2(-10, -10.0), 3), (Vector2(-4.0, -4), Vector2(2.0, 2)))
+        self.assertEqual(divmod(Vector2(-10, -10.0), Vector2(3, 5)), (Vector2(-4.0, -2.0), Vector2(2.0, 0.0)))
 
     def test_rest_operators(self):
         self.assertEqual(-Vector2.one, Vector2(-1, -1))
