@@ -51,9 +51,6 @@ cdef class Vector2Int:
         # repr(self)
         return f"Vector2Int({self.x}, {self.y})"
 
-    def __len__(self):
-        return 2
-
     def __add__(self, Vector2Int other):
         # self + other
         return Vector2Int(self.x + other.x, self.y + other.y)
