@@ -31,11 +31,8 @@ cpdef delta_angle(double current, double target):
         delta -= 360.0
     return delta
 
-cdef inline _custom_sign_func(double x):
-    return (<unsigned char>(x > 0.0)) - (<unsigned char>(x < 0.0))
-
 def sign(double x, /):
-    return _custom_sign_func(x)
+    return doublesign(x)
 
 
 def lerp(double a, double b, double t):
@@ -61,7 +58,7 @@ def smooth_step(double a, double b, double t):
 cpdef move_towards(double current, double target, double max_delta):
     if fabs(target - current) <= max_delta:
         return target
-    return current + _custom_sign_func(target - current) * max_delta
+    return current + doublesign(target - current) * max_delta
 
 def move_towards_angle(double current, double target, double max_delta):
     deltaAngle = delta_angle(current, target)
