@@ -29,6 +29,43 @@ class BasicFunctionality(unittest.TestCase):
         self.assertEqual(Vector2(5, 2.5), Vector2(5.0, 2.5))
         self.assertNotEqual(Vector2(5, 2), Vector2(5.0, 2.5))
 
+    def test_hash(self):
+        values: tuple[tuple[float, float], ...] = (
+            (69, 420),
+            (420, 69),
+            (69, 69),
+            (420, 420),
+
+            (69.420, 420.420),
+            (420.420, 69.420),
+            (69.69, 69.69),
+            (420.420, 420.420),
+
+            (0, 0),
+            (0.0, 0.0),
+            (-1, -1),
+            (-69.420, -69.420),
+            (1000, 1000),
+            (1000.0, 1000.0),
+            (-10000, -10000),
+            (-10000.0, -10000.0),
+
+            (float("inf"), float("inf")),
+            (float("-inf"), float("-inf")),
+            (float("inf"), float("-inf"))
+        )
+
+        # Vector2 hash should match tuple hash
+        for v in values:
+            self.assertEqual(hash(v), hash(Vector2(*v)), f"hash({v}) != hash({Vector2(*v)})")
+
+        # Vector2 hash behaviour on nan values
+        self.assertNotEqual(hash(Vector2(float("nan"), float("nan"))), hash(Vector2(float("nan"), float("nan"))))
+        self.assertNotEqual(hash(Vector2(float("nan"), float("inf"))), hash(Vector2(float("nan"), float("inf"))))
+        self.assertNotEqual(hash(Vector2(float("nan"), float("-inf"))), hash(Vector2(float("nan"), float("-inf"))))
+        self.assertEqual(hash(Vector2(69.420, float("nan"))), hash(Vector2(69.420, float("nan"))))
+        self.assertEqual(hash(Vector2(float("nan"), 69.420)), hash(Vector2(float("nan"), 69.420)))
+
     def test_constants(self):
         self.assertEqual(Vector2.zero,  Vector2(0.0, 0.0))
         self.assertEqual(Vector2.one,   Vector2(1.0, 1.0))

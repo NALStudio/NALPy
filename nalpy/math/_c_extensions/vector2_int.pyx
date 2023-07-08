@@ -3,9 +3,22 @@
 from libc.math cimport hypot, ceil, floor, llround
 from libc.stdlib cimport llabs
 
-from nalpy.math import Vector2
+from .vector2 import Vector2
 
 ctypedef long long int int_t
+
+cdef extern from "Python.h":
+    int SIZEOF_PY_HASH_T
+
+# Hashing
+ctypedef unsigned long long int _Vec_uhash_t
+
+cdef _Vec_uhash_t _VecHASH_XXPRIME_1 = 11400714785074694791ULL
+cdef _Vec_uhash_t _VecHASH_XXPRIME_2 = 14029467366897019727ULL
+cdef _Vec_uhash_t _VecHASH_XXPRIME_5 = 2870177450012600261ULL
+cdef inline _Vec_uhash_t _VecHASH_XXROTATE(_Vec_uhash_t x):
+    return ((x << 31) | (x >> 33)) # Rotate left 31 bits
+# Hashing
 
 cdef class Vector2Int:
     zero = Vector2Int(0, 0)
@@ -123,8 +136,38 @@ cdef class Vector2Int:
     def __eq__(self, Vector2Int other):
         return self.x == other.x and self.y == other.y
 
+    # Adapted from tuplehash https://github.com/python/cpython/blob/3.11/Objects/tupleobject.c#L321
+    # Doesn't work when extracted into a .pxd file for some reason, that's why this has been copied from vector2.pyx
     def __hash__(self):
-        return hash((self.x, self.y))
+        if SIZEOF_PY_HASH_T != 8:
+            raise RuntimeError("64 bit hash type required.")
+
+        cdef _Vec_uhash_t xlane = <_Vec_uhash_t>hash(self.x)
+        cdef _Vec_uhash_t ylane = <_Vec_uhash_t>hash(self.y)
+
+        if xlane == <_Vec_uhash_t>-1 or ylane == <_Vec_uhash_t>-1:
+            return -1
+
+        cdef _Vec_uhash_t acc = _VecHASH_XXPRIME_5
+
+        # X
+        acc += xlane * _VecHASH_XXPRIME_2
+        acc = _VecHASH_XXROTATE(acc)
+        acc *= _VecHASH_XXPRIME_1
+
+        # Y
+        acc += ylane * _VecHASH_XXPRIME_2
+        acc = _VecHASH_XXROTATE(acc)
+        acc *= _VecHASH_XXPRIME_1
+
+        acc += (<Py_ssize_t>2) ^ (_VecHASH_XXPRIME_5 ^ 3527539UL)
+        # To keep compatibility with tuple's hash implementation
+        # The performance improvement by removing this is negligible
+
+        if acc == <_Vec_uhash_t>-1:
+            return 1546275796
+
+        return acc
 
     @property
     def magnitude(self):

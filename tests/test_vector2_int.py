@@ -25,6 +25,24 @@ class BasicFunctionality(unittest.TestCase):
 
         # self.assertRaises(TypeError, lambda: v == (3.0, 3.0))
 
+    def test_hash(self):
+        values: tuple[tuple[int, int], ...] = (
+            (69, 420),
+            (420, 69),
+            (69, 69),
+            (420, 420),
+
+            (0, 0),
+            (-1, -1),
+            (-69, -69),
+            (1000, 1000),
+            (-10000, -10000)
+        )
+
+        # Vector2Int hash should match tuple hash
+        for v in values:
+            self.assertEqual(hash(v), hash(Vector2Int(*v)))
+
     def test_constants(self):
         self.assertEqual(Vector2Int.zero,  Vector2Int(0, 0))
         self.assertEqual(Vector2Int.one,   Vector2Int(1, 1))

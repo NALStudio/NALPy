@@ -2,6 +2,19 @@
 
 from libc.math cimport hypot, acos, fabs
 
+cdef extern from "Python.h":
+    int SIZEOF_PY_HASH_T
+
+# Hashing
+ctypedef unsigned long long int _Vec_uhash_t
+
+cdef _Vec_uhash_t _VecHASH_XXPRIME_1 = 11400714785074694791ULL
+cdef _Vec_uhash_t _VecHASH_XXPRIME_2 = 14029467366897019727ULL
+cdef _Vec_uhash_t _VecHASH_XXPRIME_5 = 2870177450012600261ULL
+cdef inline _Vec_uhash_t _VecHASH_XXROTATE(_Vec_uhash_t x):
+    return ((x << 31) | (x >> 33)) # Rotate left 31 bits
+# Hashing
+
 cdef double _rad2deg = 180.0 / 3.14159265358979323846
 
 cdef inline _Vector2Angle(Vector2 _from, Vector2 _to):
@@ -135,8 +148,38 @@ cdef class Vector2:
     def __eq__(self, Vector2 other):
         return self.x == other.x and self.y == other.y
 
+    # Adapted from tuplehash https://github.com/python/cpython/blob/3.11/Objects/tupleobject.c#L321
+    # Doesn't work when extracted into a .pxd file for some reason...
     def __hash__(self):
-        return hash((self.x, self.y))
+        if SIZEOF_PY_HASH_T != 8:
+            raise RuntimeError("64 bit hash type required.")
+
+        cdef _Vec_uhash_t xlane = <_Vec_uhash_t>hash(self.x)
+        cdef _Vec_uhash_t ylane = <_Vec_uhash_t>hash(self.y)
+
+        if xlane == <_Vec_uhash_t>-1 or ylane == <_Vec_uhash_t>-1:
+            return -1
+
+        cdef _Vec_uhash_t acc = _VecHASH_XXPRIME_5
+
+        # X
+        acc += xlane * _VecHASH_XXPRIME_2
+        acc = _VecHASH_XXROTATE(acc)
+        acc *= _VecHASH_XXPRIME_1
+
+        # Y
+        acc += ylane * _VecHASH_XXPRIME_2
+        acc = _VecHASH_XXROTATE(acc)
+        acc *= _VecHASH_XXPRIME_1
+
+        acc += (<Py_ssize_t>2) ^ (_VecHASH_XXPRIME_5 ^ 3527539UL)
+        # To keep compatibility with tuple's hash implementation
+        # The performance improvement by removing this is negligible
+
+        if acc == <_Vec_uhash_t>-1:
+            return 1546275796
+
+        return acc
 
     @property
     def magnitude(self):
@@ -146,7 +189,7 @@ cdef class Vector2:
     def normalized(self):
         magnitude = hypot(self.x, self.y)
         if magnitude == 0.0:
-            raise ValueError("Vector does not have a direction to normalize to.")
+            return Vector2.zero
         return Vector2(self.x / magnitude, self.y / magnitude)
 
     @staticmethod
