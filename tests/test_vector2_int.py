@@ -23,7 +23,9 @@ class BasicFunctionality(unittest.TestCase):
         self.assertNotEqual(v, Vector2Int(3, 2))
         self.assertNotEqual(v, Vector2Int(2, 2))
 
-        # self.assertRaises(TypeError, lambda: v == (3.0, 3.0))
+        self.assertRaises(TypeError, lambda: v == (3, 3))
+        self.assertNotEqual(v, None)
+        self.assertNotEqual(None, v)
 
     def test_hash(self):
         values: tuple[tuple[int, int], ...] = (

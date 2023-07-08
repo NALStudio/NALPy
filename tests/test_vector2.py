@@ -24,6 +24,8 @@ class BasicFunctionality(unittest.TestCase):
         self.assertNotEqual(v, Vector2(2.0, 2.0))
 
         self.assertRaises(TypeError, lambda: v == (3.0, 3.0))
+        self.assertNotEqual(v, None)
+        self.assertNotEqual(None, v)
 
         self.assertEqual(Vector2(3, 3), Vector2(3.0, 3.0))
         self.assertEqual(Vector2(5, 2.5), Vector2(5.0, 2.5))
