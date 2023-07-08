@@ -109,6 +109,19 @@ class BasicFunctionality(unittest.TestCase):
         self.assertEqual(Vector2Int(3, 6).magnitude, 6.70820393249936908923)
         self.assertEqual(Vector2Int(7, 12).magnitude, 13.89244398944980450843)
 
+    def test_iter(self):
+        i1 = iter(Vector2Int(69, 420))
+        self.assertEqual(next(i1), 69)
+        self.assertEqual(next(i1), 420)
+        self.assertRaises(StopIteration, lambda: next(i1))
+        self.assertRaises(StopIteration, lambda: next(iter(i1)))
+
+        i2 = iter(Vector2Int(0, 69420))
+        self.assertEqual(next(i2), 0)
+        self.assertEqual(next(iter(i2)), 69420)
+        self.assertRaises(StopIteration, lambda: next(iter(i2)))
+        self.assertRaises(StopIteration, lambda: next(i2))
+
     def test_math(self):
         a = Vector2Int(3, 7)
         b = Vector2Int(5, 3)

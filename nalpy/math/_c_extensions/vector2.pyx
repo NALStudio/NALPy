@@ -17,7 +17,7 @@ cdef inline _Vec_uhash_t _VecHASH_XXROTATE(_Vec_uhash_t x):
 
 cdef double _rad2deg = 180.0 / 3.14159265358979323846
 
-cdef inline _Vector2Angle(Vector2 _from, Vector2 _to):
+cdef inline double _Vector2Angle(Vector2 _from, Vector2 _to):
     cdef double denom = hypot(_from.x, _from.y) * hypot(_to.x, _to.y) # Multiply magnitudes
     if denom == 0.0:
         return 0.0
@@ -76,49 +76,74 @@ cdef class Vector2:
 
     def __mul__(self, other):
         # self * other
+        cdef double x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef double y
         if isinstance(other, Vector2):
-            return Vector2(self.x * other.x, self.y * other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, (float, int)):
-            return Vector2(self.x * other, self.y * other)
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2(self.x * x, self.y * y)
 
     def __rmul__(self, other):
         # other * self
         # Duplicated code because inline function didn't work for some reason...
+        cdef double x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef double y
         if isinstance(other, Vector2):
-            return Vector2(other.x * self.x, other.y * self.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, (float, int)):
-            return Vector2(other * self.x, other * self.y)
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2(self.x * x, self.y * y)
 
     def __truediv__(self, other):
         # self / other
+        cdef double x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef double y
         if isinstance(other, Vector2):
-            return Vector2(self.x / other.x, self.y / other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, (float, int)):
-            return Vector2(self.x / other, self.y / other)
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2(self.x / x, self.y / y)
 
     def __floordiv__(self, other):
         # self // other
+        cdef double x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef double y
         if isinstance(other, Vector2):
-            return Vector2(self.x // other.x, self.y // other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, (float, int)):
-            return Vector2(self.x // other, self.y // other)
+            x = y = other
         else:
             return NotImplemented
 
+        return Vector2(self.x // x, self.y // y) # Cython compiles floordiv into C
+
     def __mod__(self, other):
         # self % other
+        cdef double x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef double y
         if isinstance(other, Vector2):
-            return Vector2(self.x % other.x, self.y % other.y)
+            x = other.x
+            y = other.y
         elif isinstance(other, (float, int)):
-            return Vector2(self.x % other, self.y % other)
+            x = y = other
         else:
             return NotImplemented
+
+        return Vector2(self.x % x, self.y % y) # Cython compiles modulo into C
 
     def __divmod__(self, other):
         # divmod(self, other)
@@ -133,8 +158,10 @@ cdef class Vector2:
         else:
             return NotImplemented
 
-        x_fdiv, x_mod = divmod(self.x, x)
-        y_fdiv, y_mod = divmod(self.y, y)
+        cdef double x_fdiv = self.x // x # Cython doesn't have a divmod variant for C
+        cdef double x_mod = self.x % x   # We calculate these separately to avoid using Python's divmod
+        cdef double y_fdiv = self.y // y
+        cdef double y_mod = self.y % y
         return (Vector2(x_fdiv, y_fdiv), Vector2(x_mod, y_mod))
 
     def __neg__(self):

@@ -32,7 +32,8 @@ commands: tuple[str, ...] = (
 #     "x == x",
 #     "x == y",
 #     "x.magnitude",
-    "hash(x)",
+#     "hash(x)",
+#     "for _ in x: pass",
 
     # Vector2 Specific
 #     "x.normalized",

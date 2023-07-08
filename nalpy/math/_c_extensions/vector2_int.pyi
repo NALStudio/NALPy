@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Iterator
 from .vector2 import Vector2
 
 class Vector2Int:
@@ -51,6 +51,8 @@ class Vector2Int:
     def __abs__(self) -> Vector2Int: ...
 
     def __eq__(self, other: Vector2Int) -> bool: ...
+
+    def __iter__(self) -> Iterator[Vector2Int]: ...
 
     def __hash__(self) -> int: ...
 

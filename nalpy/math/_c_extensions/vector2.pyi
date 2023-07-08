@@ -1,4 +1,4 @@
-from typing import ClassVar
+from typing import ClassVar, Iterator
 
 class Vector2:
     """An immutable two-dimensional vector"""
@@ -51,6 +51,8 @@ class Vector2:
     def __abs__(self) -> Vector2: ...
 
     def __eq__(self, other: Vector2) -> bool: ...
+
+    def __iter__(self) -> Iterator[Vector2]: ...
 
     def __hash__(self) -> int: ...
 
