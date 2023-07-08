@@ -148,6 +148,9 @@ cdef class Vector2:
     def __eq__(self, Vector2 other):
         return self.x == other.x and self.y == other.y
 
+    def __iter__(self):
+        return Vector2Iterator(self)
+
     # Adapted from tuplehash https://github.com/python/cpython/blob/3.11/Objects/tupleobject.c#L321
     # Doesn't work when extracted into a .pxd file for some reason...
     def __hash__(self):
@@ -273,3 +276,22 @@ cdef class Vector2:
 
     def to_dict(self):
         return {"x": self.x, "y": self.y}
+
+cdef class Vector2Iterator:
+    cdef Vector2 vec2
+    cdef char index
+
+    def __init__(self, Vector2 vec2):
+        self.vec2 = vec2
+        self.index = -1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.index += 1
+        if self.index == 0:
+            return self.vec2.x
+        if self.index == 1:
+            return self.vec2.y
+        raise StopIteration()

@@ -5,10 +5,10 @@ from libc.stdlib cimport llabs
 
 from .vector2 import Vector2
 
-ctypedef long long int int_t
-
 cdef extern from "Python.h":
     int SIZEOF_PY_HASH_T
+
+ctypedef long long int int_t
 
 # Hashing
 ctypedef unsigned long long int _Vec_uhash_t
@@ -136,6 +136,9 @@ cdef class Vector2Int:
     def __eq__(self, Vector2Int other):
         return self.x == other.x and self.y == other.y
 
+    def __iter__(self):
+        return Vector2IntIterator(self)
+
     # Adapted from tuplehash https://github.com/python/cpython/blob/3.11/Objects/tupleobject.c#L321
     # Doesn't work when extracted into a .pxd file for some reason, that's why this has been copied from vector2.pyx
     def __hash__(self):
@@ -212,3 +215,22 @@ cdef class Vector2Int:
 
     def to_dict(self):
         return {"x": self.x, "y": self.y}
+
+cdef class Vector2IntIterator:
+    cdef Vector2Int vec2
+    cdef char index
+
+    def __init__(self, Vector2Int vec2):
+        self.vec2 = vec2
+        self.index = -1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.index += 1
+        if self.index == 0:
+            return self.vec2.x
+        if self.index == 1:
+            return self.vec2.y
+        raise StopIteration()
