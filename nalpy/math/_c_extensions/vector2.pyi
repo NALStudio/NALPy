@@ -96,6 +96,11 @@ class Vector2:
         ...
 
     @staticmethod
+    def smooth_damp(current: Vector2, target: Vector2, current_velocity: MVector2, smooth_time: float, delta_time: float, max_speed: float = float("inf")) -> Vector2:
+        """Gradually changes a vector towards a desired goal over time."""
+        ...
+
+    @staticmethod
     def perpendicular(vector: Vector2) -> Vector2:
         """
         Returns a 2D vector with the same magnitude, but perpendicular to the given 2D vector.

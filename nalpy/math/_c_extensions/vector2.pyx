@@ -260,6 +260,52 @@ cdef class Vector2:
         return Vector2(move_x, move_y)
 
     @staticmethod
+    def smooth_damp(Vector2 current, Vector2 target, MVector2 current_velocity, double smooth_time, double delta_time, double max_speed = <double>INFINITY):
+        # Heavy inspiration from https://github.com/Unity-Technologies/UnityCsReference/blob/2023.2/Runtime/Export/Math/Vector2.cs#L289
+
+        smooth_time = max(0.0001, smooth_time)
+        cdef double omega = 2.0 / smooth_time
+
+        cdef float x = omega * delta_time
+        cdef double exp = 1.0 / (1.0 + x + 0.48 * x * x + 0.235 * x * x * x)
+
+        cdef double change_x = current.x - target.x
+        cdef double change_y = current.y - target.y
+        cdef Vector2 original_to = target
+
+        cdef double max_change = max_speed * smooth_time
+        cdef double dist = hypot(change_x, change_y)
+        if dist > max_change:
+            change_x = change_x / dist * max_change
+            change_y = change_y / dist * max_change
+
+        target = Vector2(current.x - change_x, current.y - change_y)
+
+        cdef double temp_x = (current_velocity.x + omega * change_x) * delta_time
+        cdef double temp_y = (current_velocity.y + omega * change_y) * delta_time
+
+        current_velocity.x = (current_velocity.x - omega * temp_x) * exp
+        current_velocity.y = (current_velocity.y - omega * temp_y) * exp
+
+        cdef double output_x = target.x + (change_x + temp_x) * exp
+        cdef double output_y = target.y + (change_y + temp_y) * exp
+
+        cdef double orig_minus_current_x = original_to.x - current.x
+        cdef double orig_minus_current_y = original_to.y - current.y
+        cdef double out_minus_orig_x = output_x - original_to.x
+        cdef double out_minus_orig_y = output_y - original_to.y
+
+        if (orig_minus_current_x * out_minus_orig_x + orig_minus_current_y * out_minus_orig_y) > 0:
+            output_x = original_to.x
+            output_y = original_to.y
+
+            current_velocity.x = (output_x - original_to.x) / delta_time
+            current_velocity.y = (output_y - original_to.y) / delta_time
+
+        return Vector2(output_x, output_y)
+
+
+    @staticmethod
     def perpendicular(Vector2 vector):
         return Vector2(-vector.y, vector.x)
 
