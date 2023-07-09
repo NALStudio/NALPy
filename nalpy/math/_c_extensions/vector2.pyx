@@ -1,6 +1,8 @@
 #cython: language_level=3
 
-from libc.math cimport hypot, acos, fabs
+from libc.math cimport hypot, acos, fabs, INFINITY
+
+from .mvector2 cimport MVector2
 
 cdef extern from "Python.h":
     int SIZEOF_PY_HASH_T
@@ -41,9 +43,6 @@ cdef class Vector2:
     left = Vector2(-1.0, 0.0)
     right = Vector2(1.0, 0.0)
 
-
-    cdef readonly double x
-    cdef readonly double y
 
     def __init__(self, double x, double y):
         # Vector2(x, y)

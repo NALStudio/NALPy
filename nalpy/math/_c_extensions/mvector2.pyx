@@ -2,7 +2,7 @@
 
 from libc.math cimport hypot
 
-from .vector2 import Vector2
+from .vector2 cimport Vector2
 
 cdef class MVector2:
     @staticmethod
@@ -24,17 +24,12 @@ cdef class MVector2:
     def right():
         return MVector2(1.0, 0.0)
 
-    cdef public double x
-    cdef public double y
-
     def __init__(self, double x, double y):
         self.x = x
         self.y = y
 
     @staticmethod
-    def from_immutable(immutable):
-        if not isinstance(immutable, Vector2):
-            raise TypeError("Expected math.Vector2 instance.")
+    def from_immutable(Vector2 immutable):
         return MVector2(immutable.x, immutable.y)
 
     def __getitem__(self, char i):

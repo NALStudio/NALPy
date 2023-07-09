@@ -3,12 +3,10 @@
 from libc.math cimport hypot, ceil, floor, llround
 from libc.stdlib cimport llabs
 
-from .vector2 import Vector2
+from .vector2 cimport Vector2
 
 cdef extern from "Python.h":
     int SIZEOF_PY_HASH_T
-
-ctypedef long long int int_t
 
 # Hashing
 ctypedef unsigned long long int _Vec_uhash_t
@@ -30,10 +28,7 @@ cdef class Vector2Int:
     right = Vector2Int(1, 0)
 
 
-    cdef readonly int_t x
-    cdef readonly int_t y
-
-    def __init__(self, int_t x, int_t y):
+    def __init__(self, _V2I_int_t x, _V2I_int_t y):
         # Vector2Int(x, y)
         self.x = x
         self.y = y
@@ -65,8 +60,8 @@ cdef class Vector2Int:
 
     def __mul__(self, other):
         # self * other
-        cdef int_t x # Extracted into cdef so that Cython uses C math instead of Python math
-        cdef int_t y
+        cdef _V2I_int_t x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef _V2I_int_t y
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
@@ -80,8 +75,8 @@ cdef class Vector2Int:
     def __rmul__(self, other):
         # other * self
         # Duplicated code because inline function didn't work for some reason...
-        cdef int_t x # Extracted into cdef so that Cython uses C math instead of Python math
-        cdef int_t y
+        cdef _V2I_int_t x # Extracted into cdef so that Cython uses C math instead of Python math
+        cdef _V2I_int_t y
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
@@ -108,8 +103,8 @@ cdef class Vector2Int:
 
     def __floordiv__(self, other):
         # self // other
-        cdef int_t x
-        cdef int_t y
+        cdef _V2I_int_t x
+        cdef _V2I_int_t y
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
@@ -122,8 +117,8 @@ cdef class Vector2Int:
 
     def __mod__(self, other):
         # self % other
-        cdef int_t x
-        cdef int_t y
+        cdef _V2I_int_t x
+        cdef _V2I_int_t y
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
@@ -136,8 +131,8 @@ cdef class Vector2Int:
 
     def __divmod__(self, other):
         # divmod(self, other)
-        cdef int_t x
-        cdef int_t y
+        cdef _V2I_int_t x
+        cdef _V2I_int_t y
         if isinstance(other, Vector2Int):
             x = other.x
             y = other.y
@@ -147,10 +142,10 @@ cdef class Vector2Int:
         else:
             return NotImplemented
 
-        cdef int_t x_fdiv = self.x // x # Cython doesn't have a divmod variant for C
-        cdef int_t x_mod = self.x % x   # We calculate these separately to avoid using Python's divmod
-        cdef int_t y_fdiv = self.y // y
-        cdef int_t y_mod = self.y % y
+        cdef _V2I_int_t x_fdiv = self.x // x # Cython doesn't have a divmod variant for C
+        cdef _V2I_int_t x_mod = self.x % x   # We calculate these separately to avoid using Python's divmod
+        cdef _V2I_int_t y_fdiv = self.y // y
+        cdef _V2I_int_t y_mod = self.y % y
         return (Vector2Int(x_fdiv, y_fdiv), Vector2Int(x_mod, y_mod))
 
     def __neg__(self):
@@ -208,26 +203,26 @@ cdef class Vector2Int:
 
     @staticmethod
     def distance(Vector2Int a, Vector2Int b):
-        cdef int_t diff_x = a.x - b.x
-        cdef int_t diff_y = a.y - b.y
+        cdef _V2I_int_t diff_x = a.x - b.x
+        cdef _V2I_int_t diff_y = a.y - b.y
         return hypot(<double>diff_x, <double>diff_y)
 
     @staticmethod
     def ceil(v: Vector2) -> Vector2Int:
-       return Vector2Int(<int_t>ceil(v.x), <int_t>ceil(v.y))
+       return Vector2Int(<_V2I_int_t>ceil(v.x), <_V2I_int_t>ceil(v.y))
 
     @staticmethod
     def floor(v: Vector2) -> Vector2Int:
-        return Vector2Int(<int_t>floor(v.x), <int_t>floor(v.y))
+        return Vector2Int(<_V2I_int_t>floor(v.x), <_V2I_int_t>floor(v.y))
 
     @staticmethod
     def round(v: Vector2) -> Vector2Int:
-        return Vector2Int(<int_t>llround(v.x), <int_t>llround(v.y))
-        # Casting in case we change the int_t later. long long int can always hold a rounded double.
+        return Vector2Int(<_V2I_int_t>llround(v.x), <_V2I_int_t>llround(v.y))
+        # Casting in case we change the _V2I_int_t later. long long int can always hold a rounded double.
 
     @staticmethod
     def trunc(v: Vector2) -> Vector2Int:
-        return Vector2Int(<int_t>v.x, <int_t>v.y) # Casting floating point to integer truncates
+        return Vector2Int(<_V2I_int_t>v.x, <_V2I_int_t>v.y) # Casting floating point to integer truncates
 
     @staticmethod
     def min(Vector2Int a, Vector2Int b):

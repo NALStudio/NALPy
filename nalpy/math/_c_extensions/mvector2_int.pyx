@@ -2,7 +2,7 @@
 
 from libc.math cimport hypot
 
-from .vector2_int import Vector2Int
+from .vector2_int cimport Vector2Int
 
 ctypedef long long int int_t
 
@@ -35,9 +35,7 @@ cdef class MVector2Int:
         self.y = y
 
     @staticmethod
-    def from_immutable(immutable):
-        if not isinstance(immutable, Vector2Int):
-            raise TypeError("Expected math.Vector2Int instance.")
+    def from_immutable(Vector2Int immutable):
         return MVector2Int(immutable.x, immutable.y)
 
     def __getitem__(self, char i):

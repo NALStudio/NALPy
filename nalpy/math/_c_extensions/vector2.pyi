@@ -1,4 +1,5 @@
 from typing import ClassVar, Iterator
+from .mvector2 import MVector2
 
 class Vector2:
     """An immutable two-dimensional vector"""
