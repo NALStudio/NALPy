@@ -64,6 +64,7 @@ cdef class Vector2:
         return f"Vector2({self.x}, {self.y})"
 
     def __len__(self):
+        # len(self)
         return 2
 
     def __add__(self, Vector2 other):
@@ -173,9 +174,11 @@ cdef class Vector2:
         return Vector2(fabs(self.x), fabs(self.y))
 
     def __eq__(self, Vector2 other):
+        # self == other
         return self.x == other.x and self.y == other.y
 
     def __iter__(self):
+        # iter(self)
         return Vector2Iterator(self)
 
     # Adapted from tuplehash https://github.com/python/cpython/blob/3.11/Objects/tupleobject.c#L321
@@ -217,7 +220,7 @@ cdef class Vector2:
 
     @property
     def normalized(self):
-        magnitude = hypot(self.x, self.y)
+        cdef double magnitude = hypot(self.x, self.y)
         if magnitude == 0.0:
             return Vector2.zero
         return Vector2(self.x / magnitude, self.y / magnitude)

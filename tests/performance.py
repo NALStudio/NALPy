@@ -1,39 +1,58 @@
 from timeit import timeit
 from typing import NamedTuple
-from nalpy.math import Vector2, Vector2Int
-from nalpy.math import _Legacy_Vector2, _Legacy_Vector2Int # pyright: ignore [reportPrivateUsage, reportPrivateImportUsage]
+from nalpy.math import Vector2, Vector2Int, MVector2, MVector2Int
+from nalpy.math import _Legacy_Vector2, _Legacy_Vector2Int, _Legacy_MVector2, _Legacy_MVector2Int # pyright: ignore [reportPrivateUsage, reportPrivateImportUsage]
 from nalpy import math
 from nalpy.console_utils import set_foreground_color, set_background_color, reset_attributes, ConsoleColor, set_style, ConsoleStyle
 
-setup: str = "x=Vector2(69.0, 420.0); y=Vector2(-4.0, -5.0)"
+setup: str = "x=Vector2(69, 420); y=Vector2(-4, -5); _mutable=Vector2(69, 69); _variant2 = __Variant2(69, 420) if __Variant2 is not None else ..."
 commands: tuple[str, ...] = (
-#     "Vector2(0.0, 0.0)",
-#     "Vector2.zero",
+#     "Vector2(0, 0)",
 #     "x[0]",
 #     "x[1]",
 #     "x.x",
 #     "x.y",
-#     "x + y",
-#     "x - y",
-    "x * y",
-    "x * 2",
-    "2 * x",
-    "x / y",
-    "x / 2",
-    "x // y",
-    "x // 2",
-    "x % y",
-    "x % 2",
-    "divmod(x, y)",
-    "divmod(x, 2)",
-#     "-x",
-#     "abs(x)",
-#     "abs(y)",
 #     "x == x",
 #     "x == y",
 #     "x.magnitude",
+
+    # Vector specific
+#     "Vector2.zero",
+#     "x + y",
+#     "x - y",
+#     "x * y",
+#     "x * 2",
+#     "2 * x",
+#     "x / y",
+#     "x / 2",
+#     "x // y",
+#     "x // 2",
+#     "x % y",
+#     "x % 2",
+#     "divmod(x, y)",
+#     "divmod(x, 2)",
+#     "-x",
+#     "abs(x)",
+#     "abs(y)",
 #     "hash(x)",
 #     "for _ in x: pass",
+
+    # MVector specific
+#     "Vector2.zero()",
+#     "x.copy()",
+#     "_mutable.x += 5", # Mutable is reset before the next command, but will be mutated during the different runs of this command.
+#     "_mutable.x -= 5",
+#     "_mutable += y",
+#     "_mutable -= y",
+#     "_mutable *= 2",
+#     "_mutable //= 2",
+#     "_mutable //= 2",
+#     "Vector2.from_immutable(_variant2)",
+#     "x.to_immutable()"
+
+    # MVector2 Specific
+#     "x.normalize()",
+#     "x.normalized"
 
     # Vector2 Specific
 #     "x.normalized",
@@ -58,13 +77,18 @@ commands: tuple[str, ...] = (
 
 class Configuration(NamedTuple):
     name: str
-    Vector2Implementation: type
+    vector2Implementation: type
+    variant2: type | None = None
 
 configurations: tuple[Configuration, ...] = (
 #     Configuration("Old Vector2", _Legacy_Vector2),
 #     Configuration("New Vector2", Vector2),
 #     Configuration("Old Vector2Int", _Legacy_Vector2Int),
-    Configuration("New Vector2Int", Vector2Int),
+#     Configuration("New Vector2Int", Vector2Int),
+#     Configuration("Old MVector2", _Legacy_MVector2, _Legacy_Vector2),
+#     Configuration("New MVector2", MVector2, Vector2)
+#     Configuration("Old MVector2Int", _Legacy_MVector2Int, _Legacy_Vector2Int),
+#     Configuration("New MVector2Int", MVector2Int, Vector2Int)
 )
 
 n = 500_000
@@ -73,7 +97,13 @@ runs = 50
 DELIM: str = 75 * "-"
 
 def run_cmd(cmd: str, config: Configuration, index: int, total: int) -> float:
-    secs = timeit(cmd, setup=setup, globals={"Vector2": config.Vector2Implementation, "_math": math}, number=n)
+    gbls = {
+        "Vector2": config.vector2Implementation,
+        "_math": math,
+        "__Variant2": config.variant2
+    }
+    secs = timeit(cmd, setup=setup, globals=gbls, number=n)
+
     print(f"({index + 1} / {total}) {config.name}: {secs} seconds for {n} repetitions")
     return secs
 

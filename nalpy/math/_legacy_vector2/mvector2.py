@@ -49,6 +49,12 @@ class MVector2:
     #endregion
 
     #region Operators
+    def __getitem__(self, i: int) -> float:
+        if i == 0:
+            return self.x
+        if i == 1:
+            return self.y
+        raise IndexError(i)
 
     # Provides __str__ also
     def __repr__(self) -> str:
@@ -197,7 +203,7 @@ class MVector2:
 
     #region Operations
     def normalize(self) -> None:
-        """Make this vector keep its direction, but have a magnitude of 1."""
+        """Make this vector keep its direction, but have a magnitude of 1. Operates in place."""
         mag: float = self.magnitude
         if mag == 0:
             self.x = 0.0

@@ -52,6 +52,7 @@ cdef class Vector2Int:
         return f"Vector2Int({self.x}, {self.y})"
 
     def __len__(self):
+        # len(self)
         return 2
 
     def __add__(self, Vector2Int other):
@@ -161,9 +162,11 @@ cdef class Vector2Int:
         return Vector2Int(llabs(self.x), llabs(self.y))
 
     def __eq__(self, Vector2Int other):
+        # self == other
         return self.x == other.x and self.y == other.y
 
     def __iter__(self):
+        # iter(self)
         return Vector2IntIterator(self)
 
     # Adapted from tuplehash https://github.com/python/cpython/blob/3.11/Objects/tupleobject.c#L321
@@ -201,21 +204,21 @@ cdef class Vector2Int:
 
     @property
     def magnitude(self):
-        return hypot(self.x, self.y)
+        return hypot(<double>self.x, <double>self.y)
 
     @staticmethod
     def distance(Vector2Int a, Vector2Int b):
         cdef int_t diff_x = a.x - b.x
         cdef int_t diff_y = a.y - b.y
-        return hypot(diff_x, diff_y)
+        return hypot(<double>diff_x, <double>diff_y)
 
     @staticmethod
     def ceil(v: Vector2) -> Vector2Int:
-       return Vector2Int(<int_t>ceil(v.x), <int_t>(ceil(v.y)))
+       return Vector2Int(<int_t>ceil(v.x), <int_t>ceil(v.y))
 
     @staticmethod
     def floor(v: Vector2) -> Vector2Int:
-        return Vector2Int(<int_t>floor(v.x), <int_t>(floor(v.y)))
+        return Vector2Int(<int_t>floor(v.x), <int_t>floor(v.y))
 
     @staticmethod
     def round(v: Vector2) -> Vector2Int:

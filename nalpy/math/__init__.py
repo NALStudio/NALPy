@@ -198,8 +198,8 @@ def furthest(value: int | float, iterable: __typing.Iterable[_NumberT]) -> _Numb
 #region Public imports of components
 from nalpy.math._c_extensions.vector2 import Vector2 as Vector2
 from nalpy.math._c_extensions.vector2_int import Vector2Int as Vector2Int
-from nalpy.math._vector2.mvector2 import MVector2 as MVector2
-from nalpy.math._vector2.mvector2_int import MVector2Int as MVector2Int
+from nalpy.math._c_extensions.mvector2 import MVector2 as MVector2
+from nalpy.math._c_extensions.mvector2_int import MVector2Int as MVector2Int
 
 from nalpy.math._rect.rect import Rect as Rect
 from nalpy.math._rect.rect_int import RectInt as RectInt
@@ -208,6 +208,8 @@ from nalpy.math._rect.rect_offset_int import RectOffsetInt as RectOffsetInt
 #endregion
 
 #region Private imports of legacy components
-from nalpy.math._vector2.vector2 import Vector2 as _Legacy_Vector2
-from nalpy.math._vector2.vector2_int import Vector2Int as _Legacy_Vector2Int
+from nalpy.math._legacy_vector2.vector2 import Vector2 as _Legacy_Vector2
+from nalpy.math._legacy_vector2.vector2_int import Vector2Int as _Legacy_Vector2Int
+from nalpy.math._legacy_vector2.mvector2 import MVector2 as _Legacy_MVector2
+from nalpy.math._legacy_vector2.mvector2_int import MVector2Int as _Legacy_MVector2Int
 #endregion

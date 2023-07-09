@@ -49,6 +49,12 @@ class MVector2Int:
     #endregion
 
     #region Operators
+    def __getitem__(self, i: int) -> int:
+        if i == 0:
+            return self.x
+        if i == 1:
+            return self.y
+        raise IndexError(i)
 
     # Provides __str__ also
     def __repr__(self) -> str:
