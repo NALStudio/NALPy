@@ -18,14 +18,14 @@ def clamp(value, _min, _max): # types not verified due to performance reasons
         return _max
     return value
 
-cpdef clamp01(double value):
+cpdef clamp01(double value) noexcept:
     if value < 0.0:
         return 0.0
     if value > 1.0:
         return 1.0
     return value
 
-cpdef delta_angle(double current, double target):
+cpdef delta_angle(double current, double target) noexcept:
     cdef double delta = (target - current) % 360.0
     if delta > 180.0:
         delta -= 360.0
@@ -55,7 +55,7 @@ def smooth_step(double a, double b, double t):
     t = -2.0 * t * t * t + 3.0 * t * t
     return b * t + a * (1 - t)
 
-cpdef move_towards(double current, double target, double max_delta):
+cpdef move_towards(double current, double target, double max_delta) noexcept:
     if fabs(target - current) <= max_delta:
         return target
     return current + doublesign(target - current) * max_delta
