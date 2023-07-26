@@ -33,7 +33,7 @@ cdef class Vector2Int:
         self.x = x
         self.y = y
 
-    def __getitem__(self, char i):
+    def __getitem__(self, Py_ssize_t i):
         # self[i]
         if i == 0:
             return self.x

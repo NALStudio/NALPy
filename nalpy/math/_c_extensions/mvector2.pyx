@@ -32,7 +32,7 @@ cdef class MVector2:
     def from_immutable(Vector2 immutable):
         return MVector2(immutable.x, immutable.y)
 
-    def __getitem__(self, char i):
+    def __getitem__(self, Py_ssize_t i):
         if i == 0:
             return self.x
         if i == 1:

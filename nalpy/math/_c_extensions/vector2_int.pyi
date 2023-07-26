@@ -1,4 +1,4 @@
-from typing import ClassVar, Iterator
+from typing import ClassVar, Iterator, SupportsIndex
 from .vector2 import Vector2
 
 class Vector2Int:
@@ -18,7 +18,7 @@ class Vector2Int:
 
     def __init__(self, x: int, y: int) -> None: ...
 
-    def __getitem__(self, i: int) -> int: ...
+    def __getitem__(self, i: SupportsIndex) -> int: ...
 
     @property
     def x(self) -> int: ...

@@ -1,4 +1,4 @@
-from typing import ClassVar, Iterator
+from typing import ClassVar, Iterator, SupportsIndex
 from .mvector2 import MVector2
 
 class Vector2:
@@ -19,7 +19,7 @@ class Vector2:
 
     def __init__(self, x: float, y: float) -> None: ...
 
-    def __getitem__(self, i: int) -> float: ...
+    def __getitem__(self, i: SupportsIndex) -> float: ...
 
     @property
     def x(self) -> float: ...

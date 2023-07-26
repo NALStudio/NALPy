@@ -1,4 +1,4 @@
-from typing import Self
+from typing import Self, SupportsIndex
 from .vector2 import Vector2
 
 class MVector2:
@@ -23,7 +23,7 @@ class MVector2:
     @staticmethod
     def from_immutable(immutable: Vector2) -> MVector2: ...
 
-    def __getitem__(self, i: int) -> float: ...
+    def __getitem__(self, i: SupportsIndex) -> float: ...
 
     def __repr__(self) -> str: ...
 

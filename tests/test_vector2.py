@@ -10,6 +10,14 @@ class BasicFunctionality(unittest.TestCase):
         self.assertEqual(v[1], 7.25)
         self.assertRaises(IndexError, lambda: v[3])
 
+        class MockIndexObj:
+            def __init__(self, i: int) -> None:
+                self.__internal_index = i
+            def __index__(self) -> int:
+                return self.__internal_index
+        self.assertEqual(v[MockIndexObj(0)], 3.5)
+        self.assertEqual(v[MockIndexObj(1)], 7.25)
+
     def test_xy(self):
         v = Vector2(3.5, 7.25)
         self.assertEqual(v.x, 3.5)
