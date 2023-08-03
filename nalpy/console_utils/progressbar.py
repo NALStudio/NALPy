@@ -54,8 +54,10 @@ class Progressbar:
         _console_utils.reset_attributes()
         print(empty, self._style.bar_suffix, suffix, sep="", end="")
 
-    def stop(self) -> None:
+    def stop(self, *, end: str | None = "\n") -> None:
         """Resets the cursor visibility if it was modified."""
         if self._cursor_hidden:
             _console_utils.cursor_show()
             self._cursor_hidden = False
+
+        print(end=end)
