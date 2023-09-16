@@ -83,7 +83,7 @@ class Vector2Int:
 
     @staticmethod
     def trunc(v: Vector2) -> Vector2Int:
-        """Create a new `Vector2Int` by truncating the components of the given `Vector2`."""
+        """Create a new `Vector2Int` by truncating the components of the given `Vector2`. Truncating is equivalent to `int(float_value)`."""
         ...
 
     @staticmethod
