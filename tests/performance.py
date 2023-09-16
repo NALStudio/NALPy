@@ -83,9 +83,9 @@ class Configuration(NamedTuple):
 
 configurations: tuple[Configuration, ...] = (
 #     Configuration("Old Vector2", _Legacy_Vector2),
-    Configuration("New Vector2", Vector2),
+#     Configuration("New Vector2", Vector2),
 #     Configuration("Old Vector2Int", _Legacy_Vector2Int),
-#     Configuration("New Vector2Int", Vector2Int),
+    Configuration("New Vector2Int", Vector2Int),
 #     Configuration("Old MVector2", _Legacy_MVector2, _Legacy_Vector2),
 #     Configuration("New MVector2", MVector2, Vector2),
 #     Configuration("Old MVector2Int", _Legacy_MVector2Int, _Legacy_Vector2Int),
