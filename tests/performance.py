@@ -1,7 +1,7 @@
 from timeit import timeit
 from typing import NamedTuple
 from nalpy.math import Vector2, Vector2Int, MVector2, MVector2Int
-from nalpy.math import _Legacy_Vector2, _Legacy_Vector2Int, _Legacy_MVector2, _Legacy_MVector2Int # pyright: ignore [reportPrivateUsage, reportPrivateImportUsage]
+from nalpy.math import _Legacy_Vector2, _Legacy_Vector2Int, _Legacy_MVector2, _Legacy_MVector2Int # pyright: ignore [reportPrivateUsage]
 from nalpy import math
 from nalpy.console_utils import set_foreground_color, set_background_color, reset_attributes, ConsoleColor, set_style, ConsoleStyle
 
