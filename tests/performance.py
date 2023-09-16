@@ -8,9 +8,9 @@ from nalpy.console_utils import set_foreground_color, set_background_color, rese
 setup: str = "x=Vector2(69, 420); y=Vector2(-4, -5); _mutable=Vector2(69, 69); _variant2 = __Variant2(69, 420) if __Variant2 is not None else ..."
 commands: tuple[str, ...] = (
 #     "Vector2(0, 0)",
-    "x[0]",
-    "x[1]",
-    "x[index_obj]",
+#     "x[0]",
+#     "x[1]",
+#     "x[index_obj]",
 #     "x.x",
 #     "x.y",
 #     "x == x",
@@ -36,7 +36,7 @@ commands: tuple[str, ...] = (
 #     "abs(x)",
 #     "abs(y)",
 #     "hash(x)",
-#     "for _ in x: pass",
+    "for _ in x: pass",
 
     # MVector specific
 #     "Vector2.zero()",
@@ -82,7 +82,7 @@ class Configuration(NamedTuple):
     variant2: type | None = None
 
 configurations: tuple[Configuration, ...] = (
-    Configuration("Old Vector2", _Legacy_Vector2),
+#     Configuration("Old Vector2", _Legacy_Vector2),
     Configuration("New Vector2", Vector2),
 #     Configuration("Old Vector2Int", _Legacy_Vector2Int),
 #     Configuration("New Vector2Int", Vector2Int),
@@ -92,7 +92,7 @@ configurations: tuple[Configuration, ...] = (
 #     Configuration("New MVector2Int", MVector2Int, Vector2Int)
 )
 
-n = 5_000_000
+n = 500_000
 runs = 50
 
 DELIM: str = 75 * "-"

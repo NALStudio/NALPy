@@ -105,6 +105,14 @@ class BasicFunctionality(unittest.TestCase):
         self.assertEqual(divmod(Vector2Int(-10, -10), 3), (Vector2Int(-4, -4), Vector2Int(2, 2)))
         self.assertEqual(divmod(Vector2Int(-10, -10), Vector2Int(3, 5)), (Vector2Int(-4, -2), Vector2Int(2, 0)))
 
+        self.assertEqual(divmod(Vector2Int(5, 3), Vector2Int.one), (Vector2Int(5, 3), Vector2Int.zero))
+        self.assertEqual(divmod(Vector2Int(-5, -3), Vector2Int.one), (Vector2Int(-5, -3), Vector2Int.zero))
+
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2Int(10, 10), Vector2Int.zero))
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2Int(10, 10), 0))
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2Int(10, 10), Vector2Int(5, 0)))
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2Int(10, 10), Vector2Int(0, 5)))
+
     def test_rest_operators(self):
         self.assertEqual(-Vector2Int.one, Vector2Int(-1, -1))
         self.assertEqual(-Vector2Int.zero, Vector2Int.zero)
@@ -128,9 +136,17 @@ class BasicFunctionality(unittest.TestCase):
 
         i2 = iter(Vector2Int(0, 69420))
         self.assertEqual(next(i2), 0)
-        self.assertEqual(next(iter(i2)), 69420)
+        self.assertEqual(next(iter(i2)), 69420)  # re-iterating an iterator should keep original iteration index.
         self.assertRaises(StopIteration, lambda: next(iter(i2)))
         self.assertRaises(StopIteration, lambda: next(i2))
+
+        i3 = iter(iter(iter(iter(iter(Vector2Int(69, 420)))))) # re-iterating an iterator multiple times
+        self.assertEqual(next(i3), 69.0)
+        self.assertEqual(next(i3), 420.0)
+        self.assertRaises(StopIteration, lambda: next(i3)) # Check raising for multiple nexts
+        self.assertRaises(StopIteration, lambda: next(i3))
+
+        # No need to test value changing mid iteration as Vector2Int is immutable.
 
     def test_math(self):
         a = Vector2Int(3, 7)

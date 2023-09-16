@@ -136,6 +136,24 @@ class BasicFunctionality(unittest.TestCase):
         self.assertEqual(divmod(Vector2(-10, -10.0), 3), (Vector2(-4.0, -4), Vector2(2.0, 2)))
         self.assertEqual(divmod(Vector2(-10, -10.0), Vector2(3, 5)), (Vector2(-4.0, -2.0), Vector2(2.0, 0.0)))
 
+        div1, mod1 = divmod(Vector2(5.5, 3.3), Vector2.one)
+        self.assertAlmostEqual(div1.x, 5.0)
+        self.assertAlmostEqual(div1.y, 3.0)
+        self.assertAlmostEqual(mod1.x, 0.5)
+        self.assertAlmostEqual(mod1.y, 0.3)
+
+        div2, mod2 = divmod(Vector2(-5.5, -3.3), Vector2.one)
+        self.assertAlmostEqual(div2.x, -6.0)
+        self.assertAlmostEqual(div2.y, -4.0)
+        self.assertAlmostEqual(mod2.x, 0.5)
+        self.assertAlmostEqual(mod2.y, 0.7)
+
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2(10.0, 10.0), Vector2.zero))
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2(10.0, 10.0), 0.0))
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2(10.0, 10.0), 0))
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2(10.0, 10.0), Vector2(5.0, 0.0)))
+        self.assertRaises(ZeroDivisionError, lambda: divmod(Vector2(10.0, 10.0), Vector2(0.0, 5.0)))
+
     def test_rest_operators(self):
         self.assertEqual(-Vector2.one, Vector2(-1, -1))
         self.assertEqual(-Vector2.zero, Vector2.zero)
@@ -172,9 +190,17 @@ class BasicFunctionality(unittest.TestCase):
 
         i2 = iter(Vector2(0.0, float("inf")))
         self.assertEqual(next(i2), 0.0)
-        self.assertEqual(next(iter(i2)), float("inf"))
+        self.assertEqual(next(iter(i2)), float("inf")) # re-iterating an iterator should keep original iteration index.
         self.assertRaises(StopIteration, lambda: next(iter(i2)))
         self.assertRaises(StopIteration, lambda: next(i2))
+
+        i3 = iter(iter(iter(iter(iter(Vector2(69.0, 420.0)))))) # re-iterating an iterator multiple times
+        self.assertEqual(next(i3), 69.0)
+        self.assertEqual(next(i3), 420.0)
+        self.assertRaises(StopIteration, lambda: next(i3)) # Check raising for multiple nexts
+        self.assertRaises(StopIteration, lambda: next(i3))
+
+        # No need to test value changing mid iteration as Vector2Int is immutable.
 
     def test_math(self):
         a = Vector2(3.4, 7.6)
