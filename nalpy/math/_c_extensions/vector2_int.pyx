@@ -162,7 +162,8 @@ cdef class Vector2Int:
 
     def __iter__(self):
         # iter(self)
-        return Vector2IntIterator(self)
+        return iter((self.x, self.y))
+        # Apparently returning a tuple iterator is faster than writing a custom iterator or yielding...
 
     # Adapted from tuplehash https://github.com/python/cpython/blob/3.11/Objects/tupleobject.c#L321
     # Doesn't work when extracted into a .pxd file for some reason, that's why this has been copied from vector2.pyx
@@ -240,22 +241,3 @@ cdef class Vector2Int:
 
     def to_dict(self):
         return {"x": self.x, "y": self.y}
-
-cdef class Vector2IntIterator:
-    cdef Vector2Int vec2
-    cdef char index
-
-    def __init__(self, Vector2Int vec2):
-        self.vec2 = vec2
-        self.index = -1
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        self.index += 1
-        if self.index == 0:
-            return self.vec2.x
-        if self.index == 1:
-            return self.vec2.y
-        raise StopIteration()
