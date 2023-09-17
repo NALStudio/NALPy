@@ -1,4 +1,4 @@
-from typing import overload
+from typing import Iterable, overload
 
 
 def round(__x: float) -> int:
@@ -107,3 +107,10 @@ def ping_pong(t: float, length: float) -> float:
    ``t`` has to be a self-incrementing value.
     """
     ...
+
+def kahan_sum(float_values: Iterable[float]) -> float:
+    """
+    Implements the Kahan summation algorithm.
+
+    This algorithm greatly reduces the numerical error of the returned floating point values compared to basic summation.
+    """

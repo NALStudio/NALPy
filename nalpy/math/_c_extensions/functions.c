@@ -1909,9 +1909,13 @@ int __pyx_module_is_main_nalpy__math___c_extensions__functions = 0;
 /* #### Code section: string_decls ### */
 static const char __pyx_k_a[] = "a";
 static const char __pyx_k_b[] = "b";
+static const char __pyx_k_c[] = "c";
+static const char __pyx_k_f[] = "f";
 static const char __pyx_k_t[] = "t";
 static const char __pyx_k_x[] = "x";
-static const char __pyx_k__27[] = "?";
+static const char __pyx_k_y[] = "y";
+static const char __pyx_k__29[] = "?";
+static const char __pyx_k_acc[] = "acc";
 static const char __pyx_k_max[] = "_max";
 static const char __pyx_k_min[] = "_min";
 static const char __pyx_k_to1[] = "to1";
@@ -1932,12 +1936,14 @@ static const char __pyx_k_target[] = "target";
 static const char __pyx_k_clamp01[] = "clamp01";
 static const char __pyx_k_current[] = "current";
 static const char __pyx_k_remap01[] = "remap01";
+static const char __pyx_k_kahan_sum[] = "kahan_sum";
 static const char __pyx_k_max_delta[] = "max_delta";
 static const char __pyx_k_ping_pong[] = "ping_pong";
 static const char __pyx_k_deltaAngle[] = "deltaAngle";
 static const char __pyx_k_lerp_angle[] = "lerp_angle";
 static const char __pyx_k_delta_angle[] = "delta_angle";
 static const char __pyx_k_smooth_step[] = "smooth_step";
+static const char __pyx_k_float_values[] = "float_values";
 static const char __pyx_k_inverse_lerp[] = "inverse_lerp";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_move_towards[] = "move_towards";
@@ -1963,6 +1969,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_22smooth_step(
 static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_24move_towards(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_current, double __pyx_v_target, double __pyx_v_max_delta); /* proto */
 static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_26move_towards_angle(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_current, double __pyx_v_target, double __pyx_v_max_delta); /* proto */
 static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_28ping_pong(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_t, double __pyx_v_length); /* proto */
+static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_30kahan_sum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_float_values); /* proto */
 /* #### Code section: late_includes ### */
 /* #### Code section: module_state ### */
 typedef struct {
@@ -1994,20 +2001,25 @@ typedef struct {
   #endif
   #if CYTHON_USE_MODULE_STATE
   #endif
-  PyObject *__pyx_n_s__27;
+  PyObject *__pyx_n_s__29;
   PyObject *__pyx_n_s_a;
+  PyObject *__pyx_n_s_acc;
   PyObject *__pyx_n_s_asyncio_coroutines;
   PyObject *__pyx_n_s_b;
+  PyObject *__pyx_n_s_c;
   PyObject *__pyx_n_s_clamp;
   PyObject *__pyx_n_s_clamp01;
   PyObject *__pyx_n_s_cline_in_traceback;
   PyObject *__pyx_n_s_current;
   PyObject *__pyx_n_s_deltaAngle;
   PyObject *__pyx_n_s_delta_angle;
+  PyObject *__pyx_n_s_f;
+  PyObject *__pyx_n_s_float_values;
   PyObject *__pyx_n_s_from1;
   PyObject *__pyx_n_s_from2;
   PyObject *__pyx_n_s_inverse_lerp;
   PyObject *__pyx_n_s_is_coroutine;
+  PyObject *__pyx_n_s_kahan_sum;
   PyObject *__pyx_n_s_length;
   PyObject *__pyx_n_s_lerp;
   PyObject *__pyx_n_s_lerp_angle;
@@ -2034,6 +2046,7 @@ typedef struct {
   PyObject *__pyx_n_s_to2;
   PyObject *__pyx_n_s_value;
   PyObject *__pyx_n_s_x;
+  PyObject *__pyx_n_s_y;
   PyObject *__pyx_float_0_0;
   PyObject *__pyx_float_1_0;
   PyObject *__pyx_tuple_;
@@ -2047,6 +2060,7 @@ typedef struct {
   PyObject *__pyx_tuple__21;
   PyObject *__pyx_tuple__23;
   PyObject *__pyx_tuple__25;
+  PyObject *__pyx_tuple__27;
   PyObject *__pyx_codeobj__2;
   PyObject *__pyx_codeobj__4;
   PyObject *__pyx_codeobj__6;
@@ -2062,6 +2076,7 @@ typedef struct {
   PyObject *__pyx_codeobj__22;
   PyObject *__pyx_codeobj__24;
   PyObject *__pyx_codeobj__26;
+  PyObject *__pyx_codeobj__28;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -2104,20 +2119,25 @@ static int __pyx_m_clear(PyObject *m) {
   #ifdef __Pyx_FusedFunction_USED
   Py_CLEAR(clear_module_state->__pyx_FusedFunctionType);
   #endif
-  Py_CLEAR(clear_module_state->__pyx_n_s__27);
+  Py_CLEAR(clear_module_state->__pyx_n_s__29);
   Py_CLEAR(clear_module_state->__pyx_n_s_a);
+  Py_CLEAR(clear_module_state->__pyx_n_s_acc);
   Py_CLEAR(clear_module_state->__pyx_n_s_asyncio_coroutines);
   Py_CLEAR(clear_module_state->__pyx_n_s_b);
+  Py_CLEAR(clear_module_state->__pyx_n_s_c);
   Py_CLEAR(clear_module_state->__pyx_n_s_clamp);
   Py_CLEAR(clear_module_state->__pyx_n_s_clamp01);
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
   Py_CLEAR(clear_module_state->__pyx_n_s_current);
   Py_CLEAR(clear_module_state->__pyx_n_s_deltaAngle);
   Py_CLEAR(clear_module_state->__pyx_n_s_delta_angle);
+  Py_CLEAR(clear_module_state->__pyx_n_s_f);
+  Py_CLEAR(clear_module_state->__pyx_n_s_float_values);
   Py_CLEAR(clear_module_state->__pyx_n_s_from1);
   Py_CLEAR(clear_module_state->__pyx_n_s_from2);
   Py_CLEAR(clear_module_state->__pyx_n_s_inverse_lerp);
   Py_CLEAR(clear_module_state->__pyx_n_s_is_coroutine);
+  Py_CLEAR(clear_module_state->__pyx_n_s_kahan_sum);
   Py_CLEAR(clear_module_state->__pyx_n_s_length);
   Py_CLEAR(clear_module_state->__pyx_n_s_lerp);
   Py_CLEAR(clear_module_state->__pyx_n_s_lerp_angle);
@@ -2144,6 +2164,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_to2);
   Py_CLEAR(clear_module_state->__pyx_n_s_value);
   Py_CLEAR(clear_module_state->__pyx_n_s_x);
+  Py_CLEAR(clear_module_state->__pyx_n_s_y);
   Py_CLEAR(clear_module_state->__pyx_float_0_0);
   Py_CLEAR(clear_module_state->__pyx_float_1_0);
   Py_CLEAR(clear_module_state->__pyx_tuple_);
@@ -2157,6 +2178,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__21);
   Py_CLEAR(clear_module_state->__pyx_tuple__23);
   Py_CLEAR(clear_module_state->__pyx_tuple__25);
+  Py_CLEAR(clear_module_state->__pyx_tuple__27);
   Py_CLEAR(clear_module_state->__pyx_codeobj__2);
   Py_CLEAR(clear_module_state->__pyx_codeobj__4);
   Py_CLEAR(clear_module_state->__pyx_codeobj__6);
@@ -2172,6 +2194,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_codeobj__22);
   Py_CLEAR(clear_module_state->__pyx_codeobj__24);
   Py_CLEAR(clear_module_state->__pyx_codeobj__26);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__28);
   return 0;
 }
 #endif
@@ -2192,20 +2215,25 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   #ifdef __Pyx_FusedFunction_USED
   Py_VISIT(traverse_module_state->__pyx_FusedFunctionType);
   #endif
-  Py_VISIT(traverse_module_state->__pyx_n_s__27);
+  Py_VISIT(traverse_module_state->__pyx_n_s__29);
   Py_VISIT(traverse_module_state->__pyx_n_s_a);
+  Py_VISIT(traverse_module_state->__pyx_n_s_acc);
   Py_VISIT(traverse_module_state->__pyx_n_s_asyncio_coroutines);
   Py_VISIT(traverse_module_state->__pyx_n_s_b);
+  Py_VISIT(traverse_module_state->__pyx_n_s_c);
   Py_VISIT(traverse_module_state->__pyx_n_s_clamp);
   Py_VISIT(traverse_module_state->__pyx_n_s_clamp01);
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
   Py_VISIT(traverse_module_state->__pyx_n_s_current);
   Py_VISIT(traverse_module_state->__pyx_n_s_deltaAngle);
   Py_VISIT(traverse_module_state->__pyx_n_s_delta_angle);
+  Py_VISIT(traverse_module_state->__pyx_n_s_f);
+  Py_VISIT(traverse_module_state->__pyx_n_s_float_values);
   Py_VISIT(traverse_module_state->__pyx_n_s_from1);
   Py_VISIT(traverse_module_state->__pyx_n_s_from2);
   Py_VISIT(traverse_module_state->__pyx_n_s_inverse_lerp);
   Py_VISIT(traverse_module_state->__pyx_n_s_is_coroutine);
+  Py_VISIT(traverse_module_state->__pyx_n_s_kahan_sum);
   Py_VISIT(traverse_module_state->__pyx_n_s_length);
   Py_VISIT(traverse_module_state->__pyx_n_s_lerp);
   Py_VISIT(traverse_module_state->__pyx_n_s_lerp_angle);
@@ -2232,6 +2260,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_to2);
   Py_VISIT(traverse_module_state->__pyx_n_s_value);
   Py_VISIT(traverse_module_state->__pyx_n_s_x);
+  Py_VISIT(traverse_module_state->__pyx_n_s_y);
   Py_VISIT(traverse_module_state->__pyx_float_0_0);
   Py_VISIT(traverse_module_state->__pyx_float_1_0);
   Py_VISIT(traverse_module_state->__pyx_tuple_);
@@ -2245,6 +2274,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__21);
   Py_VISIT(traverse_module_state->__pyx_tuple__23);
   Py_VISIT(traverse_module_state->__pyx_tuple__25);
+  Py_VISIT(traverse_module_state->__pyx_tuple__27);
   Py_VISIT(traverse_module_state->__pyx_codeobj__2);
   Py_VISIT(traverse_module_state->__pyx_codeobj__4);
   Py_VISIT(traverse_module_state->__pyx_codeobj__6);
@@ -2260,6 +2290,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_codeobj__22);
   Py_VISIT(traverse_module_state->__pyx_codeobj__24);
   Py_VISIT(traverse_module_state->__pyx_codeobj__26);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__28);
   return 0;
 }
 #endif
@@ -2292,20 +2323,25 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #endif
 #if CYTHON_USE_MODULE_STATE
 #endif
-#define __pyx_n_s__27 __pyx_mstate_global->__pyx_n_s__27
+#define __pyx_n_s__29 __pyx_mstate_global->__pyx_n_s__29
 #define __pyx_n_s_a __pyx_mstate_global->__pyx_n_s_a
+#define __pyx_n_s_acc __pyx_mstate_global->__pyx_n_s_acc
 #define __pyx_n_s_asyncio_coroutines __pyx_mstate_global->__pyx_n_s_asyncio_coroutines
 #define __pyx_n_s_b __pyx_mstate_global->__pyx_n_s_b
+#define __pyx_n_s_c __pyx_mstate_global->__pyx_n_s_c
 #define __pyx_n_s_clamp __pyx_mstate_global->__pyx_n_s_clamp
 #define __pyx_n_s_clamp01 __pyx_mstate_global->__pyx_n_s_clamp01
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
 #define __pyx_n_s_current __pyx_mstate_global->__pyx_n_s_current
 #define __pyx_n_s_deltaAngle __pyx_mstate_global->__pyx_n_s_deltaAngle
 #define __pyx_n_s_delta_angle __pyx_mstate_global->__pyx_n_s_delta_angle
+#define __pyx_n_s_f __pyx_mstate_global->__pyx_n_s_f
+#define __pyx_n_s_float_values __pyx_mstate_global->__pyx_n_s_float_values
 #define __pyx_n_s_from1 __pyx_mstate_global->__pyx_n_s_from1
 #define __pyx_n_s_from2 __pyx_mstate_global->__pyx_n_s_from2
 #define __pyx_n_s_inverse_lerp __pyx_mstate_global->__pyx_n_s_inverse_lerp
 #define __pyx_n_s_is_coroutine __pyx_mstate_global->__pyx_n_s_is_coroutine
+#define __pyx_n_s_kahan_sum __pyx_mstate_global->__pyx_n_s_kahan_sum
 #define __pyx_n_s_length __pyx_mstate_global->__pyx_n_s_length
 #define __pyx_n_s_lerp __pyx_mstate_global->__pyx_n_s_lerp
 #define __pyx_n_s_lerp_angle __pyx_mstate_global->__pyx_n_s_lerp_angle
@@ -2332,6 +2368,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_to2 __pyx_mstate_global->__pyx_n_s_to2
 #define __pyx_n_s_value __pyx_mstate_global->__pyx_n_s_value
 #define __pyx_n_s_x __pyx_mstate_global->__pyx_n_s_x
+#define __pyx_n_s_y __pyx_mstate_global->__pyx_n_s_y
 #define __pyx_float_0_0 __pyx_mstate_global->__pyx_float_0_0
 #define __pyx_float_1_0 __pyx_mstate_global->__pyx_float_1_0
 #define __pyx_tuple_ __pyx_mstate_global->__pyx_tuple_
@@ -2345,6 +2382,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__21 __pyx_mstate_global->__pyx_tuple__21
 #define __pyx_tuple__23 __pyx_mstate_global->__pyx_tuple__23
 #define __pyx_tuple__25 __pyx_mstate_global->__pyx_tuple__25
+#define __pyx_tuple__27 __pyx_mstate_global->__pyx_tuple__27
 #define __pyx_codeobj__2 __pyx_mstate_global->__pyx_codeobj__2
 #define __pyx_codeobj__4 __pyx_mstate_global->__pyx_codeobj__4
 #define __pyx_codeobj__6 __pyx_mstate_global->__pyx_codeobj__6
@@ -2360,6 +2398,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_codeobj__22 __pyx_mstate_global->__pyx_codeobj__22
 #define __pyx_codeobj__24 __pyx_mstate_global->__pyx_codeobj__24
 #define __pyx_codeobj__26 __pyx_mstate_global->__pyx_codeobj__26
+#define __pyx_codeobj__28 __pyx_mstate_global->__pyx_codeobj__28
 /* #### Code section: module_code ### */
 
 /* "nalpy/math/_c_extensions/functions.pxd":3
@@ -5289,6 +5328,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_28ping_pong(CY
  * def ping_pong(double t, double length):
  *     t = t % (length * 2.0)             # <<<<<<<<<<<<<<
  *     return length - fabs(t - length)
+ * 
  */
   __pyx_t_1 = (__pyx_v_length * 2.0);
   if (unlikely(__pyx_t_1 == 0)) {
@@ -5301,6 +5341,8 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_28ping_pong(CY
  * def ping_pong(double t, double length):
  *     t = t % (length * 2.0)
  *     return length - fabs(t - length)             # <<<<<<<<<<<<<<
+ * 
+ * def kahan_sum(float_values):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = PyFloat_FromDouble((__pyx_v_length - fabs((__pyx_v_t - __pyx_v_length)))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
@@ -5328,6 +5370,274 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_28ping_pong(CY
   return __pyx_r;
 }
 
+/* "nalpy/math/_c_extensions/functions.pyx":74
+ *     return length - fabs(t - length)
+ * 
+ * def kahan_sum(float_values):             # <<<<<<<<<<<<<<
+ *     cdef double acc = 0.0
+ *     cdef double c = 0.0
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_5nalpy_4math_13_c_extensions_9functions_31kahan_sum(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_5nalpy_4math_13_c_extensions_9functions_31kahan_sum = {"kahan_sum", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5nalpy_4math_13_c_extensions_9functions_31kahan_sum, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5nalpy_4math_13_c_extensions_9functions_31kahan_sum(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_float_values = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("kahan_sum (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args);
+  if (unlikely((__pyx_nargs < 0))) __PYX_ERR(0, 74, __pyx_L3_error)
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_float_values,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_float_values)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 74, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "kahan_sum") < 0)) __PYX_ERR(0, 74, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v_float_values = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("kahan_sum", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 74, __pyx_L3_error)
+  goto __pyx_L3_error;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("nalpy.math._c_extensions.functions.kahan_sum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_5nalpy_4math_13_c_extensions_9functions_30kahan_sum(__pyx_self, __pyx_v_float_values);
+
+  /* function exit code */
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_30kahan_sum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_float_values) {
+  double __pyx_v_acc;
+  double __pyx_v_c;
+  double __pyx_v_f;
+  double __pyx_v_y;
+  double __pyx_v_t;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  Py_ssize_t __pyx_t_2;
+  PyObject *(*__pyx_t_3)(PyObject *);
+  PyObject *__pyx_t_4 = NULL;
+  double __pyx_t_5;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("kahan_sum", 0);
+
+  /* "nalpy/math/_c_extensions/functions.pyx":75
+ * 
+ * def kahan_sum(float_values):
+ *     cdef double acc = 0.0             # <<<<<<<<<<<<<<
+ *     cdef double c = 0.0
+ * 
+ */
+  __pyx_v_acc = 0.0;
+
+  /* "nalpy/math/_c_extensions/functions.pyx":76
+ * def kahan_sum(float_values):
+ *     cdef double acc = 0.0
+ *     cdef double c = 0.0             # <<<<<<<<<<<<<<
+ * 
+ *     cdef double f
+ */
+  __pyx_v_c = 0.0;
+
+  /* "nalpy/math/_c_extensions/functions.pyx":81
+ *     cdef double y
+ *     cdef double t
+ *     for f in float_values:             # <<<<<<<<<<<<<<
+ *         y = f - c
+ *         t = acc + y
+ */
+  if (likely(PyList_CheckExact(__pyx_v_float_values)) || PyTuple_CheckExact(__pyx_v_float_values)) {
+    __pyx_t_1 = __pyx_v_float_values; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
+    __pyx_t_3 = NULL;
+  } else {
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_float_values); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  }
+  for (;;) {
+    if (likely(!__pyx_t_3)) {
+      if (likely(PyList_CheckExact(__pyx_t_1))) {
+        if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely((0 < 0))) __PYX_ERR(0, 81, __pyx_L1_error)
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      } else {
+        if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely((0 < 0))) __PYX_ERR(0, 81, __pyx_L1_error)
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
+      }
+    } else {
+      __pyx_t_4 = __pyx_t_3(__pyx_t_1);
+      if (unlikely(!__pyx_t_4)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+          else __PYX_ERR(0, 81, __pyx_L1_error)
+        }
+        break;
+      }
+      __Pyx_GOTREF(__pyx_t_4);
+    }
+    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_v_f = __pyx_t_5;
+
+    /* "nalpy/math/_c_extensions/functions.pyx":82
+ *     cdef double t
+ *     for f in float_values:
+ *         y = f - c             # <<<<<<<<<<<<<<
+ *         t = acc + y
+ * 
+ */
+    __pyx_v_y = (__pyx_v_f - __pyx_v_c);
+
+    /* "nalpy/math/_c_extensions/functions.pyx":83
+ *     for f in float_values:
+ *         y = f - c
+ *         t = acc + y             # <<<<<<<<<<<<<<
+ * 
+ *         c = (t - acc) - y
+ */
+    __pyx_v_t = (__pyx_v_acc + __pyx_v_y);
+
+    /* "nalpy/math/_c_extensions/functions.pyx":85
+ *         t = acc + y
+ * 
+ *         c = (t - acc) - y             # <<<<<<<<<<<<<<
+ *         acc = t
+ * 
+ */
+    __pyx_v_c = ((__pyx_v_t - __pyx_v_acc) - __pyx_v_y);
+
+    /* "nalpy/math/_c_extensions/functions.pyx":86
+ * 
+ *         c = (t - acc) - y
+ *         acc = t             # <<<<<<<<<<<<<<
+ * 
+ *     return acc
+ */
+    __pyx_v_acc = __pyx_v_t;
+
+    /* "nalpy/math/_c_extensions/functions.pyx":81
+ *     cdef double y
+ *     cdef double t
+ *     for f in float_values:             # <<<<<<<<<<<<<<
+ *         y = f - c
+ *         t = acc + y
+ */
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "nalpy/math/_c_extensions/functions.pyx":88
+ *         acc = t
+ * 
+ *     return acc             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_acc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "nalpy/math/_c_extensions/functions.pyx":74
+ *     return length - fabs(t - length)
+ * 
+ * def kahan_sum(float_values):             # <<<<<<<<<<<<<<
+ *     cdef double acc = 0.0
+ *     cdef double c = 0.0
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("nalpy.math._c_extensions.functions.kahan_sum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 static PyMethodDef __pyx_methods[] = {
   {0, 0, 0, 0}
 };
@@ -5344,20 +5654,25 @@ static PyMethodDef __pyx_methods[] = {
 
 static int __Pyx_CreateStringTabAndInitStrings(void) {
   __Pyx_StringTabEntry __pyx_string_tab[] = {
-    {&__pyx_n_s__27, __pyx_k__27, sizeof(__pyx_k__27), 0, 0, 1, 1},
+    {&__pyx_n_s__29, __pyx_k__29, sizeof(__pyx_k__29), 0, 0, 1, 1},
     {&__pyx_n_s_a, __pyx_k_a, sizeof(__pyx_k_a), 0, 0, 1, 1},
+    {&__pyx_n_s_acc, __pyx_k_acc, sizeof(__pyx_k_acc), 0, 0, 1, 1},
     {&__pyx_n_s_asyncio_coroutines, __pyx_k_asyncio_coroutines, sizeof(__pyx_k_asyncio_coroutines), 0, 0, 1, 1},
     {&__pyx_n_s_b, __pyx_k_b, sizeof(__pyx_k_b), 0, 0, 1, 1},
+    {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
     {&__pyx_n_s_clamp, __pyx_k_clamp, sizeof(__pyx_k_clamp), 0, 0, 1, 1},
     {&__pyx_n_s_clamp01, __pyx_k_clamp01, sizeof(__pyx_k_clamp01), 0, 0, 1, 1},
     {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
     {&__pyx_n_s_current, __pyx_k_current, sizeof(__pyx_k_current), 0, 0, 1, 1},
     {&__pyx_n_s_deltaAngle, __pyx_k_deltaAngle, sizeof(__pyx_k_deltaAngle), 0, 0, 1, 1},
     {&__pyx_n_s_delta_angle, __pyx_k_delta_angle, sizeof(__pyx_k_delta_angle), 0, 0, 1, 1},
+    {&__pyx_n_s_f, __pyx_k_f, sizeof(__pyx_k_f), 0, 0, 1, 1},
+    {&__pyx_n_s_float_values, __pyx_k_float_values, sizeof(__pyx_k_float_values), 0, 0, 1, 1},
     {&__pyx_n_s_from1, __pyx_k_from1, sizeof(__pyx_k_from1), 0, 0, 1, 1},
     {&__pyx_n_s_from2, __pyx_k_from2, sizeof(__pyx_k_from2), 0, 0, 1, 1},
     {&__pyx_n_s_inverse_lerp, __pyx_k_inverse_lerp, sizeof(__pyx_k_inverse_lerp), 0, 0, 1, 1},
     {&__pyx_n_s_is_coroutine, __pyx_k_is_coroutine, sizeof(__pyx_k_is_coroutine), 0, 0, 1, 1},
+    {&__pyx_n_s_kahan_sum, __pyx_k_kahan_sum, sizeof(__pyx_k_kahan_sum), 0, 0, 1, 1},
     {&__pyx_n_s_length, __pyx_k_length, sizeof(__pyx_k_length), 0, 0, 1, 1},
     {&__pyx_n_s_lerp, __pyx_k_lerp, sizeof(__pyx_k_lerp), 0, 0, 1, 1},
     {&__pyx_n_s_lerp_angle, __pyx_k_lerp_angle, sizeof(__pyx_k_lerp_angle), 0, 0, 1, 1},
@@ -5384,6 +5699,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_to2, __pyx_k_to2, sizeof(__pyx_k_to2), 0, 0, 1, 1},
     {&__pyx_n_s_value, __pyx_k_value, sizeof(__pyx_k_value), 0, 0, 1, 1},
     {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
+    {&__pyx_n_s_y, __pyx_k_y, sizeof(__pyx_k_y), 0, 0, 1, 1},
     {0, 0, 0, 0, 0, 0, 0}
   };
   return __Pyx_InitStrings(__pyx_string_tab);
@@ -5565,6 +5881,18 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
   __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_functio, __pyx_n_s_ping_pong, 70, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 70, __pyx_L1_error)
+
+  /* "nalpy/math/_c_extensions/functions.pyx":74
+ *     return length - fabs(t - length)
+ * 
+ * def kahan_sum(float_values):             # <<<<<<<<<<<<<<
+ *     cdef double acc = 0.0
+ *     cdef double c = 0.0
+ */
+  __pyx_tuple__27 = PyTuple_Pack(6, __pyx_n_s_float_values, __pyx_n_s_acc, __pyx_n_s_c, __pyx_n_s_f, __pyx_n_s_y, __pyx_n_s_t); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__27);
+  __Pyx_GIVEREF(__pyx_tuple__27);
+  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_nalpy_math__c_extensions_functio, __pyx_n_s_kahan_sum, 74, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6110,6 +6438,18 @@ if (!__Pyx_RefNanny) {
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5nalpy_4math_13_c_extensions_9functions_29ping_pong, 0, __pyx_n_s_ping_pong, NULL, __pyx_n_s_nalpy_math__c_extensions_functio_2, __pyx_d, ((PyObject *)__pyx_codeobj__26)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_ping_pong, __pyx_t_2) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "nalpy/math/_c_extensions/functions.pyx":74
+ *     return length - fabs(t - length)
+ * 
+ * def kahan_sum(float_values):             # <<<<<<<<<<<<<<
+ *     cdef double acc = 0.0
+ *     cdef double c = 0.0
+ */
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_5nalpy_4math_13_c_extensions_9functions_31kahan_sum, 0, __pyx_n_s_kahan_sum, NULL, __pyx_n_s_nalpy_math__c_extensions_functio_2, __pyx_d, ((PyObject *)__pyx_codeobj__28)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_kahan_sum, __pyx_t_2) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "nalpy/math/_c_extensions/functions.pyx":1
@@ -8450,7 +8790,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__27);
+        name = __Pyx_NewRef(__pyx_n_s__29);
     }
     return name;
 }

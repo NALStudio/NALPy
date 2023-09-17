@@ -64,6 +64,8 @@ from nalpy.math._c_extensions.functions import smooth_step as smooth_step
 from nalpy.math._c_extensions.functions import move_towards as move_towards
 from nalpy.math._c_extensions.functions import move_towards_angle as move_towards_angle
 from nalpy.math._c_extensions.functions import ping_pong as ping_pong
+
+from nalpy.math._c_extensions.functions import kahan_sum as kahan_sum
 #endregion
 
 # Public component imports at the bottom

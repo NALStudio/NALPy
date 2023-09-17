@@ -283,5 +283,27 @@ class Interpolation(unittest.TestCase):
         self.assertAlmostEqual(math.lerp_angle(360, 720, 0.5), 360)
 
 
+class Arithmetic(unittest.TestCase):
+    def test_kahan_sum(self):
+        self.assertEqual(math.kahan_sum(0.1 for _ in range(10)), 1.0) # Iterable
+        self.assertEqual(math.kahan_sum([0.1 for _ in range(10)]), 1.0) # List
+        self.assertEqual(math.kahan_sum(tuple(0.1 for _ in range(10))), 1.0) # Tuple
+        self.assertEqual(math.kahan_sum({0.1 * i: None for i in range(10)}), 4.5) # Dict keys
+        self.assertEqual(math.kahan_sum({0.1 * i: None for i in range(10)}.keys()), 4.5) # Dict keys 2
+        self.assertEqual(math.kahan_sum({i: 0.1 for i in range(10)}.values()), 1.0) # Dict values
+
+        self.assertEqual(math.kahan_sum(0.1 if i % 2 == 0 else 1 for i in range(10)), 5.5) # int and float mixed
+        self.assertEqual(math.kahan_sum(1 for _ in range(10)), 10) # int only
+
+        self.assertRaises(TypeError, lambda: math.kahan_sum(0.1)) # type: ignore
+        self.assertRaises(TypeError, lambda: math.kahan_sum({i: 0.1 * i for i in range(10)}.items())) # type: ignore
+        self.assertRaises(TypeError, lambda: math.kahan_sum(None)) # type: ignore
+        self.assertRaises(TypeError, lambda: math.kahan_sum(object())) # type: ignore
+        self.assertRaises(TypeError, lambda: math.kahan_sum(...)) # type: ignore
+
+        self.assertRaises(TypeError, lambda: math.kahan_sum([0.1, 0.2, 0.3, 0.4, None])) # type: ignore
+        self.assertRaises(TypeError, lambda: math.kahan_sum([0.1, 0.2, 0.3, 0.4, object(), 0.6, 0.7])) # type: ignore
+        self.assertRaises(TypeError, lambda: math.kahan_sum(None for _ in range(10))) # type: ignore
+
 if __name__ == '__main__':
     unittest.main()

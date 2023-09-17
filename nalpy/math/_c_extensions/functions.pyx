@@ -70,3 +70,19 @@ def move_towards_angle(double current, double target, double max_delta):
 def ping_pong(double t, double length):
     t = t % (length * 2.0)
     return length - fabs(t - length)
+
+def kahan_sum(float_values):
+    cdef double acc = 0.0
+    cdef double c = 0.0
+
+    cdef double f
+    cdef double y
+    cdef double t
+    for f in float_values:
+        y = f - c
+        t = acc + y
+
+        c = (t - acc) - y
+        acc = t
+
+    return acc
