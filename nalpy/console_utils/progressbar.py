@@ -14,7 +14,6 @@ class ProgressbarStyle(_typing.NamedTuple):
     hide_cursor: bool = True
 
     @classmethod
-    @property
     def default(cls) -> _typing.Self:
         return ProgressbarStyle()
 

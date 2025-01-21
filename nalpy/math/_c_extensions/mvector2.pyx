@@ -146,7 +146,7 @@ cdef class MVector2:
         return v
 
 
-    cpdef normalize(self) noexcept:
+    cpdef normalize(self):
         cdef double magnitude = hypot(self.x, self.y)
         if magnitude == 0.0:
             self.x = self.y = 0.0
@@ -154,7 +154,7 @@ cdef class MVector2:
             self.x /= magnitude
             self.y /= magnitude
 
-    cpdef MVector2 copy(self) noexcept:
+    cpdef MVector2 copy(self):
         return MVector2(self.x, self.y)
 
 

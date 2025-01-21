@@ -3197,7 +3197,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_6clamp(CYTHON_
  *         return _max
  *     return value             # <<<<<<<<<<<<<<
  * 
- * cpdef clamp01(double value) noexcept:
+ * cpdef clamp01(double value):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_value);
@@ -3226,7 +3226,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_6clamp(CYTHON_
 /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -3250,7 +3250,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
 
   /* "nalpy/math/_c_extensions/functions.pyx":22
  * 
- * cpdef clamp01(double value) noexcept:
+ * cpdef clamp01(double value):
  *     if value < 0.0:             # <<<<<<<<<<<<<<
  *         return 0.0
  *     if value > 1.0:
@@ -3259,7 +3259,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
   if (__pyx_t_1) {
 
     /* "nalpy/math/_c_extensions/functions.pyx":23
- * cpdef clamp01(double value) noexcept:
+ * cpdef clamp01(double value):
  *     if value < 0.0:
  *         return 0.0             # <<<<<<<<<<<<<<
  *     if value > 1.0:
@@ -3272,7 +3272,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
 
     /* "nalpy/math/_c_extensions/functions.pyx":22
  * 
- * cpdef clamp01(double value) noexcept:
+ * cpdef clamp01(double value):
  *     if value < 0.0:             # <<<<<<<<<<<<<<
  *         return 0.0
  *     if value > 1.0:
@@ -3315,7 +3315,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
  *         return 1.0
  *     return value             # <<<<<<<<<<<<<<
  * 
- * cpdef delta_angle(double current, double target) noexcept:
+ * cpdef delta_angle(double current, double target):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2 = PyFloat_FromDouble(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
@@ -3327,7 +3327,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_clamp01(double 
   /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -3468,7 +3468,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_8clamp01(CYTHO
 /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */
@@ -3493,7 +3493,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
 
   /* "nalpy/math/_c_extensions/functions.pyx":29
  * 
- * cpdef delta_angle(double current, double target) noexcept:
+ * cpdef delta_angle(double current, double target):
  *     cdef double delta = (target - current) % 360.0             # <<<<<<<<<<<<<<
  *     if delta > 180.0:
  *         delta -= 360.0
@@ -3501,7 +3501,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
   __pyx_v_delta = __Pyx_mod_double((__pyx_v_target - __pyx_v_current), 360.0);
 
   /* "nalpy/math/_c_extensions/functions.pyx":30
- * cpdef delta_angle(double current, double target) noexcept:
+ * cpdef delta_angle(double current, double target):
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:             # <<<<<<<<<<<<<<
  *         delta -= 360.0
@@ -3520,7 +3520,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
     __pyx_v_delta = (__pyx_v_delta - 360.0);
 
     /* "nalpy/math/_c_extensions/functions.pyx":30
- * cpdef delta_angle(double current, double target) noexcept:
+ * cpdef delta_angle(double current, double target):
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:             # <<<<<<<<<<<<<<
  *         delta -= 360.0
@@ -3545,7 +3545,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_delta_angle(dou
   /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */
@@ -4730,7 +4730,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_22smooth_step(
  *     t = -2.0 * t * t * t + 3.0 * t * t
  *     return b * t + a * (1 - t)             # <<<<<<<<<<<<<<
  * 
- * cpdef move_towards(double current, double target, double max_delta) noexcept:
+ * cpdef move_towards(double current, double target, double max_delta):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = PyFloat_FromDouble(((__pyx_v_b * __pyx_v_t) + (__pyx_v_a * (1.0 - __pyx_v_t)))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
@@ -4761,7 +4761,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_9functions_22smooth_step(
 /* "nalpy/math/_c_extensions/functions.pyx":58
  *     return b * t + a * (1 - t)
  * 
- * cpdef move_towards(double current, double target, double max_delta) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef move_towards(double current, double target, double max_delta):             # <<<<<<<<<<<<<<
  *     if fabs(target - current) <= max_delta:
  *         return target
  */
@@ -4785,7 +4785,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_move_towards(do
 
   /* "nalpy/math/_c_extensions/functions.pyx":59
  * 
- * cpdef move_towards(double current, double target, double max_delta) noexcept:
+ * cpdef move_towards(double current, double target, double max_delta):
  *     if fabs(target - current) <= max_delta:             # <<<<<<<<<<<<<<
  *         return target
  *     return current + doublesign(target - current) * max_delta
@@ -4794,7 +4794,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_move_towards(do
   if (__pyx_t_1) {
 
     /* "nalpy/math/_c_extensions/functions.pyx":60
- * cpdef move_towards(double current, double target, double max_delta) noexcept:
+ * cpdef move_towards(double current, double target, double max_delta):
  *     if fabs(target - current) <= max_delta:
  *         return target             # <<<<<<<<<<<<<<
  *     return current + doublesign(target - current) * max_delta
@@ -4809,7 +4809,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_move_towards(do
 
     /* "nalpy/math/_c_extensions/functions.pyx":59
  * 
- * cpdef move_towards(double current, double target, double max_delta) noexcept:
+ * cpdef move_towards(double current, double target, double max_delta):
  *     if fabs(target - current) <= max_delta:             # <<<<<<<<<<<<<<
  *         return target
  *     return current + doublesign(target - current) * max_delta
@@ -4833,7 +4833,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_9functions_move_towards(do
   /* "nalpy/math/_c_extensions/functions.pyx":58
  *     return b * t + a * (1 - t)
  * 
- * cpdef move_towards(double current, double target, double max_delta) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef move_towards(double current, double target, double max_delta):             # <<<<<<<<<<<<<<
  *     if fabs(target - current) <= max_delta:
  *         return target
  */
@@ -5847,7 +5847,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -5859,7 +5859,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */
@@ -5931,7 +5931,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "nalpy/math/_c_extensions/functions.pyx":58
  *     return b * t + a * (1 - t)
  * 
- * cpdef move_towards(double current, double target, double max_delta) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef move_towards(double current, double target, double max_delta):             # <<<<<<<<<<<<<<
  *     if fabs(target - current) <= max_delta:
  *         return target
  */
@@ -6391,7 +6391,7 @@ if (!__Pyx_RefNanny) {
   /* "nalpy/math/_c_extensions/functions.pyx":21
  *     return value
  * 
- * cpdef clamp01(double value) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef clamp01(double value):             # <<<<<<<<<<<<<<
  *     if value < 0.0:
  *         return 0.0
  */
@@ -6403,7 +6403,7 @@ if (!__Pyx_RefNanny) {
   /* "nalpy/math/_c_extensions/functions.pyx":28
  *     return value
  * 
- * cpdef delta_angle(double current, double target) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef delta_angle(double current, double target):             # <<<<<<<<<<<<<<
  *     cdef double delta = (target - current) % 360.0
  *     if delta > 180.0:
  */
@@ -6487,7 +6487,7 @@ if (!__Pyx_RefNanny) {
   /* "nalpy/math/_c_extensions/functions.pyx":58
  *     return b * t + a * (1 - t)
  * 
- * cpdef move_towards(double current, double target, double max_delta) noexcept:             # <<<<<<<<<<<<<<
+ * cpdef move_towards(double current, double target, double max_delta):             # <<<<<<<<<<<<<<
  *     if fabs(target - current) <= max_delta:
  *         return target
  */

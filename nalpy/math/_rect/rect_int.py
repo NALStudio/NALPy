@@ -19,7 +19,6 @@ class RectInt(NamedTuple):
     h: int
 
     @classmethod
-    @property
     def zero(cls) -> Self:
         """Shorthand for ``math.RectInt(0, 0, 0, 0)``"""
         return _ZERO #  Returning single instance, because Rect is immutable

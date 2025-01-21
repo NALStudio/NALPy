@@ -5464,7 +5464,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_8mvector2_8MVector2_10nor
 /* "nalpy/math/_c_extensions/mvector2.pyx":149
  * 
  * 
- *     cpdef normalize(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef normalize(self):             # <<<<<<<<<<<<<<
  *         cdef double magnitude = hypot(self.x, self.y)
  *         if magnitude == 0.0:
  */
@@ -5546,7 +5546,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_8mvector2_8MVector2_normal
 
   /* "nalpy/math/_c_extensions/mvector2.pyx":150
  * 
- *     cpdef normalize(self) noexcept:
+ *     cpdef normalize(self):
  *         cdef double magnitude = hypot(self.x, self.y)             # <<<<<<<<<<<<<<
  *         if magnitude == 0.0:
  *             self.x = self.y = 0.0
@@ -5554,7 +5554,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_8mvector2_8MVector2_normal
   __pyx_v_magnitude = hypot(__pyx_v_self->x, __pyx_v_self->y);
 
   /* "nalpy/math/_c_extensions/mvector2.pyx":151
- *     cpdef normalize(self) noexcept:
+ *     cpdef normalize(self):
  *         cdef double magnitude = hypot(self.x, self.y)
  *         if magnitude == 0.0:             # <<<<<<<<<<<<<<
  *             self.x = self.y = 0.0
@@ -5574,7 +5574,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_8mvector2_8MVector2_normal
     __pyx_v_self->y = 0.0;
 
     /* "nalpy/math/_c_extensions/mvector2.pyx":151
- *     cpdef normalize(self) noexcept:
+ *     cpdef normalize(self):
  *         cdef double magnitude = hypot(self.x, self.y)
  *         if magnitude == 0.0:             # <<<<<<<<<<<<<<
  *             self.x = self.y = 0.0
@@ -5602,7 +5602,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_8mvector2_8MVector2_normal
  *             self.x /= magnitude
  *             self.y /= magnitude             # <<<<<<<<<<<<<<
  * 
- *     cpdef MVector2 copy(self) noexcept:
+ *     cpdef MVector2 copy(self):
  */
     if (unlikely(__pyx_v_magnitude == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
@@ -5615,7 +5615,7 @@ static PyObject *__pyx_f_5nalpy_4math_13_c_extensions_8mvector2_8MVector2_normal
   /* "nalpy/math/_c_extensions/mvector2.pyx":149
  * 
  * 
- *     cpdef normalize(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef normalize(self):             # <<<<<<<<<<<<<<
  *         cdef double magnitude = hypot(self.x, self.y)
  *         if magnitude == 0.0:
  */
@@ -5706,7 +5706,7 @@ static PyObject *__pyx_pf_5nalpy_4math_13_c_extensions_8mvector2_8MVector2_36nor
 /* "nalpy/math/_c_extensions/mvector2.pyx":157
  *             self.y /= magnitude
  * 
- *     cpdef MVector2 copy(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef MVector2 copy(self):             # <<<<<<<<<<<<<<
  *         return MVector2(self.x, self.y)
  * 
  */
@@ -5787,7 +5787,7 @@ static struct __pyx_obj_5nalpy_4math_13_c_extensions_8mvector2_MVector2 *__pyx_f
 
   /* "nalpy/math/_c_extensions/mvector2.pyx":158
  * 
- *     cpdef MVector2 copy(self) noexcept:
+ *     cpdef MVector2 copy(self):
  *         return MVector2(self.x, self.y)             # <<<<<<<<<<<<<<
  * 
  * 
@@ -5815,7 +5815,7 @@ static struct __pyx_obj_5nalpy_4math_13_c_extensions_8mvector2_MVector2 *__pyx_f
   /* "nalpy/math/_c_extensions/mvector2.pyx":157
  *             self.y /= magnitude
  * 
- *     cpdef MVector2 copy(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef MVector2 copy(self):             # <<<<<<<<<<<<<<
  *         return MVector2(self.x, self.y)
  * 
  */
@@ -8237,7 +8237,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "nalpy/math/_c_extensions/mvector2.pyx":149
  * 
  * 
- *     cpdef normalize(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef normalize(self):             # <<<<<<<<<<<<<<
  *         cdef double magnitude = hypot(self.x, self.y)
  *         if magnitude == 0.0:
  */
@@ -8249,7 +8249,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "nalpy/math/_c_extensions/mvector2.pyx":157
  *             self.y /= magnitude
  * 
- *     cpdef MVector2 copy(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef MVector2 copy(self):             # <<<<<<<<<<<<<<
  *         return MVector2(self.x, self.y)
  * 
  */
@@ -8900,7 +8900,7 @@ if (!__Pyx_RefNanny) {
   /* "nalpy/math/_c_extensions/mvector2.pyx":149
  * 
  * 
- *     cpdef normalize(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef normalize(self):             # <<<<<<<<<<<<<<
  *         cdef double magnitude = hypot(self.x, self.y)
  *         if magnitude == 0.0:
  */
@@ -8913,7 +8913,7 @@ if (!__Pyx_RefNanny) {
   /* "nalpy/math/_c_extensions/mvector2.pyx":157
  *             self.y /= magnitude
  * 
- *     cpdef MVector2 copy(self) noexcept:             # <<<<<<<<<<<<<<
+ *     cpdef MVector2 copy(self):             # <<<<<<<<<<<<<<
  *         return MVector2(self.x, self.y)
  * 
  */
